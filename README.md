@@ -17,7 +17,6 @@ Stack: Python (FastAPI, DuckDB, PostgreSQL + pgvector) · React (Vite, Tailwind,
 Interface em pt-BR, español e English.
 
 Construído com um time de agentes de IA orquestrado pelo [orch](https://github.com/hectorcanaimero/orch).
-O diário e o conteúdo da série estão em [`build-in-public/`](build-in-public/).
 
 ## Licença
 

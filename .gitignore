@@ -22,3 +22,4 @@ venv/
 # predicts
 data/
 .env
+build-in-public/
