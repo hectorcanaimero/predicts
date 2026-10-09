@@ -199,9 +199,21 @@ FastAPI con OpenAPI completo (de ahí se generan los tipos del frontend). Errore
   para los tipos, Recharts para gráficos, Framer Motion para transiciones.
 - **i18n:** `react-i18next` con `pt-BR`, `es`, `en`; idioma por usuario, detectado del navegador
   la primera vez. Ningún texto de interfaz fuera de los archivos de traducción.
-- **React Three Fiber** solo en `tres/`, con carga diferida: (1) procesamiento en vivo alimentado
-  por SSE; (2) universo de clientes (puntos por frecuencia × valor, detalle al tocar). Respeta
-  `prefers-reduced-motion` con una versión 2D.
+- **Sala pixel art en React Three Fiber** (`tres/`, carga diferida), la identidad visual del
+  producto: una sala isométrica estilo pixel art (cámara ortográfica, render a baja resolución
+  escalado con filtro `nearest`, paleta limitada, sprites/voxels low-poly; `@react-three/drei` y
+  `postprocessing` para el pixelado). En la sala:
+  1. **Procesamiento en vivo:** personajes/estaciones que representan las etapas del trabajo
+     (subida → mapeo Jev → ingesta → productos → análisis → mensajes), animados con los eventos
+     SSE; el progreso y los avisos aparecen como globos o pantallas dentro de la sala.
+  2. **Universo de clientes:** vista de la sala (o una ventana dentro de ella) con los clientes
+     como puntos/píxeles por frecuencia × valor; detalle al tocar.
+  - Formularios, tablas y resultados siguen en UI convencional (shadcn/ui) con un tema que
+    combina con la sala (tipografía pixel en títulos, misma paleta), para que sea usable y
+    accesible.
+  - Respeta `prefers-reduced-motion` y equipos débiles con una versión 2D estática; presupuesto
+    de rendimiento: 60 fps en notebook común, bundle 3D separado del inicial.
+  - Assets propios o con licencia abierta (CC0), registrados en `web/ASSETS.md`.
 
 ### Despliegue (`deploy/`)
 `docker-compose.yml` con:
@@ -263,7 +275,8 @@ confianza, corregida_por, corregida_a), `plantillas_mensaje`, `api_keys`.
 - **D6 — Trabajos en subproceso con tope de memoria.**
 - **D7 — Login propio** (Argon2id, sesiones en Postgres).
 - **D8 — i18n desde el día 1** en web y en los errores de la API.
-- **D9 — React Three Fiber solo en dos vistas, con carga diferida.**
+- **D9 — Sala pixel art en React Three Fiber como identidad visual** (procesamiento en vivo y
+  universo de clientes), con carga diferida y versión 2D; el resto de la app en UI convencional.
 
 ## Fases propuestas (para las specs)
 
@@ -275,9 +288,9 @@ confianza, corregida_por, corregida_a), `plantillas_mensaje`, `api_keys`.
 | F3 | Subida, detección, mapeo con Jev, plantillas, ingesta, calidad | acierto del mapeo medido en CSVs desordenados |
 | F4 | Productos (recompra/durable, categoría, equivalentes) y análisis completos (recompra, ciclos, riesgo, ofertas), trabajos en subproceso, eventos SSE | 1 M de filas < 5 min y dentro del límite de memoria |
 | F5 | Mensajes (plantillas + revisión Jev) y exportación CSV | — |
-| F6 | Frontend: login, proyectos, subir, mapear, calidad, análisis, resultados, i18n pt-BR/es/en | flujo completo de punta a punta |
+| F6 | Frontend: login, proyectos, subir, mapear, calidad, análisis, resultados, i18n pt-BR/es/en; tema visual alineado con la sala pixel art | flujo completo de punta a punta |
 | F7 | Agente analista + servidor MCP | — |
-| F8 | React Three Fiber (procesamiento en vivo, universo de clientes), demo con datos de ejemplo, retención, despliegue en VPS | demo pública |
+| F8 | Sala pixel art en React Three Fiber (procesamiento en vivo, universo de clientes), demo con datos de ejemplo, retención, despliegue en VPS | demo pública |
 
 ## Riesgos
 
