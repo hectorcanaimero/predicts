@@ -14,8 +14,8 @@ Cualquier empresa entra con **un CSV de compras** exportado de su ERP, tienda on
 mapea sus columnas en el panel, elige qué análisis correr y obtiene un panel con los resultados y
 un **CSV de salida** listo para importar en su CRM, herramienta de email o WhatsApp.
 
-Es open source (MIT, `github.com/hectorcanaimero/predicts`) y se construye **en público**: la carpeta `build-in-public/` guarda el diario y el
-contenido que se publica (LinkedIn, Reddit, artículos, carruseles).
+Es open source (MIT, `github.com/hectorcanaimero/predicts`) y se construye **en público**: la carpeta `build-in-public/` (local, fuera de git) guarda
+el diario y el contenido que se publica (X, Instagram, LinkedIn, Reddit, artículos).
 
 ## Para quién
 
