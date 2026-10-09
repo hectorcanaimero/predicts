@@ -6,6 +6,7 @@ status: borrador para revisión de Héctor
 depends_on:
   - docs/prd/001-predicts.md
   - CONTEXTO.md
+generated_by: orch-arch
 generated_at: 2026-10-09
 title: predicts — arquitectura
 ---
@@ -268,29 +269,151 @@ confianza, corregida_por, corregida_a), `plantillas_mensaje`, `api_keys`.
 - **D2 — DuckDB + Parquet para analizar, Postgres para la aplicación.** Postgres solo no alcanza
   para millones de filas en el homelab; ClickHouse es un servidor más que operar.
 - **D3 — Modelo estadístico simple, explicable y medido antes de cualquier ML pesado.**
-  Ciclo contraído + log-normal + backtesting contra línea base. Si en el backtest no supera a la
+  Elegido: ciclo contraído + log-normal + backtesting contra línea base. Rechazado por ahora:
+  BG/NBD y gradient boosting, porque explican peor cada predicción y no sabemos aún si hacen falta. Si en el backtest no supera a la
   línea base, se itera antes de construir pantallas encima (gate en F1).
-- **D4 — Jev para decisiones, LLM para texto, código para números.**
+- **D4 — Jev para decisiones, LLM para texto, código para números.** Rechazado: un LLM que
+  "analice" el CSV, porque inventa números y no se puede medir.
 - **D5 — Llamadas a modelos por producto, plantilla o lote, nunca por fila o cliente.**
-- **D6 — Trabajos en subproceso con tope de memoria.**
-- **D7 — Login propio** (Argon2id, sesiones en Postgres).
-- **D8 — i18n desde el día 1** en web y en los errores de la API.
+  Rechazado: un mensaje generado por cliente, porque el costo crece con la base.
+- **D6 — Trabajos en subproceso con tope de memoria.** Rechazado: hilos en el proceso de la API
+  (un análisis que se pasa de memoria tumba la API).
+- **D7 — Login propio** (Argon2id, sesiones en Postgres). Rechazado: Clerk/Supabase Auth, por
+  dependencia externa en un proyecto open source autoalojable.
+- **D8 — i18n desde el día 1** en web y en los errores de la API. Rechazado: traducir al final
+  (obliga a tocar todas las pantallas).
 - **D9 — Sala pixel art en React Three Fiber como identidad visual** (procesamiento en vivo y
   universo de clientes), con carga diferida y versión 2D; el resto de la app en UI convencional.
 
-## Fases propuestas (para las specs)
+## Interfaces
 
-| Fase | Contenido | Gate |
+Contratos fijados en F0/F1 para que los paquetes paralelos no se pisen.
+
+### Esquema interno (`api/src/predicts/datos/esquema.py`)
+`COLUMNAS_COMPRA` (ver *Modelo de datos*) y `validar_parquet(path) -> list[str]`. Todo productor
+(ingesta CSV, conectores futuros, scripts de datasets) escribe exactamente este Parquet.
+
+### Modelo (`api/src/predicts/modelo/`)
+```python
+VERSION_MODELO: str
+def intervalos(con: duckdb.DuckDBPyConnection, compras: str) -> str          # nombre de vista
+def ajustar(con, compras: str, params: ParamsModelo) -> Ajuste               # ciclos por par y producto
+def predecir(ajuste: Ajuste, fecha_ref: date, horizonte: int) -> str         # vista: cliente_id, producto_id, ciclo, p, fecha_probable, fecha_min, fecha_max, n_compras
+def linea_base(con, compras: str, fecha_ref: date, horizonte: int) -> str
+def backtest(con, compras: str, params: ParamsModelo, semanas: int, horizonte: int) -> MetricasBacktest
+```
+`MetricasBacktest` (Pydantic): `precision_at_k`, `cobertura_at_k`, `brier`, `calibracion` (deciles),
+`mae_dias`, `n_pares`, `k`, y los mismos campos para la línea base.
+
+### Jev (`api/src/predicts/ia.py`)
+```python
+def decidir_choice(pregunta: str, opciones: dict[str, str], contexto: dict) -> Decision
+def decidir_si_no(pregunta: str, contexto: dict) -> Decision
+# Decision: opcion, confianza, crudo; se persiste en decisiones_jev con tipo y empresa_id
+def generar(llm_prompt: str, esquema: type[BaseModel]) -> BaseModel   # 9router, json_schema
+```
+
+### Eventos de trabajo (SSE)
+`GET /trabajos/{id}/eventos` → `text/event-stream`, un JSON por evento:
+`{"etapa": "leyendo|mapeando|calidad|ciclos|prediccion|backtest|ofertas|mensajes|listo|error",
+"contadores": {"filas": int, "clientes": int, "productos": int, "pares": int, "recordatorios": int},
+"progreso": float, "ts": iso8601}`.
+
+### API HTTP (resumen; el OpenAPI generado es la fuente de verdad)
+| Método y ruta | Entrada | Salida |
 |---|---|---|
-| F0 | Monorepo, `docker compose`, CI, config, Postgres + Alembic, `ia.py` | `docker compose up` y tests en verde |
-| F1 | **Spike del modelo:** scripts de datasets, ingesta mínima a Parquet, modelo de recompra, línea base y backtesting por CLI sobre Online Retail II e Instacart; informe | el modelo supera a la línea base (si no, se ajusta antes de seguir) |
-| F2 | Auth, empresas, proyectos | — |
-| F3 | Subida, detección, mapeo con Jev, plantillas, ingesta, calidad | acierto del mapeo medido en CSVs desordenados |
-| F4 | Productos (recompra/durable, categoría, equivalentes) y análisis completos (recompra, ciclos, riesgo, ofertas), trabajos en subproceso, eventos SSE | 1 M de filas < 5 min y dentro del límite de memoria |
-| F5 | Mensajes (plantillas + revisión Jev) y exportación CSV | — |
-| F6 | Frontend: login, proyectos, subir, mapear, calidad, análisis, resultados, i18n pt-BR/es/en; tema visual alineado con la sala pixel art | flujo completo de punta a punta |
-| F7 | Agente analista + servidor MCP | — |
-| F8 | Sala pixel art en React Three Fiber (procesamiento en vivo, universo de clientes), demo con datos de ejemplo, retención, despliegue en VPS | demo pública |
+| `POST /auth/registro`, `/auth/login`, `/auth/logout` | email, contraseña | cookie de sesión |
+| `POST /auth/recuperar`, `/auth/restablecer` | email / token + contraseña | 204 |
+| `GET/POST /proyectos` | nombre, idioma, tono | proyecto |
+| `POST /proyectos/{id}/datasets` | multipart CSV | dataset + vista previa + detección |
+| `GET/PUT /datasets/{id}/mapeo` | mapeo confirmado | sugerencias de Jev con confianza |
+| `POST /datasets/{id}/ingesta` | — | trabajo |
+| `GET /datasets/{id}/calidad` | — | informe |
+| `POST /datasets/{id}/analisis` | tipos + parámetros | análisis + trabajo |
+| `GET /analisis/{id}`, `/analisis/{id}/resultados?tipo=` | paginación | resumen, métricas, filas |
+| `GET /analisis/{id}/exportar?tipo=` | — | CSV |
+| `POST /agente/preguntas` | dataset, pregunta | respuesta, sql, filas |
+| `POST /demo` | — | proyecto con el dataset de ejemplo |
+
+Errores: `{"codigo": str, "parametros": dict}` con status HTTP adecuado.
+
+### CLI (`predicts …`)
+`predicts preparar-dataset {online-retail|instacart} --salida data/…` · `predicts backtest
+<compras.parquet> [--semanas N --horizonte H]` · `predicts worker` · `predicts mcp`.
+
+## Requirement coverage
+
+| Requisito | Componente(s) |
+| --- | --- |
+| FR-1 | datos (subida, detección), web (subir) |
+| FR-2, FR-3, FR-4 | datos (mapeo, plantillas), ia (Jev), web (mapear) |
+| FR-5 | datos (ingesta), esquema interno |
+| FR-6, FR-7 | datos (calidad), web (calidad) |
+| FR-8, FR-9, FR-10 | productos, ia, pgvector |
+| FR-11, FR-12 | modelo, analisis |
+| FR-13, FR-14 | analisis (riesgo, ofertas) |
+| FR-15 | analisis (parámetros), web |
+| FR-16 | modelo (backtest) |
+| FR-17 | decisiones_jev, web (correcciones) |
+| FR-18 | web (resultados) |
+| FR-19 | mensajes |
+| FR-20 | analisis (¿contactar?), ia |
+| FR-21 | exportar |
+| FR-22 | agente |
+| FR-23, FR-24 | trabajos (eventos SSE), web/tres |
+| FR-25 | scripts de datasets, api `/demo` |
+| FR-26 | web/i18n, errores con código |
+| FR-27 | auth, tenancy |
+| NFR-1, NFR-2 | trabajos (subproceso), DuckDB `memory_limit`, compose |
+| NFR-3 | auth, tenancy, retencion |
+| NFR-4 | analisis (versión, parámetros), decisiones_jev, ia (contador) |
+| NFR-5 | productos y mensajes por lote y caché, ia (costo) |
+| NFR-6 | deploy |
+| NFR-7 | tests, CI |
+
+## Work breakdown
+
+### F0 — Base del proyecto
+- **F0.1 — monorepo y CI**: estructura `api/` (uv, ruff, pytest) y `web/` (Vite, eslint, vitest), Makefile, CI de GitHub para ambos. Files: `api/pyproject.toml`, `api/src/predicts/__init__.py`, `web/package.json`, `Makefile`, `.github/workflows/`.
+- **F0.2 — config, base de datos e IA**: `config.py`, SQLAlchemy + Alembic con la migración inicial (todas las tablas de *Modelo de datos*), `ia.py` (Jev y 9router, contador). Files: `api/src/predicts/config.py`, `api/src/predicts/db/`, `api/alembic/`, `api/src/predicts/ia.py`. Depends on: F0.1.
+- **F0.3 — docker compose**: Dockerfiles de api y web, compose con límites de memoria, `.env.example`. Files: `api/Dockerfile`, `web/Dockerfile`, `deploy/`. Depends on: F0.1.
+
+### F1 — Spike del modelo (gate)
+- **F1.1 — datasets y esquema**: `esquema.py`, scripts para descargar y preparar Online Retail II e Instacart al esquema interno, fixtures chicos. Files: `api/src/predicts/datos/esquema.py`, `api/src/predicts/datos/datasets_publicos.py`, `scripts/`, `api/tests/fixtures/`.
+- **F1.2 — modelo y línea base**: intervalos, ciclo contraído, log-normal, predicción y línea base (contratos de *Interfaces*). Files: `api/src/predicts/modelo/`. Depends on: F1.1.
+- **F1.3 — backtesting e informe**: `backtest`, CLI `predicts backtest`, medición en ambos datasets con tiempo y memoria, informe `docs/notas/spike-modelo.md` con recomendación. Files: `api/src/predicts/modelo/backtest.py`, `api/src/predicts/cli.py`, `docs/notas/spike-modelo.md`. Depends on: F1.2.
+
+### F2 — Cuentas
+- **F2.1 — auth**: registro, login, sesiones, CSRF, recuperación, límite de intentos. Files: `api/src/predicts/auth/`, `api/src/predicts/api/auth.py`.
+- **F2.2 — empresas y proyectos**: `tenancy.py`, rutas de proyectos. Files: `api/src/predicts/tenancy.py`, `api/src/predicts/api/proyectos.py`. Depends on: F2.1.
+
+### F3 — Entrada de datos
+- **F3.1 — subida y detección**: streaming a disco, codificación, `sniff_csv`, vista previa. Files: `api/src/predicts/datos/subida.py`, `api/src/predicts/datos/deteccion.py`.
+- **F3.2 — mapeo con Jev y plantillas**: sugerencias con confianza, plantillas por firma de encabezados, set de CSVs desordenados y medición de acierto. Files: `api/src/predicts/datos/mapeo.py`, `api/tests/fixtures/desordenados/`. Depends on: F3.1.
+- **F3.3 — ingesta y calidad**: CSV → Parquet con el mapeo, informe de calidad, rutas de datasets. Files: `api/src/predicts/datos/ingesta.py`, `api/src/predicts/datos/calidad.py`, `api/src/predicts/api/datasets.py`. Depends on: F3.2.
+
+### F4 — Productos, análisis y trabajos
+- **F4.1 — trabajos y eventos**: cola en Postgres, worker con subproceso y tope de memoria, eventos y SSE. Files: `api/src/predicts/trabajos/`, `api/src/predicts/api/trabajos.py`.
+- **F4.2 — productos**: recompra/durable y categoría con Jev (lotes y caché), equivalentes con pgvector. Files: `api/src/predicts/productos/`.
+- **F4.3 — análisis**: recompra, ciclos, riesgo, ofertas y ¿contactar?, sobre el modelo de F1; rutas de análisis y resultados; medición con 1 M de filas. Files: `api/src/predicts/analisis/`, `api/src/predicts/api/analisis.py`. Depends on: F4.1, F4.2.
+
+### F5 — Mensajes y exportación
+- **F5.1 — mensajes**: plantillas por lote con 9router y revisión con Jev. Files: `api/src/predicts/mensajes/`.
+- **F5.2 — exportación**: CSV de recordatorios y ofertas. Files: `api/src/predicts/exportar.py`. Depends on: F5.1.
+
+### F6 — Interfaz web
+- **F6.1 — base web**: layout, rutas, i18n (pt-BR/es/en), cliente OpenAPI, login y proyectos. Files: `web/src/api/`, `web/src/i18n/`, `web/src/paginas/login*`, `web/src/paginas/proyectos*`.
+- **F6.2 — flujo de datos**: subir, mapear (con confianza de Jev), calidad. Files: `web/src/paginas/datos/`. Depends on: F6.1.
+- **F6.3 — análisis y resultados**: elegir análisis, resultados, métricas de backtest, mensajes, exportar. Files: `web/src/paginas/analisis/`. Depends on: F6.1.
+
+### F7 — Agente analista
+- **F7.1 — agente y MCP**: LangGraph con `consultar_sql` de solo lectura, ruta `/agente/preguntas`, servidor MCP. Files: `api/src/predicts/agente/`, `api/src/predicts/api/agente.py`.
+- **F7.2 — chat en la web**: pantalla del agente con la consulta y los números. Files: `web/src/paginas/agente/`. Depends on: F7.1.
+
+### F8 — 3D, demo y despliegue
+- **F8.1 — procesamiento en vivo (R3F)**: escena alimentada por SSE, versión 2D con `prefers-reduced-motion`. Files: `web/src/tres/procesamiento/`.
+- **F8.2 — universo de clientes (R3F)**. Files: `web/src/tres/universo/`.
+- **F8.3 — demo, retención y VPS**: `/demo` con Online Retail II, `retencion.py`, guía de despliegue con TLS. Files: `api/src/predicts/retencion.py`, `api/src/predicts/api/demo.py`, `deploy/vps/`, `README.md`.
 
 ## Riesgos
 
