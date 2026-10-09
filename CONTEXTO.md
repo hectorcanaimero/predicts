@@ -14,7 +14,7 @@ Cualquier empresa entra con **un CSV de compras** exportado de su ERP, tienda on
 mapea sus columnas en el panel, elige qué análisis correr y obtiene un panel con los resultados y
 un **CSV de salida** listo para importar en su CRM, herramienta de email o WhatsApp.
 
-Es open source y se construye **en público**: la carpeta `build-in-public/` guarda el diario y el
+Es open source (MIT, `github.com/hectorcanaimero/predicts`) y se construye **en público**: la carpeta `build-in-public/` guarda el diario y el
 contenido que se publica (LinkedIn, Reddit, artículos, carruseles).
 
 ## Para quién
@@ -92,7 +92,7 @@ Los datasets completos viven fuera de git (`data/`); los tests usan muestras chi
 ## Idioma
 
 - Código, specs, docs internas y diario: **español**.
-- Interfaz del producto: **pt-BR y español** (i18n desde el inicio).
+- Interfaz del producto: **multiidioma** con i18n desde el inicio: **pt-BR, español e inglés**.
 - Contenido público (`build-in-public/`): **pt-BR y español**.
 
 ## Flujo de trabajo

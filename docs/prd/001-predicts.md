@@ -98,10 +98,10 @@ Que cualquier equipo de marketing o CRM, con **solo un CSV de compras**, obtenga
 - **FR-24** Vista 3D opcional del **universo de clientes** (agrupados por frecuencia y valor), con
   detalle al tocar un punto.
 - **FR-25** Botón **"probar con datos de ejemplo"** (muestra de Instacart) sin subir nada.
-- **FR-26** Interfaz en **pt-BR y español**.
+- **FR-26** Interfaz **multiidioma** con i18n: **pt-BR, español e inglés** desde el MVP; agregar un idioma es agregar un archivo de traducciones. Los mensajes generados para clientes salen en el idioma elegido por proyecto.
 
 ### Cuentas
-- **FR-27** Empresas (multi-tenant), usuarios con login, proyectos por empresa.
+- **FR-27** Empresas (multi-tenant), usuarios con **login propio por email y contraseña** (hash Argon2, sesión con cookie httpOnly, recuperación de contraseña por email), proyectos por empresa.
 
 ## 5. Requisitos no funcionales
 
@@ -131,9 +131,15 @@ Que cualquier equipo de marketing o CRM, con **solo un CSV de compras**, obtenga
 
 Conectores directos, envío de mensajes, integración con open-emarsys, deep learning, pagos.
 
-## 8. Preguntas abiertas
+## 8. Decisiones (2026-10-09)
 
-1. ¿Repo público en GitHub desde el día 1 (recomendado para la serie) y bajo qué licencia (MIT o
-   Apache-2.0)?
-2. ¿Login propio simple (email + contraseña) o un proveedor (Clerk, Supabase Auth) para el MVP?
-3. ¿La demo pública corre en el homelab vía Cloudflare Tunnel o directamente en un VPS?
+1. **Repo público** en `github.com/hectorcanaimero/predicts`, licencia **MIT**.
+2. **Login propio** con email y contraseña.
+3. **Demo pública:** probablemente en un **VPS** (por confirmar). El diseño con Docker Compose no
+   depende del lugar.
+4. **Multiidioma:** pt-BR, español e inglés en la interfaz.
+
+## 9. Preguntas abiertas
+
+- Proveedor de VPS y dominio de la demo.
+- Envío de email para recuperación de contraseña (SMTP propio o un servicio).
