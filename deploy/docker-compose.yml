@@ -1,0 +1,136 @@
+name: predicts
+
+# Límites de memoria y servicios según docs/arch/001-predicts.md#despliegue. Pensado para
+# correr igual en el homelab (14 GB compartidos) y en el VPS de demo.
+
+x-predicts-build: &predicts-build
+  context: ../api
+  dockerfile: Dockerfile
+
+x-predicts-env: &predicts-env
+  ENTORNO: ${ENTORNO:-dev}
+  SECRET_KEY: ${SECRET_KEY:-}
+  DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://${POSTGRES_USER:-predicts}:${POSTGRES_PASSWORD:-predicts}@postgres:5432/${POSTGRES_DB:-predicts}}
+  DATA_DIR: /data
+  ROUTER_BASE_URL: ${ROUTER_BASE_URL:-}
+  ROUTER_API_KEY: ${ROUTER_API_KEY:-}
+  ROUTER_MODEL: ${ROUTER_MODEL:-}
+  ROUTER_EMBEDDINGS_MODEL: ${ROUTER_EMBEDDINGS_MODEL:-openai/text-embedding-3-small}
+  TYPESAFE_API_KEY: ${TYPESAFE_API_KEY:-}
+  TYPESAFE_MODEL: ${TYPESAFE_MODEL:-jev-latest}
+  SMTP_HOST: ${SMTP_HOST:-}
+  # Entero obligatorio en Settings (int | None): si se deja vacío, pydantic-settings falla al
+  # parsear "" como int. 587 es el puerto estándar de SMTP y no se usa si SMTP_HOST está vacío
+  # (el código cae al log en ese caso), así que es un default inofensivo, no un secreto.
+  SMTP_PORT: ${SMTP_PORT:-587}
+  SMTP_USER: ${SMTP_USER:-}
+  SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+  SMTP_FROM: ${SMTP_FROM:-}
+  MAX_CSV_MB: ${MAX_CSV_MB:-500}
+  MIN_COMPRAS: ${MIN_COMPRAS:-3}
+  HORIZONTE_DIAS: ${HORIZONTE_DIAS:-7}
+  VENTANA_VALIDACION_SEMANAS: ${VENTANA_VALIDACION_SEMANAS:-4}
+  CONFIANZA_MAPEO: ${CONFIANZA_MAPEO:-0.8}
+  CONFIANZA_JEV: ${CONFIANZA_JEV:-0.7}
+  RETENCION_DIAS: ${RETENCION_DIAS:-7}
+  DUCKDB_MEMORY_LIMIT: ${DUCKDB_MEMORY_LIMIT:-3GB}
+  DUCKDB_THREADS: ${DUCKDB_THREADS:-4}
+  MAX_MEMORIA_TRABAJO_MB: ${MAX_MEMORIA_TRABAJO_MB:-4096}
+  TIMEOUT_TRABAJO_S: ${TIMEOUT_TRABAJO_S:-1800}
+  CORS_ORIGENES: ${CORS_ORIGENES:-http://localhost:8080}
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-predicts}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-predicts}
+      POSTGRES_DB: ${POSTGRES_DB:-predicts}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-54320}:5432"
+    mem_limit: 1g
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-predicts} -d ${POSTGRES_DB:-predicts}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # One-shot: `alembic upgrade head`. `api`/`worker` esperan a que termine bien
+  # (`service_completed_successfully`) antes de arrancar.
+  migrar:
+    build: *predicts-build
+    command: ["alembic", "upgrade", "head"]
+    environment: *predicts-env
+    volumes:
+      - data_dir:/data
+    mem_limit: 512m
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    build: *predicts-build
+    environment: *predicts-env
+    volumes:
+      - data_dir:/data
+    ports:
+      - "${API_PORT:-8000}:8000"
+    mem_limit: 1g
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrar:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/salud', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # `predicts worker` todavía no existe (lo trae una fase posterior, ver specs/f0-base.md
+  # #F0.3.T1); el servicio queda definido con la misma imagen de `api` y el límite de memoria
+  # de la arquitectura para cuando se implemente. Sin healthcheck propio hasta entonces: no
+  # hay endpoint HTTP que consultar (el subproceso de cada trabajo tiene su propio tope,
+  # MAX_MEMORIA_TRABAJO_MB, dentro de este límite de contenedor).
+  worker:
+    build: *predicts-build
+    command: ["predicts", "worker"]
+    environment: *predicts-env
+    volumes:
+      - data_dir:/data
+    mem_limit: 5g
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrar:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ../web
+      dockerfile: Dockerfile
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    mem_limit: 256m
+    depends_on:
+      - api
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1/"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  data_dir:
