@@ -1,0 +1,64 @@
+[project]
+name = "predicts"
+version = "0.1.0"
+description = "Predicción de recompra y recordatorios a partir del historial de compras."
+readme = "README.md"
+authors = [
+    { name = "Héctor Alejandro", email = "rodriguez.hectoralejandro@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "sqlalchemy>=2",
+    "psycopg[binary]>=3",
+    "alembic>=1.13",
+    "pgvector>=0.3",
+    "duckdb>=1.1",
+    "pyarrow>=17",
+    "numpy>=2",
+    "scipy>=1.14",
+    "argon2-cffi>=23",
+    "itsdangerous>=2.2",
+    "python-multipart>=0.0.12",
+    "charset-normalizer>=3.4",
+    "sse-starlette>=2.1",
+    "typer>=0.13",
+    "httpx>=0.27",
+    "langchain-core>=0.3",
+    "langchain-openai>=0.2",
+    "langgraph>=0.2",
+    "typesafe-sdk>=0.7",
+    "mcp>=1.0",
+    "email-validator>=2.2",
+    "openpyxl>=3.1",
+]
+
+[project.scripts]
+predicts = "predicts.cli:app"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.7",
+    "mypy>=1.13",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.24,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "db: tests que necesitan una base Postgres (ver tests/conftest_db.py)",
+]
