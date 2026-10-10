@@ -21,8 +21,8 @@ en). Contratos: *Componentes → Frontend*, FR-1 a FR-21, FR-26.
 Contexto común: el de `specs/f0-base.md`. Además:
 - **Tipos de la API:** `web/src/api/openapi.json` se exporta con `uv run predicts openapi
   --salida ../web/src/api/openapi.json` (desde `api/`) y `npm run gen:api` genera
-  `web/src/api/schema.ts`. Solo F6.1.T1 los genera; las demás tareas de esta fase los usan sin
-  regenerarlos.
+  `web/src/api/schema.ts`. **Cada tarea de esta fase los regenera** al empezar (desde `master`, que ya
+  tiene los endpoints que necesita); las tareas de F6 corren en cadena, así que no se pisan.
 - **Textos:** cada página tiene su namespace i18n propio (`web/src/i18n/locales/<idioma>/
   <namespace>.json`, en los tres idiomas). Los códigos de error de la API se traducen en el
   namespace de la pantalla que los muestra; los genéricos están en `comun`.
@@ -50,7 +50,7 @@ Done when: tests cubren login correcto y con error traducido en los tres idiomas
 - **Modelo**: claude/claude-sonnet-5
 - **Estimación**: 4h
 - **Razón**: Integración frontend–API con sesión y CSRF.
-- **Dependencies**: F0.1.T2, F2.1.T2, F2.2.T2, F4.2.T2, F5.2.T1
+- **Dependencies**: F0.1.T2, F2.1.T2, F2.2.T1
 - **Files**:
   - `web/src/api/`
   - `web/src/hooks/useSesion.ts`
@@ -79,6 +79,8 @@ Done when: tests cubren lista, crear, editar, borrar y estados de carga/vacío/e
 - **Razón**: CRUD de interfaz estándar.
 - **Dependencies**: F6.1.T1
 - **Files**:
+  - `web/src/api/openapi.json`
+  - `web/src/api/schema.ts`
   - `web/src/routes/_autenticado/proyectos/`
   - `web/src/features/proyectos/`
   - `web/src/i18n/locales/pt-BR/proyectos.json`
@@ -105,6 +107,8 @@ errores.
 - **Razón**: Componente de subida con estados definidos.
 - **Dependencies**: F6.1.T2
 - **Files**:
+  - `web/src/api/openapi.json`
+  - `web/src/api/schema.ts`
   - `web/src/routes/_autenticado/proyectos/$proyectoId/datasets/nuevo.tsx`
   - `web/src/features/subir/`
   - `web/src/i18n/locales/pt-BR/subir.json`
@@ -135,8 +139,10 @@ falso (incluida la reconexión), el informe de calidad y la corrección de produ
 - **Modelo**: claude/claude-sonnet-5
 - **Estimación**: 4h
 - **Razón**: Pantallas con varios estados y streaming.
-- **Dependencies**: F6.2.T1
+- **Dependencies**: F6.2.T1, F4.1.T2, F4.2.T2
 - **Files**:
+  - `web/src/api/openapi.json`
+  - `web/src/api/schema.ts`
   - `web/src/routes/_autenticado/datasets/$datasetId/mapeo.tsx`
   - `web/src/routes/_autenticado/datasets/$datasetId/calidad.tsx`
   - `web/src/features/mapeo/`
@@ -171,8 +177,10 @@ con un stream falso, cancelar y los errores.
 - **Modelo**: claude/claude-sonnet-5
 - **Estimación**: 3h
 - **Razón**: Formulario y progreso con hook ya existente.
-- **Dependencies**: F6.2.T2
+- **Dependencies**: F6.2.T2, F4.3.T3
 - **Files**:
+  - `web/src/api/openapi.json`
+  - `web/src/api/schema.ts`
   - `web/src/routes/_autenticado/datasets/$datasetId/analisis/nuevo.tsx`
   - `web/src/routes/_autenticado/analisis/$analisisId/progreso.tsx`
   - `web/src/features/analisis/`
@@ -202,8 +210,10 @@ la descarga del CSV.
 - **Modelo**: claude/claude-sonnet-5
 - **Estimación**: 4h
 - **Razón**: Pantalla rica pero con datos ya resueltos por la API.
-- **Dependencies**: F6.3.T1
+- **Dependencies**: F6.3.T1, F5.2.T1
 - **Files**:
+  - `web/src/api/openapi.json`
+  - `web/src/api/schema.ts`
   - `web/src/routes/_autenticado/analisis/$analisisId/index.tsx`
   - `web/src/features/resultados/`
   - `web/src/i18n/locales/pt-BR/resultados.json`

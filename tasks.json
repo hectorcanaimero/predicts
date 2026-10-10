@@ -724,9 +724,7 @@
       "dependencies": [
         "F0.1.T2",
         "F2.1.T2",
-        "F2.2.T2",
-        "F4.2.T2",
-        "F5.2.T1"
+        "F2.2.T1"
       ],
       "estimateHours": 4.0,
       "files": [
@@ -801,7 +799,9 @@
       "reason": "Pantallas con varios estados y streaming.",
       "status": "backlog",
       "dependencies": [
-        "F6.2.T1"
+        "F6.2.T1",
+        "F4.1.T2",
+        "F4.2.T2"
       ],
       "estimateHours": 4.0,
       "files": [
@@ -831,7 +831,8 @@
       "reason": "Formulario y progreso con hook ya existente.",
       "status": "backlog",
       "dependencies": [
-        "F6.2.T2"
+        "F6.2.T2",
+        "F4.3.T3"
       ],
       "estimateHours": 3.0,
       "files": [
@@ -855,7 +856,8 @@
       "reason": "Pantalla rica pero con datos ya resueltos por la API.",
       "status": "backlog",
       "dependencies": [
-        "F6.3.T1"
+        "F6.3.T1",
+        "F5.2.T1"
       ],
       "estimateHours": 4.0,
       "files": [
