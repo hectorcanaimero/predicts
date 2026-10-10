@@ -1,0 +1,3645 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "predicts API",
+    "description": "Predicción de recompra y recordatorios a partir del historial de compras.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/agente/preguntas": {
+      "post": {
+        "tags": [
+          "agente"
+        ],
+        "summary": "Preguntar al agente analista sobre un dataset",
+        "operationId": "preguntar_agente_agente_preguntas_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreguntaEntrada"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RespuestaSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/datasets/{dataset_id}/analisis": {
+      "post": {
+        "tags": [
+          "analisis"
+        ],
+        "summary": "Lanzar un análisis",
+        "operationId": "lanzar_analisis_datasets__dataset_id__analisis_post",
+        "parameters": [
+          {
+            "name": "dataset_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dataset Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalisisEntrada"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalisisSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "analisis"
+        ],
+        "summary": "Listar los análisis de un dataset",
+        "operationId": "listar_analisis_datasets__dataset_id__analisis_get",
+        "parameters": [
+          {
+            "name": "dataset_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dataset Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AnalisisSalida"
+                  },
+                  "title": "Response Listar Analisis Datasets  Dataset Id  Analisis Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analisis/{analisis_id}": {
+      "get": {
+        "tags": [
+          "analisis"
+        ],
+        "summary": "Estado, resumen y métricas de un análisis",
+        "operationId": "obtener_analisis_analisis__analisis_id__get",
+        "parameters": [
+          {
+            "name": "analisis_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Analisis Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalisisSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "analisis"
+        ],
+        "summary": "Borrar un análisis",
+        "operationId": "borrar_analisis_analisis__analisis_id__delete",
+        "parameters": [
+          {
+            "name": "analisis_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Analisis Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analisis/{analisis_id}/resultados": {
+      "get": {
+        "tags": [
+          "analisis"
+        ],
+        "summary": "Resultados paginados de un análisis",
+        "operationId": "resultados_analisis_analisis__analisis_id__resultados_get",
+        "parameters": [
+          {
+            "name": "analisis_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Analisis Id"
+            }
+          },
+          {
+            "name": "tipo",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tipo"
+            }
+          },
+          {
+            "name": "pagina",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Pagina"
+            }
+          },
+          {
+            "name": "tam_pagina",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 50,
+              "title": "Tam Pagina"
+            }
+          },
+          {
+            "name": "orden",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Orden"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Resultados Analisis Analisis  Analisis Id  Resultados Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api-keys": {
+      "get": {
+        "tags": [
+          "api-keys"
+        ],
+        "summary": "Listar claves de API de la empresa actual",
+        "operationId": "listar_api_keys_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ApiKeySalida"
+                  },
+                  "type": "array",
+                  "title": "Response Listar Api Keys Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "api-keys"
+        ],
+        "summary": "Crear una clave de API (el valor completo solo aquí)",
+        "operationId": "crear_api_keys_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKeyEntrada"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiKeyCreada"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api-keys/{api_key_id}": {
+      "delete": {
+        "tags": [
+          "api-keys"
+        ],
+        "summary": "Revocar una clave de API",
+        "operationId": "revocar_api_keys__api_key_id__delete",
+        "parameters": [
+          {
+            "name": "api_key_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Api Key Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/registro": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Crear empresa y usuario dueño",
+        "operationId": "registro_auth_registro_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Registro"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Yo"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Iniciar sesión",
+        "operationId": "login_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Yo"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Cerrar sesión",
+        "operationId": "logout_auth_logout_post",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        }
+      }
+    },
+    "/auth/yo": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Usuario, empresa e idioma de la sesión actual",
+        "operationId": "yo_auth_yo_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Yo"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Cambiar el idioma preferido",
+        "operationId": "cambiar_yo_auth_yo_patch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CambioYo"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Yo"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/proyectos/{proyecto_id}/datasets": {
+      "post": {
+        "tags": [
+          "datasets"
+        ],
+        "summary": "Subir un CSV al proyecto",
+        "operationId": "subir_proyectos__proyecto_id__datasets_post",
+        "parameters": [
+          {
+            "name": "proyecto_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Proyecto Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_subir_proyectos__proyecto_id__datasets_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "datasets"
+        ],
+        "summary": "Listar datasets de un proyecto",
+        "operationId": "listar_proyectos__proyecto_id__datasets_get",
+        "parameters": [
+          {
+            "name": "proyecto_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Proyecto Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DatasetSalida"
+                  },
+                  "title": "Response Listar Proyectos  Proyecto Id  Datasets Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/datasets/{dataset_id}": {
+      "get": {
+        "tags": [
+          "datasets"
+        ],
+        "summary": "Obtener un dataset",
+        "operationId": "obtener_datasets__dataset_id__get",
+        "parameters": [
+          {
+            "name": "dataset_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dataset Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "datasets"
+        ],
+        "summary": "Borrar un dataset",
+        "operationId": "borrar_datasets__dataset_id__delete",
+        "parameters": [
+          {
+            "name": "dataset_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dataset Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/datasets/{dataset_id}/ingesta": {
+      "post": {
+        "tags": [
+          "ingesta"
+        ],
+        "summary": "Iniciar la ingesta de un dataset",
+        "operationId": "iniciar_ingesta_datasets__dataset_id__ingesta_post",
+        "parameters": [
+          {
+            "name": "dataset_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dataset Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngestaSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/datasets/{dataset_id}/calidad": {
+      "get": {
+        "tags": [
+          "ingesta"
+        ],
+        "summary": "Informe de calidad de un dataset",
+        "operationId": "obtener_calidad_datasets__dataset_id__calidad_get",
+        "parameters": [
+          {
+            "name": "dataset_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dataset Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Obtener Calidad Datasets  Dataset Id  Calidad Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/datasets/{dataset_id}/mapeo": {
+      "get": {
+        "tags": [
+          "mapeo"
+        ],
+        "summary": "Sugerir el mapeo de columnas de un dataset",
+        "operationId": "obtener_mapeo_datasets__dataset_id__mapeo_get",
+        "parameters": [
+          {
+            "name": "dataset_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dataset Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sugerencias"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "mapeo"
+        ],
+        "summary": "Confirmar el mapeo de columnas de un dataset",
+        "operationId": "confirmar_mapeo_datasets__dataset_id__mapeo_put",
+        "parameters": [
+          {
+            "name": "dataset_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dataset Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MapeoEntrada"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfirmarMapeoSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plantillas-mapeo": {
+      "get": {
+        "tags": [
+          "mapeo"
+        ],
+        "summary": "Listar las plantillas de mapeo de la empresa",
+        "operationId": "listar_plantillas_plantillas_mapeo_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PlantillaMapeoSalida"
+                  },
+                  "type": "array",
+                  "title": "Response Listar Plantillas Plantillas Mapeo Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plantillas-mapeo/{plantilla_id}": {
+      "delete": {
+        "tags": [
+          "mapeo"
+        ],
+        "summary": "Borrar una plantilla de mapeo",
+        "operationId": "borrar_plantilla_plantillas_mapeo__plantilla_id__delete",
+        "parameters": [
+          {
+            "name": "plantilla_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Plantilla Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/datasets/{dataset_id}/ofertas": {
+      "post": {
+        "tags": [
+          "ofertas"
+        ],
+        "summary": "Subir la lista de ofertas",
+        "operationId": "subir_ofertas_datasets__dataset_id__ofertas_post",
+        "parameters": [
+          {
+            "name": "dataset_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dataset Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_subir_ofertas_datasets__dataset_id__ofertas_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfertasSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analisis/{analisis_id}/exportar": {
+      "get": {
+        "tags": [
+          "exportar"
+        ],
+        "summary": "Exportar recordatorios, ofertas o riesgo",
+        "operationId": "exportar_analisis_analisis__analisis_id__exportar_get",
+        "parameters": [
+          {
+            "name": "analisis_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Analisis Id"
+            }
+          },
+          {
+            "name": "tipo",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tipo"
+            }
+          },
+          {
+            "name": "separador",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ",",
+              "title": "Separador"
+            }
+          },
+          {
+            "name": "incluir_revisar",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Incluir Revisar"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analisis/{analisis_id}/plantillas": {
+      "get": {
+        "tags": [
+          "mensajes"
+        ],
+        "summary": "Plantillas de mensaje de un análisis",
+        "operationId": "listar_plantillas_analisis__analisis_id__plantillas_get",
+        "parameters": [
+          {
+            "name": "analisis_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Analisis Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlantillaSalida"
+                  },
+                  "title": "Response Listar Plantillas Analisis  Analisis Id  Plantillas Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plantillas-mensaje/{plantilla_id}": {
+      "patch": {
+        "tags": [
+          "mensajes"
+        ],
+        "summary": "Editar una plantilla a mano",
+        "operationId": "editar_plantilla_plantillas_mensaje__plantilla_id__patch",
+        "parameters": [
+          {
+            "name": "plantilla_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Plantilla Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditarPlantilla"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlantillaSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analisis/{analisis_id}/plantillas/regenerar": {
+      "post": {
+        "tags": [
+          "mensajes"
+        ],
+        "summary": "Regenerar las plantillas de un análisis",
+        "operationId": "regenerar_plantillas_analisis__analisis_id__plantillas_regenerar_post",
+        "parameters": [
+          {
+            "name": "analisis_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Analisis Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Regenerar Plantillas Analisis  Analisis Id  Plantillas Regenerar Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/datasets/{dataset_id}/productos": {
+      "get": {
+        "tags": [
+          "productos"
+        ],
+        "summary": "Listar los productos de la empresa",
+        "description": "El catálogo de productos es por empresa (no por dataset); `dataset_id` solo sirve para\naislar la ruta y confirmar que el dataset existe y es de la empresa.",
+        "operationId": "listar_productos_datasets__dataset_id__productos_get",
+        "parameters": [
+          {
+            "name": "dataset_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Dataset Id"
+            }
+          },
+          {
+            "name": "estado",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Estado"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductoSalida"
+                  },
+                  "title": "Response Listar Productos Datasets  Dataset Id  Productos Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/productos/{producto_id}": {
+      "patch": {
+        "tags": [
+          "productos"
+        ],
+        "summary": "Corregir el tipo o la categoría de un producto",
+        "operationId": "corregir_producto_productos__producto_id__patch",
+        "parameters": [
+          {
+            "name": "producto_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Producto Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorregirProductoEntrada"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductoSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/productos/grupos": {
+      "get": {
+        "tags": [
+          "productos-grupos"
+        ],
+        "summary": "Listar grupos de productos equivalentes",
+        "operationId": "listar_grupos_productos_grupos_get",
+        "parameters": [
+          {
+            "name": "estado",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "propuesto",
+              "title": "Estado"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrupoSalida"
+                  },
+                  "title": "Response Listar Grupos Productos Grupos Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/productos/grupos/{grupo_id}/confirmar": {
+      "post": {
+        "tags": [
+          "productos-grupos"
+        ],
+        "summary": "Confirmar un grupo propuesto",
+        "operationId": "confirmar_grupo_productos_grupos__grupo_id__confirmar_post",
+        "parameters": [
+          {
+            "name": "grupo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Grupo Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/productos/grupos/{grupo_id}/rechazar": {
+      "post": {
+        "tags": [
+          "productos-grupos"
+        ],
+        "summary": "Rechazar un grupo propuesto",
+        "operationId": "rechazar_grupo_productos_grupos__grupo_id__rechazar_post",
+        "parameters": [
+          {
+            "name": "grupo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Grupo Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/productos/{producto_id}/separar": {
+      "post": {
+        "tags": [
+          "productos-grupos"
+        ],
+        "summary": "Separar un producto de su grupo",
+        "operationId": "separar_producto_productos__producto_id__separar_post",
+        "parameters": [
+          {
+            "name": "producto_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Producto Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductoDeGrupoSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/proyectos": {
+      "get": {
+        "tags": [
+          "proyectos"
+        ],
+        "summary": "Listar proyectos de la empresa actual",
+        "operationId": "listar_proyectos_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ProyectoSalida"
+                  },
+                  "type": "array",
+                  "title": "Response Listar Proyectos Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "proyectos"
+        ],
+        "summary": "Crear un proyecto",
+        "operationId": "crear_proyectos_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProyectoEntrada"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProyectoSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/proyectos/{proyecto_id}": {
+      "get": {
+        "tags": [
+          "proyectos"
+        ],
+        "summary": "Obtener un proyecto",
+        "operationId": "obtener_proyectos__proyecto_id__get",
+        "parameters": [
+          {
+            "name": "proyecto_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Proyecto Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProyectoSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "proyectos"
+        ],
+        "summary": "Editar un proyecto",
+        "operationId": "actualizar_proyectos__proyecto_id__patch",
+        "parameters": [
+          {
+            "name": "proyecto_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Proyecto Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProyectoActualizar"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProyectoSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "proyectos"
+        ],
+        "summary": "Borrar un proyecto",
+        "operationId": "borrar_proyectos__proyecto_id__delete",
+        "parameters": [
+          {
+            "name": "proyecto_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Proyecto Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/recuperar": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Pedir recuperación de contraseña",
+        "operationId": "recuperar_auth_recuperar_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Recuperar"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/restablecer": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Restablecer contraseña con el token",
+        "operationId": "restablecer_auth_restablecer_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Restablecer"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/salud": {
+      "get": {
+        "tags": [
+          "salud"
+        ],
+        "summary": "Estado de salud del servicio",
+        "operationId": "salud_salud_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trabajos/{trabajo_id}": {
+      "get": {
+        "tags": [
+          "trabajos"
+        ],
+        "summary": "Estado de un trabajo",
+        "operationId": "obtener_trabajo_trabajos__trabajo_id__get",
+        "parameters": [
+          {
+            "name": "trabajo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Trabajo Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrabajoSalida"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trabajos/{trabajo_id}/eventos": {
+      "get": {
+        "tags": [
+          "trabajos"
+        ],
+        "summary": "Eventos de progreso de un trabajo (SSE)",
+        "operationId": "eventos_trabajo_trabajos__trabajo_id__eventos_get",
+        "parameters": [
+          {
+            "name": "trabajo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Trabajo Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trabajos/{trabajo_id}/cancelar": {
+      "post": {
+        "tags": [
+          "trabajos"
+        ],
+        "summary": "Cancelar un trabajo",
+        "operationId": "cancelar_trabajo_trabajos__trabajo_id__cancelar_post",
+        "parameters": [
+          {
+            "name": "trabajo_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Trabajo Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analisis/{analisis_id}/universo": {
+      "get": {
+        "tags": [
+          "universo"
+        ],
+        "summary": "Universo de clientes",
+        "operationId": "universo_clientes_analisis__analisis_id__universo_get",
+        "parameters": [
+          {
+            "name": "analisis_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Analisis Id"
+            }
+          },
+          {
+            "name": "max",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50000,
+              "minimum": 1,
+              "default": 5000,
+              "title": "Max"
+            }
+          },
+          {
+            "name": "k",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 20,
+              "minimum": 1,
+              "default": 4,
+              "title": "K"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClienteUniverso"
+                  },
+                  "title": "Response Universo Clientes Analisis  Analisis Id  Universo Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analisis/{analisis_id}/universo/{cliente_id}": {
+      "get": {
+        "tags": [
+          "universo"
+        ],
+        "summary": "Historial resumido de un cliente",
+        "operationId": "historial_de_cliente_analisis__analisis_id__universo__cliente_id__get",
+        "parameters": [
+          {
+            "name": "analisis_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Analisis Id"
+            }
+          },
+          {
+            "name": "cliente_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Cliente Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistorialCliente"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalisisEntrada": {
+        "properties": {
+          "tipos": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tipos"
+          },
+          "parametros": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parametros"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tipos"
+        ],
+        "title": "AnalisisEntrada"
+      },
+      "AnalisisSalida": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "dataset_id": {
+            "type": "string",
+            "title": "Dataset Id"
+          },
+          "tipos": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tipos"
+          },
+          "parametros": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parametros"
+          },
+          "estado": {
+            "type": "string",
+            "title": "Estado"
+          },
+          "trabajo_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trabajo Id"
+          },
+          "version_modelo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version Modelo"
+          },
+          "metricas": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metricas"
+          },
+          "resumen": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resumen"
+          },
+          "costo_ia": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Costo Ia"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "dataset_id",
+          "tipos",
+          "parametros",
+          "estado",
+          "trabajo_id",
+          "version_modelo",
+          "metricas",
+          "resumen",
+          "costo_ia"
+        ],
+        "title": "AnalisisSalida"
+      },
+      "ApiKeyCreada": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "prefijo": {
+            "type": "string",
+            "title": "Prefijo"
+          },
+          "creado_en": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Creado En"
+          },
+          "ultimo_uso_en": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ultimo Uso En"
+          },
+          "clave": {
+            "type": "string",
+            "title": "Clave"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "nombre",
+          "prefijo",
+          "creado_en",
+          "ultimo_uso_en",
+          "clave"
+        ],
+        "title": "ApiKeyCreada"
+      },
+      "ApiKeyEntrada": {
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Nombre"
+          }
+        },
+        "type": "object",
+        "required": [
+          "nombre"
+        ],
+        "title": "ApiKeyEntrada"
+      },
+      "ApiKeySalida": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "prefijo": {
+            "type": "string",
+            "title": "Prefijo"
+          },
+          "creado_en": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Creado En"
+          },
+          "ultimo_uso_en": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ultimo Uso En"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "nombre",
+          "prefijo",
+          "creado_en",
+          "ultimo_uso_en"
+        ],
+        "title": "ApiKeySalida"
+      },
+      "Body_subir_ofertas_datasets__dataset_id__ofertas_post": {
+        "properties": {
+          "archivo": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "Archivo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "archivo"
+        ],
+        "title": "Body_subir_ofertas_datasets__dataset_id__ofertas_post"
+      },
+      "Body_subir_proyectos__proyecto_id__datasets_post": {
+        "properties": {
+          "archivo": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "Archivo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "archivo"
+        ],
+        "title": "Body_subir_proyectos__proyecto_id__datasets_post"
+      },
+      "CambioYo": {
+        "properties": {
+          "idioma": {
+            "type": "string",
+            "enum": [
+              "pt-BR",
+              "es",
+              "en"
+            ],
+            "title": "Idioma"
+          }
+        },
+        "type": "object",
+        "required": [
+          "idioma"
+        ],
+        "title": "CambioYo"
+      },
+      "ClienteUniverso": {
+        "properties": {
+          "cliente_id": {
+            "type": "string",
+            "title": "Cliente Id"
+          },
+          "frecuencia": {
+            "type": "number",
+            "title": "Frecuencia"
+          },
+          "valor": {
+            "type": "number",
+            "title": "Valor"
+          },
+          "recencia": {
+            "type": "integer",
+            "title": "Recencia"
+          },
+          "estado": {
+            "type": "string",
+            "enum": [
+              "activo",
+              "en_recompra",
+              "en_riesgo"
+            ],
+            "title": "Estado"
+          },
+          "grupo": {
+            "type": "integer",
+            "title": "Grupo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "cliente_id",
+          "frecuencia",
+          "valor",
+          "recencia",
+          "estado",
+          "grupo"
+        ],
+        "title": "ClienteUniverso"
+      },
+      "ConfirmarMapeoSalida": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "estado": {
+            "type": "string",
+            "title": "Estado"
+          },
+          "mapeo": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Mapeo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "estado",
+          "mapeo"
+        ],
+        "title": "ConfirmarMapeoSalida"
+      },
+      "Consulta": {
+        "properties": {
+          "sql": {
+            "type": "string",
+            "title": "Sql"
+          },
+          "filas_muestra": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Filas Muestra"
+          },
+          "n_filas": {
+            "type": "integer",
+            "title": "N Filas"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sql",
+          "filas_muestra",
+          "n_filas"
+        ],
+        "title": "Consulta"
+      },
+      "CorregirProductoEntrada": {
+        "properties": {
+          "tipo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tipo"
+          },
+          "categoria": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Categoria"
+          }
+        },
+        "type": "object",
+        "title": "CorregirProductoEntrada"
+      },
+      "DatasetSalida": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "proyecto_id": {
+            "type": "string",
+            "title": "Proyecto Id"
+          },
+          "nombre_archivo": {
+            "type": "string",
+            "title": "Nombre Archivo"
+          },
+          "tamano_bytes": {
+            "type": "integer",
+            "title": "Tamano Bytes"
+          },
+          "sha256": {
+            "type": "string",
+            "title": "Sha256"
+          },
+          "estado": {
+            "type": "string",
+            "title": "Estado"
+          },
+          "deteccion": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deteccion"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "proyecto_id",
+          "nombre_archivo",
+          "tamano_bytes",
+          "sha256",
+          "estado",
+          "deteccion"
+        ],
+        "title": "DatasetSalida"
+      },
+      "EditarPlantilla": {
+        "properties": {
+          "texto": {
+            "type": "string",
+            "title": "Texto"
+          }
+        },
+        "type": "object",
+        "required": [
+          "texto"
+        ],
+        "title": "EditarPlantilla"
+      },
+      "EmpresaSalida": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "nombre"
+        ],
+        "title": "EmpresaSalida"
+      },
+      "GrupoSalida": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "estado": {
+            "type": "string",
+            "title": "Estado"
+          },
+          "similitud": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Similitud"
+          },
+          "productos": {
+            "items": {
+              "$ref": "#/components/schemas/ProductoDeGrupoSalida"
+            },
+            "type": "array",
+            "title": "Productos"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "nombre",
+          "estado",
+          "similitud",
+          "productos"
+        ],
+        "title": "GrupoSalida"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HistorialCliente": {
+        "properties": {
+          "cliente_id": {
+            "type": "string",
+            "title": "Cliente Id"
+          },
+          "productos": {
+            "items": {
+              "$ref": "#/components/schemas/ProductoHistorial"
+            },
+            "type": "array",
+            "title": "Productos"
+          }
+        },
+        "type": "object",
+        "required": [
+          "cliente_id",
+          "productos"
+        ],
+        "title": "HistorialCliente"
+      },
+      "IngestaSalida": {
+        "properties": {
+          "trabajo_id": {
+            "type": "string",
+            "title": "Trabajo Id"
+          },
+          "estado": {
+            "type": "string",
+            "title": "Estado"
+          }
+        },
+        "type": "object",
+        "required": [
+          "trabajo_id",
+          "estado"
+        ],
+        "title": "IngestaSalida"
+      },
+      "Login": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 320,
+            "title": "Email"
+          },
+          "contrasena": {
+            "type": "string",
+            "maxLength": 1024,
+            "title": "Contrasena"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "contrasena"
+        ],
+        "title": "Login"
+      },
+      "MapeoColumnaEntrada": {
+        "properties": {
+          "columna": {
+            "type": "string",
+            "title": "Columna"
+          },
+          "campo": {
+            "type": "string",
+            "title": "Campo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "columna",
+          "campo"
+        ],
+        "title": "MapeoColumnaEntrada"
+      },
+      "MapeoEntrada": {
+        "properties": {
+          "columnas": {
+            "items": {
+              "$ref": "#/components/schemas/MapeoColumnaEntrada"
+            },
+            "type": "array",
+            "title": "Columnas"
+          },
+          "producto_id_tipo": {
+            "type": "string",
+            "title": "Producto Id Tipo"
+          },
+          "formato_fecha": {
+            "type": "string",
+            "title": "Formato Fecha"
+          },
+          "guardar_como_plantilla": {
+            "type": "boolean",
+            "title": "Guardar Como Plantilla",
+            "default": false
+          },
+          "nombre_plantilla": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nombre Plantilla"
+          }
+        },
+        "type": "object",
+        "required": [
+          "columnas",
+          "producto_id_tipo",
+          "formato_fecha"
+        ],
+        "title": "MapeoEntrada"
+      },
+      "MensajeHistorial": {
+        "properties": {
+          "rol": {
+            "type": "string",
+            "enum": [
+              "usuario",
+              "agente"
+            ],
+            "title": "Rol"
+          },
+          "contenido": {
+            "type": "string",
+            "maxLength": 10000,
+            "title": "Contenido"
+          }
+        },
+        "type": "object",
+        "required": [
+          "rol",
+          "contenido"
+        ],
+        "title": "MensajeHistorial"
+      },
+      "OfertasSalida": {
+        "properties": {
+          "productos": {
+            "type": "integer",
+            "title": "Productos"
+          }
+        },
+        "type": "object",
+        "required": [
+          "productos"
+        ],
+        "title": "OfertasSalida"
+      },
+      "PlantillaMapeoSalida": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "firma_encabezados": {
+            "type": "string",
+            "title": "Firma Encabezados"
+          },
+          "mapeo": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Mapeo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "nombre",
+          "firma_encabezados",
+          "mapeo"
+        ],
+        "title": "PlantillaMapeoSalida"
+      },
+      "PlantillaSalida": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "clave": {
+            "type": "string",
+            "title": "Clave"
+          },
+          "tipo": {
+            "type": "string",
+            "title": "Tipo"
+          },
+          "idioma": {
+            "type": "string",
+            "title": "Idioma"
+          },
+          "tono": {
+            "type": "string",
+            "title": "Tono"
+          },
+          "texto": {
+            "type": "string",
+            "title": "Texto"
+          },
+          "estado": {
+            "type": "string",
+            "title": "Estado"
+          },
+          "motivo_revision": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Motivo Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "clave",
+          "tipo",
+          "idioma",
+          "tono",
+          "texto",
+          "estado",
+          "motivo_revision"
+        ],
+        "title": "PlantillaSalida"
+      },
+      "PreguntaEntrada": {
+        "properties": {
+          "dataset_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Dataset Id"
+          },
+          "pregunta": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Pregunta"
+          },
+          "historial": {
+            "items": {
+              "$ref": "#/components/schemas/MensajeHistorial"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Historial"
+          }
+        },
+        "type": "object",
+        "required": [
+          "dataset_id",
+          "pregunta"
+        ],
+        "title": "PreguntaEntrada"
+      },
+      "ProductoDeGrupoSalida": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "categoria": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Categoria"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "nombre",
+          "categoria"
+        ],
+        "title": "ProductoDeGrupoSalida"
+      },
+      "ProductoHistorial": {
+        "properties": {
+          "producto_id": {
+            "type": "string",
+            "title": "Producto Id"
+          },
+          "producto_nombre": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Producto Nombre"
+          },
+          "n_compras": {
+            "type": "integer",
+            "title": "N Compras"
+          },
+          "cantidad_total": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cantidad Total"
+          },
+          "valor_total": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Valor Total"
+          },
+          "ultima_compra": {
+            "type": "string",
+            "format": "date",
+            "title": "Ultima Compra"
+          },
+          "ciclo": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ciclo"
+          },
+          "proxima_compra": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proxima Compra"
+          }
+        },
+        "type": "object",
+        "required": [
+          "producto_id",
+          "producto_nombre",
+          "n_compras",
+          "cantidad_total",
+          "valor_total",
+          "ultima_compra",
+          "ciclo",
+          "proxima_compra"
+        ],
+        "title": "ProductoHistorial"
+      },
+      "ProductoSalida": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "categoria": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Categoria"
+          },
+          "categoria_origen": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Categoria Origen"
+          },
+          "tipo": {
+            "type": "string",
+            "title": "Tipo"
+          },
+          "tipo_origen": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tipo Origen"
+          },
+          "confianza": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confianza"
+          },
+          "estado_revision": {
+            "type": "string",
+            "title": "Estado Revision"
+          },
+          "estadisticas": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estadisticas"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "nombre",
+          "categoria",
+          "categoria_origen",
+          "tipo",
+          "tipo_origen",
+          "confianza",
+          "estado_revision",
+          "estadisticas"
+        ],
+        "title": "ProductoSalida"
+      },
+      "ProyectoActualizar": {
+        "properties": {
+          "nombre": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nombre"
+          },
+          "idioma_mensajes": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "pt-BR",
+                  "es",
+                  "en"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Idioma Mensajes"
+          },
+          "tono": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "cercano",
+                  "neutro",
+                  "formal"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tono"
+          },
+          "descripcion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 5000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Descripcion"
+          }
+        },
+        "type": "object",
+        "title": "ProyectoActualizar"
+      },
+      "ProyectoEntrada": {
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Nombre"
+          },
+          "idioma_mensajes": {
+            "type": "string",
+            "enum": [
+              "pt-BR",
+              "es",
+              "en"
+            ],
+            "title": "Idioma Mensajes",
+            "default": "pt-BR"
+          },
+          "tono": {
+            "type": "string",
+            "enum": [
+              "cercano",
+              "neutro",
+              "formal"
+            ],
+            "title": "Tono",
+            "default": "neutro"
+          },
+          "descripcion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 5000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Descripcion"
+          }
+        },
+        "type": "object",
+        "required": [
+          "nombre"
+        ],
+        "title": "ProyectoEntrada"
+      },
+      "ProyectoSalida": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "nombre": {
+            "type": "string",
+            "title": "Nombre"
+          },
+          "idioma_mensajes": {
+            "type": "string",
+            "enum": [
+              "pt-BR",
+              "es",
+              "en"
+            ],
+            "title": "Idioma Mensajes"
+          },
+          "tono": {
+            "type": "string",
+            "enum": [
+              "cercano",
+              "neutro",
+              "formal"
+            ],
+            "title": "Tono"
+          },
+          "descripcion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Descripcion"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "nombre",
+          "idioma_mensajes",
+          "tono",
+          "descripcion"
+        ],
+        "title": "ProyectoSalida"
+      },
+      "Recuperar": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "title": "Recuperar"
+      },
+      "Registro": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "contrasena": {
+            "type": "string",
+            "maxLength": 1024,
+            "title": "Contrasena"
+          },
+          "nombre_empresa": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Nombre Empresa"
+          },
+          "idioma": {
+            "type": "string",
+            "enum": [
+              "pt-BR",
+              "es",
+              "en"
+            ],
+            "title": "Idioma",
+            "default": "pt-BR"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "contrasena",
+          "nombre_empresa"
+        ],
+        "title": "Registro"
+      },
+      "RespuestaSalida": {
+        "properties": {
+          "respuesta": {
+            "type": "string",
+            "title": "Respuesta"
+          },
+          "consultas": {
+            "items": {
+              "$ref": "#/components/schemas/Consulta"
+            },
+            "type": "array",
+            "title": "Consultas"
+          },
+          "advertencias": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Advertencias"
+          },
+          "costo_ia": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Costo Ia"
+          }
+        },
+        "type": "object",
+        "required": [
+          "respuesta",
+          "costo_ia"
+        ],
+        "title": "RespuestaSalida"
+      },
+      "Restablecer": {
+        "properties": {
+          "token": {
+            "type": "string",
+            "title": "Token"
+          },
+          "contrasena": {
+            "type": "string",
+            "maxLength": 1024,
+            "title": "Contrasena"
+          }
+        },
+        "type": "object",
+        "required": [
+          "token",
+          "contrasena"
+        ],
+        "title": "Restablecer"
+      },
+      "SugerenciaColumna": {
+        "properties": {
+          "columna": {
+            "type": "string",
+            "title": "Columna"
+          },
+          "campo": {
+            "type": "string",
+            "title": "Campo"
+          },
+          "confianza": {
+            "type": "number",
+            "title": "Confianza"
+          },
+          "origen": {
+            "type": "string",
+            "title": "Origen"
+          },
+          "estado": {
+            "type": "string",
+            "title": "Estado"
+          }
+        },
+        "type": "object",
+        "required": [
+          "columna",
+          "campo",
+          "confianza",
+          "origen",
+          "estado"
+        ],
+        "title": "SugerenciaColumna"
+      },
+      "SugerenciaProductoIdTipo": {
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "title": "Tipo"
+          },
+          "confianza": {
+            "type": "number",
+            "title": "Confianza"
+          },
+          "origen": {
+            "type": "string",
+            "title": "Origen"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tipo",
+          "confianza",
+          "origen"
+        ],
+        "title": "SugerenciaProductoIdTipo"
+      },
+      "Sugerencias": {
+        "properties": {
+          "columnas": {
+            "items": {
+              "$ref": "#/components/schemas/SugerenciaColumna"
+            },
+            "type": "array",
+            "title": "Columnas"
+          },
+          "producto_id_tipo": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SugerenciaProductoIdTipo"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "origen": {
+            "type": "string",
+            "title": "Origen"
+          },
+          "firma_encabezados": {
+            "type": "string",
+            "title": "Firma Encabezados"
+          }
+        },
+        "type": "object",
+        "required": [
+          "columnas",
+          "producto_id_tipo",
+          "origen",
+          "firma_encabezados"
+        ],
+        "title": "Sugerencias"
+      },
+      "TrabajoSalida": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "tipo": {
+            "type": "string",
+            "title": "Tipo"
+          },
+          "estado": {
+            "type": "string",
+            "title": "Estado"
+          },
+          "error_codigo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Codigo"
+          },
+          "error_detalle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Detalle"
+          },
+          "duracion_s": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duracion S"
+          },
+          "memoria_pico_mb": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Memoria Pico Mb"
+          },
+          "creado_en": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Creado En"
+          },
+          "iniciado_en": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Iniciado En"
+          },
+          "terminado_en": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Terminado En"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "tipo",
+          "estado",
+          "error_codigo",
+          "error_detalle",
+          "duracion_s",
+          "memoria_pico_mb",
+          "creado_en",
+          "iniciado_en",
+          "terminado_en"
+        ],
+        "title": "TrabajoSalida"
+      },
+      "UsuarioSalida": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "rol": {
+            "type": "string",
+            "title": "Rol"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "email",
+          "rol"
+        ],
+        "title": "UsuarioSalida"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "Yo": {
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/UsuarioSalida"
+          },
+          "empresa": {
+            "$ref": "#/components/schemas/EmpresaSalida"
+          },
+          "idioma": {
+            "type": "string",
+            "enum": [
+              "pt-BR",
+              "es",
+              "en"
+            ],
+            "title": "Idioma"
+          }
+        },
+        "type": "object",
+        "required": [
+          "usuario",
+          "empresa",
+          "idioma"
+        ],
+        "title": "Yo"
+      }
+    }
+  }
+}
