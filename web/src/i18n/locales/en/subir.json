@@ -1,0 +1,26 @@
+{
+  "titulo": "Upload dataset",
+  "volver": "Back to project",
+  "dropzone": {
+    "titulo": "Drag your CSV, .csv.gz or .zip file here",
+    "elegir_archivo": "Choose file"
+  },
+  "previa": {
+    "titulo": "Preview"
+  },
+  "subiendo": {
+    "porcentaje": "{{porcentaje}}%",
+    "cancelar": "Cancel"
+  },
+  "listo": {
+    "titulo": "File uploaded. Preparing mapping…"
+  },
+  "acciones": {
+    "elegir_otro": "Choose another file"
+  },
+  "errores": {
+    "formato_no_soportado": "Unsupported format. Use a .csv, .csv.gz or .zip file.",
+    "archivo_muy_grande": "The file exceeds the {{max_mb}} MB limit.",
+    "zip_formato_invalido": "The .zip must contain a single file."
+  }
+}
