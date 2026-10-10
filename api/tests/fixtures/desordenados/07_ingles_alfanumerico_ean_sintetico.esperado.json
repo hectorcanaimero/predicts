@@ -1,0 +1,18 @@
+{
+  "columnas": {
+    "Customer ID": "cliente_id",
+    "Order Date": "fecha",
+    "Product Code": "producto_id",
+    "Product Name": "producto_nombre",
+    "Order ID": "pedido_id",
+    "Qty": "cantidad",
+    "Unit Price": "precio_unitario",
+    "Total": "valor_total",
+    "Category": "categoria",
+    "Brand": "marca",
+    "Sucursal": "ignorar",
+    "Vendedor": "ignorar",
+    "Forma de Pago": "ignorar"
+  },
+  "producto_id_tipo": "ean"
+}

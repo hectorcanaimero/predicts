@@ -1,0 +1,19 @@
+{
+  "columnas": {
+    "CUSTOMER ID": "cliente_id",
+    "ORDER DATE": "fecha",
+    "PRODUCT CODE": "producto_id",
+    "PRODUCT NAME": "producto_nombre",
+    "ORDER ID": "pedido_id",
+    "QTY": "cantidad",
+    "UNIT PRICE": "precio_unitario",
+    "TOTAL": "valor_total",
+    "CATEGORY": "categoria",
+    "BRAND": "marca",
+    "SUCURSAL": "ignorar",
+    "VENDEDOR": "ignorar",
+    "FORMA DE PAGO": "ignorar",
+    "": "ignorar"
+  },
+  "producto_id_tipo": "sku"
+}

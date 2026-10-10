@@ -1,0 +1,16 @@
+{
+  "columnas": {
+    "ID CLIENTE": "cliente_id",
+    "FECHA VENTA": "fecha",
+    "CODIGO PRODUCTO": "producto_id",
+    "NOMBRE PRODUCTO": "producto_nombre",
+    "PEDIDO": "pedido_id",
+    "CANTIDAD": "cantidad",
+    "PRECIO UNITARIO": "precio_unitario",
+    "TOTAL": "valor_total",
+    "SUCURSAL": "ignorar",
+    "VENDEDOR": "ignorar",
+    "FORMA DE PAGO": "ignorar"
+  },
+  "producto_id_tipo": "ean"
+}
