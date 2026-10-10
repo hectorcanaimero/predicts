@@ -1,0 +1,56 @@
+{
+  "titulo": "Mapear columnas",
+  "error": {
+    "titulo": "Ocurrió un error al cargar la información.",
+    "reintentar": "Reintentar"
+  },
+  "tabla": {
+    "columna": "Columna del CSV",
+    "valores_muestra": "Valores de muestra",
+    "campo": "Campo interno",
+    "confianza": "Confianza"
+  },
+  "insignias": {
+    "prellenado": "Sugerido",
+    "revisar": "Revisar"
+  },
+  "campos": {
+    "ignorar": "Ignorar",
+    "cliente_id": "Cliente",
+    "fecha": "Fecha",
+    "producto_id": "Producto (SKU/EAN)",
+    "producto_nombre": "Nombre del producto",
+    "pedido_id": "Pedido",
+    "cantidad": "Cantidad",
+    "precio_unitario": "Precio unitario",
+    "valor_total": "Valor total",
+    "categoria": "Categoría",
+    "marca": "Marca"
+  },
+  "formato_fecha": {
+    "titulo": "Formato de fecha",
+    "opcion": "{{formato}} ({{porcentaje}}%)"
+  },
+  "producto_id_tipo": {
+    "titulo": "Tipo de identificador de producto",
+    "sku": "SKU (código interno)",
+    "ean": "EAN (código de barras)"
+  },
+  "validacion": {
+    "campo_duplicado": "El campo \"{{campo}}\" está asignado a más de una columna.",
+    "campo_obligatorio_faltante": "Falta asignar el campo obligatorio \"{{campo}}\"."
+  },
+  "plantilla": {
+    "guardar": "Guardar como plantilla",
+    "nombre": "Nombre de la plantilla"
+  },
+  "errores": {
+    "mapeo_invalido": "Hay errores en el mapeo, revísalo antes de confirmar.",
+    "dataset_sin_deteccion": "El dataset todavía no tiene una detección de formato.",
+    "mapeo_no_confirmado": "El mapeo todavía no está confirmado."
+  },
+  "acciones": {
+    "confirmar": "Confirmar e iniciar ingesta",
+    "confirmando": "Confirmando…"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "titulo": "Qualidade do dataset",
+  "error": {
+    "titulo": "Ocorreu um erro ao carregar as informações."
+  },
+  "progreso": {
+    "titulo": "Progresso da ingestão",
+    "conectando": "Conectando…",
+    "esperando": "Esperando o início da ingestão…",
+    "etapa": "Etapa: {{etapa}}",
+    "contador": "{{clave}}: {{valor}}",
+    "error": "A ingestão terminou com um erro."
+  },
+  "informe": {
+    "titulo": "Relatório de qualidade",
+    "procesando": "Calculando o relatório de qualidade…",
+    "tarjetas": {
+      "filas": "Linhas",
+      "clientes": "Clientes",
+      "productos": "Produtos",
+      "duplicados": "Duplicados exatos"
+    },
+    "distribucion": {
+      "titulo": "Compras por cliente",
+      "minimo": "Mínimo",
+      "promedio": "Média",
+      "mediana": "Mediana",
+      "maximo": "Máximo"
+    },
+    "analisis": {
+      "recompra": "Lembretes de recompra",
+      "riesgo": "Risco de abandono",
+      "ofertas": "Ofertas"
+    },
+    "viabilidad": {
+      "viable": "Viável",
+      "no_viable": "Não alcança"
+    }
+  },
+  "productos": {
+    "titulo": "Produtos a revisar",
+    "vacio": "Não há produtos pendentes de revisão.",
+    "tipo_de": "Tipo de {{nombre}}",
+    "categoria_de": "Categoria de {{nombre}}",
+    "columnas": {
+      "nombre": "Produto",
+      "tipo": "Tipo",
+      "categoria": "Categoria",
+      "confianza": "Confiança"
+    },
+    "tipos": {
+      "recompra": "Recompra",
+      "durable": "Durável"
+    }
+  },
+  "grupos": {
+    "titulo": "Produtos equivalentes propostos",
+    "vacio": "Não há propostas de produtos equivalentes.",
+    "confirmar": "Confirmar",
+    "rechazar": "Rejeitar"
+  },
+  "acciones": {
+    "continuar_analisis": "Continuar para a análise"
+  }
+}

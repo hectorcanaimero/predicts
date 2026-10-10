@@ -1,0 +1,56 @@
+{
+  "titulo": "Mapear colunas",
+  "error": {
+    "titulo": "Ocorreu um erro ao carregar as informações.",
+    "reintentar": "Tentar novamente"
+  },
+  "tabla": {
+    "columna": "Coluna do CSV",
+    "valores_muestra": "Valores de amostra",
+    "campo": "Campo interno",
+    "confianza": "Confiança"
+  },
+  "insignias": {
+    "prellenado": "Sugerido",
+    "revisar": "Revisar"
+  },
+  "campos": {
+    "ignorar": "Ignorar",
+    "cliente_id": "Cliente",
+    "fecha": "Data",
+    "producto_id": "Produto (SKU/EAN)",
+    "producto_nombre": "Nome do produto",
+    "pedido_id": "Pedido",
+    "cantidad": "Quantidade",
+    "precio_unitario": "Preço unitário",
+    "valor_total": "Valor total",
+    "categoria": "Categoria",
+    "marca": "Marca"
+  },
+  "formato_fecha": {
+    "titulo": "Formato de data",
+    "opcion": "{{formato}} ({{porcentaje}}%)"
+  },
+  "producto_id_tipo": {
+    "titulo": "Tipo de identificador do produto",
+    "sku": "SKU (código interno)",
+    "ean": "EAN (código de barras)"
+  },
+  "validacion": {
+    "campo_duplicado": "O campo \"{{campo}}\" está atribuído a mais de uma coluna.",
+    "campo_obligatorio_faltante": "Falta atribuir o campo obrigatório \"{{campo}}\"."
+  },
+  "plantilla": {
+    "guardar": "Salvar como modelo",
+    "nombre": "Nome do modelo"
+  },
+  "errores": {
+    "mapeo_invalido": "Há erros no mapeamento, revise-o antes de confirmar.",
+    "dataset_sin_deteccion": "O dataset ainda não tem uma detecção de formato.",
+    "mapeo_no_confirmado": "O mapeamento ainda não foi confirmado."
+  },
+  "acciones": {
+    "confirmar": "Confirmar e iniciar a ingestão",
+    "confirmando": "Confirmando…"
+  }
+}

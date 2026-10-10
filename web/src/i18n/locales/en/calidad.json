@@ -1,0 +1,65 @@
+{
+  "titulo": "Dataset quality",
+  "error": {
+    "titulo": "An error occurred while loading the information."
+  },
+  "progreso": {
+    "titulo": "Ingestion progress",
+    "conectando": "Connecting…",
+    "esperando": "Waiting for the ingestion to start…",
+    "etapa": "Stage: {{etapa}}",
+    "contador": "{{clave}}: {{valor}}",
+    "error": "The ingestion finished with an error."
+  },
+  "informe": {
+    "titulo": "Quality report",
+    "procesando": "Calculating the quality report…",
+    "tarjetas": {
+      "filas": "Rows",
+      "clientes": "Customers",
+      "productos": "Products",
+      "duplicados": "Exact duplicates"
+    },
+    "distribucion": {
+      "titulo": "Purchases per customer",
+      "minimo": "Minimum",
+      "promedio": "Average",
+      "mediana": "Median",
+      "maximo": "Maximum"
+    },
+    "analisis": {
+      "recompra": "Repurchase reminders",
+      "riesgo": "Churn risk",
+      "ofertas": "Offers"
+    },
+    "viabilidad": {
+      "viable": "Viable",
+      "no_viable": "Not enough data"
+    }
+  },
+  "productos": {
+    "titulo": "Products to review",
+    "vacio": "No products pending review.",
+    "tipo_de": "Type of {{nombre}}",
+    "categoria_de": "Category of {{nombre}}",
+    "columnas": {
+      "nombre": "Product",
+      "tipo": "Type",
+      "categoria": "Category",
+      "confianza": "Confidence"
+    },
+    "tipos": {
+      "recompra": "Repurchase",
+      "durable": "Durable"
+    }
+  },
+  "grupos": {
+    "titulo": "Proposed equivalent products",
+    "vacio": "No proposed equivalent products.",
+    "confirmar": "Confirm",
+    "rechazar": "Reject"
+  },
+  "acciones": {
+    "continuar_analisis": "Continue to analysis"
+  }
+}
