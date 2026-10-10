@@ -1,0 +1,46 @@
+# Override de `deploy/docker-compose.yml` para el e2e de F6.3.T3: agrega los servidores falsos
+# de Jev y 9router (`jev_falso.py`/`router_falso.py`, sin dependencias, stdlib puro) y redirige
+# `api`/`worker` hacia ellos. Uso (ver `web/package.json#scripts.e2e`):
+#
+#   docker compose -f deploy/docker-compose.yml -f api/tests/e2e/docker-compose.e2e.yml up -d --build
+#
+# `environment` en formato mapa se mergea por clave con el archivo base: las claves nuevas
+# (`TYPESAFE_BASE_URL`) se agregan, las existentes (`ROUTER_BASE_URL`, etc.) se reemplazan.
+name: predicts
+
+services:
+  jev-falso:
+    image: python:3.13-slim
+    # Ruta relativa al directorio "de proyecto" de compose (el del *primer* `-f`, normalmente
+    # `deploy/`, no el de este archivo) -- ver el comentario del encabezado sobre cómo invocar.
+    volumes:
+      - ../api/tests/e2e:/e2e:ro
+    environment:
+      PUERTO: "9200"
+    command: ["python3", "/e2e/jev_falso.py"]
+    restart: unless-stopped
+
+  router-falso:
+    image: python:3.13-slim
+    volumes:
+      - ../api/tests/e2e:/e2e:ro
+    environment:
+      PUERTO: "9100"
+    command: ["python3", "/e2e/router_falso.py"]
+    restart: unless-stopped
+
+  api:
+    environment:
+      TYPESAFE_BASE_URL: http://jev-falso:9200
+      TYPESAFE_API_KEY: falso
+      ROUTER_BASE_URL: http://router-falso:9100/v1
+      ROUTER_API_KEY: falso
+      ROUTER_MODEL: falso
+
+  worker:
+    environment:
+      TYPESAFE_BASE_URL: http://jev-falso:9200
+      TYPESAFE_API_KEY: falso
+      ROUTER_BASE_URL: http://router-falso:9100/v1
+      ROUTER_API_KEY: falso
+      ROUTER_MODEL: falso

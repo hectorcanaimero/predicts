@@ -1,0 +1,52 @@
+name: e2e
+
+# Manual: el flujo completo tarda varios minutos (sube un CSV, espera la ingesta/calidad y
+# corre 4 análisis contra `docker compose`) y no bloquea el merge normal (ver `ci.yml`).
+on:
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: docker compose up (api, worker, web + Jev/9router falsos)
+        working-directory: deploy
+        run: |
+          docker compose -f docker-compose.yml -f ../api/tests/e2e/docker-compose.e2e.yml \
+            up -d --build --wait
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: npm ci
+        working-directory: web
+        run: npm ci
+
+      - name: Instalar navegadores de Playwright
+        working-directory: web
+        run: npx playwright install --with-deps chromium
+
+      - name: npm run e2e
+        working-directory: web
+        run: npm run e2e
+
+      - name: Subir reporte de Playwright
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: web/playwright-report/
+          retention-days: 14
+
+      - name: Logs de docker compose
+        if: always()
+        working-directory: deploy
+        run: docker compose -f docker-compose.yml -f ../api/tests/e2e/docker-compose.e2e.yml logs
+
+      - name: docker compose down
+        if: always()
+        working-directory: deploy
+        run: docker compose -f docker-compose.yml -f ../api/tests/e2e/docker-compose.e2e.yml down -v

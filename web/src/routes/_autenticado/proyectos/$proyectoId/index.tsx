@@ -9,7 +9,7 @@ import { DialogoBorrarProyecto } from '@/features/proyectos/DialogoBorrarProyect
 import { DialogoProyecto } from '@/features/proyectos/DialogoProyecto'
 import { useAnalisisDataset, useDatasetsProyecto, useProyecto, type Dataset } from '@/features/proyectos/hooks'
 
-export const Route = createFileRoute('/_autenticado/proyectos/$proyectoId')({
+export const Route = createFileRoute('/_autenticado/proyectos/$proyectoId/')({
   component: ProyectoDetalle,
 })
 

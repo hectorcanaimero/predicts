@@ -10,7 +10,8 @@
     "test": "vitest",
     "lint": "eslint .",
     "gen:api": "openapi-typescript src/api/openapi.json -o src/api/schema.ts",
-    "captura:procesamiento": "tsx scripts/captura-procesamiento.ts"
+    "captura:procesamiento": "tsx scripts/captura-procesamiento.ts",
+    "e2e": "playwright test"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.2.0",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.0",
     "@tanstack/router-plugin": "^1.168.42",
     "@testing-library/react": "^16.3.3",
     "@types/node": "^26.6.5",
