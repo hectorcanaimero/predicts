@@ -10,5 +10,1114 @@
       "name": "F0 — Foundation"
     }
   ],
-  "tasks": []
+  "tasks": [
+    {
+      "id": "F0.1.T1",
+      "phase": 0,
+      "title": "Proyecto Python `api/` con todas las dependencias del MVP",
+      "description": "Crear el paquete `predicts` en `api/` con `uv` (Python 3.13, layout `src/`):\n\n- `api/pyproject.toml` con **todas las dependencias previstas del MVP** para que las tareas\n  siguientes no tengan que tocar este archivo en paralelo: fastapi, uvicorn[standard],\n  pydantic, pydantic-settings, sqlalchemy\u003e=2, psycopg[binary]\u003e=3, alembic, pgvector, duckdb,\n  pyarrow, numpy, scipy, argon2-cffi, itsdangerous, python-multipart, charset-normalizer,\n  sse-starlette, typer, httpx, langchain-core, langchain-openai, langgraph, typesafe-sdk\u003e=0.7,\n  mcp, email-validator, openpyxl (lectura del Excel de Online Retail II); dev: pytest, pytest-asyncio, ruff, mypy (opcional).\n- `api/uv.lock` generado y versionado.\n- `api/src/predicts/__init__.py` con `__version__`, `api/src/predicts/cli.py` con la app Typer\n  `predicts` y el script `predicts` en `pyproject`. `cli.py` **descubre** los módulos de\n  `predicts.comandos` y registra cada función decorada con `@comando` (helper en\n  `predicts/comandos/__init__.py`), así cada fase agrega su comando en un archivo propio sin tocar\n  `cli.py`. Primer comando: `comandos/version.py`.\n- Ruff configurado (line-length 100, reglas E, F, I, B, UP) y pytest con `tests/` y marcador\n  `db` para tests que necesitan Postgres.\n- `api/tests/test_smoke.py` que importa el paquete y corre el CLI.\n- `Makefile` en la raíz con `api-test`, `api-lint`, `web-test`, `web-lint`, `test`, `lint`.\n\nDone when: `cd api \u0026\u0026 uv sync --frozen \u0026\u0026 uv run pytest -q \u0026\u0026 uv run ruff check .` pasa y\n`uv run predicts version` imprime la versión.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Scaffolding estándar con lista de dependencias definida.",
+      "status": "backlog",
+      "dependencies": [],
+      "estimateHours": 1.5,
+      "files": [
+        "api/pyproject.toml",
+        "api/uv.lock",
+        "api/src/predicts/__init__.py",
+        "api/src/predicts/cli.py",
+        "api/src/predicts/comandos/__init__.py",
+        "api/src/predicts/comandos/version.py",
+        "api/tests/test_smoke.py",
+        "api/tests/conftest.py",
+        "Makefile",
+        ".gitignore"
+      ],
+      "specRef": "f0-base.md#F0.1.T1",
+      "comments": []
+    },
+    {
+      "id": "F0.1.T2",
+      "phase": 0,
+      "title": "Proyecto web `web/` con todas las dependencias del MVP",
+      "description": "Crear `web/` con Vite + React + TypeScript (npm, `package-lock.json` versionado):\n\n- Dependencias previstas del MVP (para no tocar `package.json` en paralelo después): react,\n  react-dom, @tanstack/react-query, @tanstack/react-router (+ plugin de rutas por archivos),\n  i18next, react-i18next, i18next-browser-languagedetector, tailwindcss (v4 con su plugin de\n  Vite), clsx, tailwind-merge, class-variance-authority, lucide-react, @radix-ui/* necesarios para\n  shadcn/ui, recharts, framer-motion, reactflow, three, @react-three/fiber, @react-three/drei,\n  openapi-typescript, openapi-fetch; dev: vitest, @testing-library/react, jsdom, eslint con\n  typescript-eslint, prettier.\n- Rutas por archivos (`web/src/routes/`) para que cada página viva en su propio archivo y las\n  tareas de pantallas no compartan un archivo de rutas.\n- **i18n por namespaces:** `web/src/i18n/index.ts` carga con `import.meta.glob` todos los\n  archivos `web/src/i18n/locales/\u003cidioma\u003e/\u003cnamespace\u003e.json` para `pt-BR`, `es` y `en`, con\n  detección del navegador y `pt-BR` por defecto. Cada feature tendrá su propio namespace, así dos\n  tareas nunca editan el mismo JSON. Crear el namespace `comun` (botones, errores genéricos) en los\n  tres idiomas.\n- Componentes base de shadcn/ui en `web/src/components/ui/` (button, input, label, card, dialog,\n  dropdown-menu, select, table, tabs, toast, badge, progress, skeleton) y `web/src/lib/utils.ts`.\n- Layout raíz con selector de idioma y una página de inicio de prueba.\n- Scripts: `dev`, `build`, `test`, `lint`, `gen:api` (genera `web/src/api/schema.ts` a partir de\n  `web/src/api/openapi.json`, que se exporta con `predicts openapi`).\n\nDone when: `cd web \u0026\u0026 npm ci \u0026\u0026 npm run lint \u0026\u0026 npm test -- --run \u0026\u0026 npm run build` pasa, y un test\nde Vitest verifica que el selector de idioma cambia un texto entre pt-BR, es y en.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Scaffolding de frontend con varias piezas a integrar (router, i18n, shadcn).",
+      "status": "backlog",
+      "dependencies": [],
+      "estimateHours": 3.0,
+      "files": [
+        "web/package.json",
+        "web/package-lock.json",
+        "web/vite.config.ts",
+        "web/tsconfig.json",
+        "web/index.html",
+        "web/eslint.config.js",
+        "web/src/main.tsx",
+        "web/src/routes/__root.tsx",
+        "web/src/routes/index.tsx",
+        "web/src/i18n/index.ts",
+        "web/src/i18n/locales/pt-BR/comun.json",
+        "web/src/i18n/locales/es/comun.json",
+        "web/src/i18n/locales/en/comun.json",
+        "web/src/components/ui/",
+        "web/src/lib/utils.ts",
+        "web/src/styles.css",
+        "web/src/__tests__/i18n.test.tsx",
+        "web/.gitignore"
+      ],
+      "specRef": "f0-base.md#F0.1.T2",
+      "comments": []
+    },
+    {
+      "id": "F0.1.T3",
+      "phase": 0,
+      "title": "CI de GitHub para api y web",
+      "description": "Reemplazar `.github/workflows/orch-ci.yml` (el que generó `orch init` usa pip y Python 3.11, y no\nsirve) por un workflow con dos jobs que corren en cada PR y en push a `master`:\n\n- `api`: `astral-sh/setup-uv`, Python 3.13, servicio `pgvector/pgvector:pg17` con\n  `TEST_DATABASE_URL` apuntando a él, `uv sync --frozen`, `uv run ruff check .`,\n  `uv run pytest -q`. Si `api/` no existe todavía, el job termina en verde sin hacer nada.\n- `web`: Node 22, `npm ci`, `npm run lint`, `npm test -- --run`, `npm run build`. Si `web/` no\n  existe, termina en verde.\n- El nombre del check que orch espera es `test`: crear un job final `test` que dependa de `api`\n  y `web` y solo pase si ambos pasan.\n\nDone when: el workflow es YAML válido (`python -c \"import yaml,sys;yaml.safe_load(open(...))\"`),\nlos pasos condicionales están probados leyendo el archivo, y el PR de esta tarea muestra el\ncheck `test` en verde.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Configuración de CI acotada.",
+      "status": "backlog",
+      "dependencies": [],
+      "estimateHours": 1.0,
+      "files": [
+        ".github/workflows/orch-ci.yml"
+      ],
+      "specRef": "f0-base.md#F0.1.T3",
+      "comments": []
+    },
+    {
+      "id": "F0.2.T1",
+      "phase": 0,
+      "title": "Configuración (`config.py`)",
+      "description": "`Settings` con pydantic-settings exactamente con las claves y defaults de la sección *config* de\nla arquitectura, más `ROUTER_EMBEDDINGS_MODEL` (default `openai/text-embedding-3-small`) y\n`TEST_DATABASE_URL`. Lee `.env` del cwd o el archivo de `PREDICTS_ENV_FILE`. Función\n`settings()` cacheada y `settings_para_tests(**overrides)`. Validaciones: `DUCKDB_MEMORY_LIMIT`\ncon formato `\u003cn\u003eGB|MB`, `MAX_MEMORIA_TRABAJO_MB` \u003e 512, `CONFIANZA_*` entre 0 y 1. `SECRET_KEY`\nobligatoria fuera de `ENTORNO=dev`.\n\nDone when: tests cubren defaults, lectura desde `PREDICTS_ENV_FILE`, overrides por entorno y cada\nvalidación.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Configuración tipada estándar.",
+      "status": "backlog",
+      "dependencies": [
+        "F0.1.T1"
+      ],
+      "estimateHours": 1.0,
+      "files": [
+        "api/src/predicts/config.py",
+        "api/tests/test_config.py"
+      ],
+      "specRef": "f0-base.md#F0.2.T1",
+      "comments": []
+    },
+    {
+      "id": "F0.2.T2",
+      "phase": 0,
+      "title": "Esquema completo de Postgres con SQLAlchemy y Alembic",
+      "description": "Modelos ORM (SQLAlchemy 2, tipado con `Mapped`) de **todas** las tablas de *Modelo de datos →\nPostgres* de la arquitectura, **con exactamente las columnas que allí se listan**, con `empresa_id` en cada tabla de negocio, timestamps, índices y FKs con\n`ON DELETE` coherente: `empresas`, `usuarios`, `sesiones`, `tokens_recuperacion`,\n`intentos_login`, `proyectos`, `datasets`, `plantillas_mapeo`, `productos` (con\n`embedding vector(1536)`), `grupos_producto`, `analisis`, `trabajos`, `eventos_trabajo`,\n`decisiones_jev`, `plantillas_mensaje`, `api_keys`. Campos JSON como `JSONB`.\n\n- `api/src/predicts/db/` con `base.py`, `modelos.py`, `sesion.py` (engine y `SessionLocal` desde\n  `DATABASE_URL`, dependencia FastAPI `get_db`).\n- Alembic en `api/alembic/` con **una sola migración inicial** que crea la extensión `vector` y\n  todo el esquema. Las fases siguientes no cambian el esquema salvo que su tarea lo diga.\n- Fixture de pytest `db` (en `api/tests/conftest_db.py`, registrada en `api/tests/conftest.py`\n  con `pytest_plugins`) que crea una base temporal única desde `TEST_DATABASE_URL`, corre\n  `alembic upgrade head` y la borra al final.\n- `docs/notas/esquema.md` con el diagrama de tablas (Mermaid) y el porqué de cada índice.\n\nDone when: `uv run pytest -q -m db` crea la base, migra, inserta y lee una fila de cada tabla, y\n`alembic downgrade base` deja la base vacía; `alembic check` no detecta diferencias con los\nmodelos.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Esquema amplio pero especificado; volumen más que dificultad.",
+      "status": "backlog",
+      "dependencies": [
+        "F0.1.T1",
+        "F0.2.T1"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "api/src/predicts/db/",
+        "api/alembic.ini",
+        "api/alembic/",
+        "api/tests/conftest.py",
+        "api/tests/conftest_db.py",
+        "api/tests/test_db_esquema.py",
+        "docs/notas/esquema.md"
+      ],
+      "specRef": "f0-base.md#F0.2.T2",
+      "comments": []
+    },
+    {
+      "id": "F0.2.T3",
+      "phase": 0,
+      "title": "Clientes de IA (`ia.py`): Jev, 9router y contador de costo",
+      "description": "Implementar las funciones de *Interfaces → Jev* de la arquitectura:\n\n- `cliente_jev()` (`TypeSafeClient` con `TYPESAFE_API_KEY`/`TYPESAFE_MODEL`) y\n  `decidir_choice(pregunta, opciones, contexto)` / `decidir_si_no(pregunta, contexto)` sobre\n  `system_one` (ver el patrón de `juez_jev.py` de apolicies), que devuelven\n  `Decision(opcion, confianza, crudo)`. Variante en lote: `decidir_lote(contexto, preguntas)` que\n  hace una sola llamada con varias preguntas.\n- `registrar_decision(db, empresa_id, tipo, entrada_resumida, decision)` que guarda en\n  `decisiones_jev`.\n- `llm_texto()` (`ChatOpenAI` contra 9router, `streaming=False`, `timeout=120`, `max_retries=2`)\n  y `generar(prompt, esquema)` con salida JSON validada por Pydantic y hasta 2 reintentos con el\n  error de validación (patrón `estruturar` de apolicies; **no** usar `tool_choice` forzado).\n- `embeddings(textos)` contra `/v1/embeddings` de 9router con `ROUTER_EMBEDDINGS_MODEL`, en lotes.\n- `Contador` (thread-safe) de llamadas, tokens de entrada/salida por proveedor y costo estimado\n  con precios configurables en un dict documentado.\n- Todas las funciones aceptan un cliente inyectado para tests.\n\nDone when: tests sin red con clientes falsos cubren cada función, el reintento por JSON inválido,\nel registro en `decisiones_jev` (marcador `db`) y el contador; y un script\n`api/scripts_dev/probar_ia.py` (no lo corre la CI) hace una llamada real a cada servicio con\n`PREDICTS_ENV_FILE` y el resultado de esa corrida queda en el PR.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Integración con dos SDKs conocidos y patrón existente en apolicies.",
+      "status": "backlog",
+      "dependencies": [
+        "F0.2.T1",
+        "F0.2.T2"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "api/src/predicts/ia.py",
+        "api/tests/test_ia.py",
+        "api/scripts_dev/probar_ia.py"
+      ],
+      "specRef": "f0-base.md#F0.2.T3",
+      "comments": []
+    },
+    {
+      "id": "F0.2.T4",
+      "phase": 0,
+      "title": "App FastAPI con descubrimiento de routers y salud",
+      "description": "`api/src/predicts/app.py` con `crear_app()`:\n\n- Descubre automáticamente todos los módulos de `predicts.api` que exponen `router` y los\n  incluye, para que cada fase agregue su archivo sin tocar `app.py`.\n- Manejador de errores con el formato `{\"codigo\": str, \"parametros\": dict}` de la arquitectura;\n  clase `ErrorApi(codigo, status, **parametros)` para usar en todo el proyecto.\n- `GET /salud` (incluye chequeo de Postgres y de `DATA_DIR`), CORS configurable para el\n  frontend en dev, OpenAPI con títulos en español.\n- Comandos `predicts api` (uvicorn) y `predicts openapi --salida \u003carchivo\u003e` (escribe el\n  OpenAPI sin levantar el servidor; lo usa el frontend para generar sus tipos) en\n  `comandos/api.py`.\n\nDone when: tests con `TestClient` verifican el descubrimiento (un router de prueba en un paquete\ntemporal), el formato de error y `/salud`.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Infraestructura de API acotada.",
+      "status": "backlog",
+      "dependencies": [
+        "F0.2.T1",
+        "F0.2.T2"
+      ],
+      "estimateHours": 1.5,
+      "files": [
+        "api/src/predicts/app.py",
+        "api/src/predicts/api/__init__.py",
+        "api/src/predicts/api/salud.py",
+        "api/src/predicts/errores.py",
+        "api/src/predicts/comandos/api.py",
+        "api/tests/test_app.py"
+      ],
+      "specRef": "f0-base.md#F0.2.T4",
+      "comments": []
+    },
+    {
+      "id": "F0.3.T1",
+      "phase": 0,
+      "title": "Dockerfiles y docker compose con límites de memoria",
+      "description": "- `api/Dockerfile` multi-stage con `uv` (imagen final slim, usuario no root) que sirve para\n  `api` y `worker`.\n- `web/Dockerfile`: build con Node 22 y nginx que sirve el build y hace proxy de `/api` a la API\n  (`deploy/nginx.conf`), con soporte de SSE (`proxy_buffering off` en `/api/trabajos/`).\n- `deploy/docker-compose.yml` con `postgres` (pgvector/pg17), `migrar` (one-shot\n  `alembic upgrade head`), `api`, `worker` (comando `predicts worker`; si todavía no existe, que el\n  servicio quede definido y documentado) y `web`, con los **límites de memoria** de la\n  arquitectura (`mem_limit`), healthchecks, volúmenes para Postgres y `DATA_DIR`.\n- `deploy/.env.example` con todas las claves de `config.py` sin valores secretos.\n- `docs/notas/desarrollo.md`: cómo levantar todo, cómo correr tests contra `predicts-pg-dev`, y\n  dónde mirar los logs.\n\nDone when: `docker compose -f deploy/docker-compose.yml config` valida; `docker compose build`\ntermina; `docker compose up -d postgres migrar api web` deja `/salud` respondiendo a través de\nnginx; se anota en el PR la memoria de cada contenedor en reposo (`docker stats --no-stream`).\nBajar los contenedores al terminar.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Docker estándar con verificación real.",
+      "status": "backlog",
+      "dependencies": [
+        "F0.1.T1",
+        "F0.1.T2",
+        "F0.2.T4"
+      ],
+      "estimateHours": 2.5,
+      "files": [
+        "api/Dockerfile",
+        "api/.dockerignore",
+        "web/Dockerfile",
+        "web/.dockerignore",
+        "deploy/docker-compose.yml",
+        "deploy/nginx.conf",
+        "deploy/.env.example",
+        "docs/notas/desarrollo.md"
+      ],
+      "specRef": "f0-base.md#F0.3.T1",
+      "comments": []
+    },
+    {
+      "id": "F1.1.T1",
+      "phase": 1,
+      "title": "Esquema interno, conexión DuckDB y generador sintético con verdad conocida",
+      "description": "- `api/src/predicts/datos/esquema.py`: `COLUMNAS_COMPRA` (nombre, tipo DuckDB, obligatoria)\n  exactamente como la tabla *Modelo de datos → Esquema interno de compras*,\n  `validar_parquet(path) -\u003e list[str]` (columnas faltantes, tipos, nulos en obligatorias,\n  `producto_id_tipo` fuera de `sku|ean`).\n- `api/src/predicts/datos/duckdb.py`: `conexion_duckdb(solo_lectura=False)` con los límites de\n  memoria, hilos y temporales de la configuración.\n- `api/src/predicts/datos/sintetico.py`: `generar(n_clientes, productos, semilla, ...)` que\n  escribe un Parquet con el esquema interno donde **cada par cliente–producto tiene un ciclo\n  verdadero conocido** (log-normal alrededor del ciclo del producto, con variación por cliente),\n  compras con ruido, clientes que abandonan en una fecha conocida, productos durables (una sola\n  compra) y productos de recompra; devuelve también la tabla de verdad (`ciclo_real`,\n  `abandono_en`). Comando `predicts sintetico --clientes N --salida ...` en\n  `comandos/sintetico.py`.\n- Fixtures chicos en `api/tests/fixtures/` (un Parquet sintético de ~2.000 filas y su verdad)\n  generados con semilla fija por un script, no a mano.\n\nDone when: tests verifican que el sintético cumple el esquema (`validar_parquet` vacío), que los\nintervalos generados tienen la mediana esperada por par (± 10 %) y que `validar_parquet` detecta\ncada tipo de error con Parquets inválidos construidos en el test.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Generación de datos con propiedades estadísticas verificables.",
+      "status": "backlog",
+      "dependencies": [
+        "F0.1.T1",
+        "F0.2.T1"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "api/src/predicts/datos/__init__.py",
+        "api/src/predicts/datos/esquema.py",
+        "api/src/predicts/datos/duckdb.py",
+        "api/src/predicts/datos/sintetico.py",
+        "api/src/predicts/comandos/sintetico.py",
+        "api/tests/fixtures/",
+        "api/tests/test_esquema.py",
+        "api/tests/test_sintetico.py",
+        "scripts/generar_fixtures.py"
+      ],
+      "specRef": "f1-spike-modelo.md#F1.1.T1",
+      "comments": []
+    },
+    {
+      "id": "F1.1.T2",
+      "phase": 1,
+      "title": "Datasets públicos: Online Retail II e Instacart al esquema interno",
+      "description": "`api/src/predicts/datos/datasets_publicos.py` y comando (en `comandos/datasets.py`)\n`predicts preparar-dataset {online-retail|instacart} --salida data/\u003cnombre\u003e/compras.parquet`:\n\n- **Online Retail II (UCI, CC BY 4.0):** descargar de la fuente oficial de UCI (Excel con dos\n  hojas), quedarse con filas con `Customer ID`, sin cancelaciones (`Invoice` que empieza con `C`)\n  ni cantidades ≤ 0; mapear `Customer ID → cliente_id`, `InvoiceDate → fecha`,\n  `StockCode → producto_id` (`sku`), `Description → producto_nombre`, `Invoice → pedido_id`,\n  `Quantity`, `Price`, valor total. Guardar en `data/raw/` el archivo descargado y no volver a\n  bajarlo si existe.\n- **Instacart Market Basket:** buscar una fuente descargable sin login (por ejemplo un espejo\n  público en Hugging Face). **Antes de usarla, leer y anotar su licencia** en\n  `docs/notas/datasets.md`. Si no hay fuente sin login, el comando acepta\n  `--desde \u003ccarpeta con los CSV\u003e` y explica en el mensaje dónde conseguirlos; no inventar URLs.\n  Construir fechas sintéticas por usuario: fecha base fija + suma acumulada de\n  `days_since_prior_order` por `order_number`; `producto_id` = `product_id` (`sku`),\n  `producto_nombre` y `categoria` (aisle/department). Documentar que las fechas son sintéticas.\n- Opción `--muestra N` que toma N clientes al azar con semilla, para pruebas rápidas.\n- `docs/notas/datasets.md`: origen, licencia, filtros aplicados, filas/clientes/productos y rango\n  de fechas resultantes (medidos al correr), y limitaciones.\n\nDone when: `predicts preparar-dataset online-retail` produce un Parquet que pasa\n`validar_parquet`, y el PR trae los conteos medidos; Instacart queda preparado o documentado con\nel motivo exacto por el que no se pudo; tests sin red del mapeo con un Excel/CSV mínimo de\nfixture.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "ETL con verificación de licencias y datos reales.",
+      "status": "backlog",
+      "dependencies": [
+        "F1.1.T1"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "api/src/predicts/datos/datasets_publicos.py",
+        "api/src/predicts/comandos/datasets.py",
+        "api/tests/test_datasets_publicos.py",
+        "api/tests/fixtures/publicos/",
+        "docs/notas/datasets.md"
+      ],
+      "specRef": "f1-spike-modelo.md#F1.1.T2",
+      "comments": []
+    },
+    {
+      "id": "F1.2.T1",
+      "phase": 1,
+      "title": "Intervalos y ciclo por par (contracción hacia el producto)",
+      "description": "En `api/src/predicts/modelo/` implementar `intervalos()` y `ajustar()` con las firmas de\n*Interfaces → Modelo*:\n\n- Trabajar sobre **días de compra distintos** por par (varias líneas el mismo día = una compra).\n- Intervalos entre compras consecutivas por par; por producto: mediana, MAD y número de\n  clientes recurrentes; por par: mediana, MAD, `n` intervalos.\n- Ciclo contraído `(n·med_cliente + k·med_producto) / (n + k)` con `k` en `ParamsModelo`\n  (default 2); desvío log por producto agrupado entre clientes (estimador robusto, documentado).\n- Pares con menos de `MIN_COMPRAS` compras quedan fuera del ajuste con el motivo.\n- `ParamsModelo` y `Ajuste` como dataclasses/Pydantic; `VERSION_MODELO` en `modelo/__init__.py`.\n- Cada fórmula documentada en el docstring con su porqué.\n\nDone when: sobre el sintético de F1.1.T1 el ciclo estimado queda dentro del ±15 % del\n`ciclo_real` en al menos el 80 % de los pares con ≥ 4 compras (test), la contracción hacia el\nproducto mejora el error en pares con 2–3 intervalos frente a usar solo el par (test), y el\najuste de 1 M de filas sintéticas corre en \u003c 60 s con `DUCKDB_MEMORY_LIMIT=2GB` (anotado en el\nPR, no en la CI).",
+      "model": "claude/claude-opus-5-5",
+      "reason": "Núcleo estadístico; errores aquí invalidan todo lo demás.",
+      "status": "backlog",
+      "dependencies": [
+        "F1.1.T1"
+      ],
+      "estimateHours": 4.0,
+      "files": [
+        "api/src/predicts/modelo/__init__.py",
+        "api/src/predicts/modelo/ciclos.py",
+        "api/tests/test_modelo_ciclos.py"
+      ],
+      "specRef": "f1-spike-modelo.md#F1.2.T1",
+      "comments": []
+    },
+    {
+      "id": "F1.2.T2",
+      "phase": 1,
+      "title": "Probabilidad de compra en el horizonte y línea base",
+      "description": "- `predecir(ajuste, fecha_ref, horizonte)`: log-normal por par con media `log(ciclo)` y el desvío\n  del producto; con `t` = días desde la última compra, `P = (F(t+H) − F(t)) / (1 − F(t))`;\n  fecha probable = mediana condicional; rango = percentiles 25–75 condicionales; manejo\n  numérico estable cuando `1 − F(t)` es muy chico (cliente muy atrasado → probabilidad baja,\n  marcado como posible abandono, sin dividir por cero).\n- `linea_base(con, compras, fecha_ref, horizonte)`: próxima = última + promedio de intervalos;\n  \"compra en el horizonte\" si cae en `(fecha_ref, fecha_ref + H]`; probabilidad 1/0.\n- Salidas como vistas DuckDB con las columnas de *Interfaces*; vectorizado (SciPy sobre arrays,\n  nunca un bucle Python por par).\n\nDone when: tests verifican la fórmula contra casos calculados a mano (incluidos `t = 0`,\n`t ≫ ciclo` y `H` grande), que las probabilidades están en [0, 1], que el rango contiene la\nmediana, y que sobre el sintético la probabilidad media de los pares que de verdad compran en el\nhorizonte es mayor que la de los que no.",
+      "model": "claude/claude-opus-5-5",
+      "reason": "Probabilidad condicional con bordes numéricos delicados.",
+      "status": "backlog",
+      "dependencies": [
+        "F1.2.T1"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "api/src/predicts/modelo/prediccion.py",
+        "api/src/predicts/modelo/linea_base.py",
+        "api/tests/test_modelo_prediccion.py"
+      ],
+      "specRef": "f1-spike-modelo.md#F1.2.T2",
+      "comments": []
+    },
+    {
+      "id": "F1.3.T1",
+      "phase": 1,
+      "title": "Backtesting y métricas",
+      "description": "`backtest(con, compras, params, semanas, horizonte) -\u003e MetricasBacktest` según *Interfaces*:\n\n- Corte en `fecha_max − semanas`; ajuste con datos ≤ corte; verdad = compras del par en\n  `(corte, corte + H]`.\n- Métricas para modelo **y** línea base: precisión y cobertura en el top-K (K configurable, por\n  defecto el número de pares que de verdad compran), Brier, calibración por deciles (predicho vs.\n  observado), error absoluto medio en días para los pares que compraron, y `n_pares`.\n- Varias ventanas (`--repeticiones R`: cortes sucesivos hacia atrás) para dar media y desvío.\n- `MetricasBacktest` serializable a JSON (es lo que guardará `analisis.metricas` en F4).\n\nDone when: tests sobre el sintético verifican que con datos sin ruido el modelo logra precisión\nalta y la línea base también, que con ruido el modelo supera a la línea base en Brier, y que las\nmétricas cuadran con un cálculo independiente hecho a mano en un caso de 5 pares.",
+      "model": "claude/claude-opus-5-5",
+      "reason": "Diseño de evaluación; un error aquí da conclusiones falsas.",
+      "status": "backlog",
+      "dependencies": [
+        "F1.2.T2"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "api/src/predicts/modelo/backtest.py",
+        "api/tests/test_modelo_backtest.py"
+      ],
+      "specRef": "f1-spike-modelo.md#F1.3.T1",
+      "comments": []
+    },
+    {
+      "id": "F1.3.T2",
+      "phase": 1,
+      "title": "CLI `predicts backtest`, medición real e informe del spike",
+      "description": "- Comando (en `comandos/backtest.py`) `predicts backtest \u003ccompras.parquet\u003e [--semanas N --horizonte H --k K\n  --repeticiones R --salida resultados.json]` que imprime una tabla legible modelo vs. línea base.\n- Correr, **con límite de memoria** (`systemd-run --user --scope -p MemoryMax=4G\n  -p MemorySwapMax=0 …` y `/usr/bin/time -v`), sobre: el sintético de 1 M de filas, Online Retail\n  II completo e Instacart (completo o la muestra más grande que entre en el límite), con\n  horizontes de 7 y 14 días.\n- Escribir `docs/notas/spike-modelo.md` (español): datos usados, métricas por dataset y\n  horizonte (modelo vs. línea base, media ± desvío), tiempo y memoria pico, calibración (tabla\n  de deciles), ejemplos concretos de pares bien y mal predichos, limitaciones (fechas sintéticas\n  de Instacart, poca recompra en Online Retail II) y una **recomendación explícita**: seguir,\n  ajustar (qué) o cambiar de método. No inventar cifras.\n\nDone when: el informe existe con los números medidos y la recomendación, y el CLI tiene tests\ncon el fixture sintético.",
+      "model": "claude/claude-opus-5-5",
+      "reason": "Requiere juicio para interpretar métricas y recomendar.",
+      "status": "backlog",
+      "dependencies": [
+        "F1.3.T1",
+        "F1.1.T2"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "api/src/predicts/comandos/backtest.py",
+        "api/tests/test_cli_backtest.py",
+        "docs/notas/spike-modelo.md"
+      ],
+      "specRef": "f1-spike-modelo.md#F1.3.T2",
+      "comments": []
+    },
+    {
+      "id": "F2.1.T1",
+      "phase": 2,
+      "title": "Registro, login, sesiones, CSRF y límite de intentos",
+      "description": "- `auth/seguridad.py`: hash y verificación con **Argon2id** (`argon2-cffi`, parámetros por\n  defecto de la librería, rehash si cambian); validación de contraseña (mínimo 10 caracteres,\n  no igual al email).\n- `auth/sesiones.py`: token aleatorio de 32 bytes; en la base solo su SHA-256; expiración\n  deslizante de 30 días; cookie `predicts_sesion` `HttpOnly`, `SameSite=Lax`, `Secure` fuera de\n  dev; cerrar sesión borra la fila.\n- **CSRF:** cookie `predicts_csrf` (no HttpOnly) + header `X-CSRF-Token` obligatorio en\n  POST/PUT/PATCH/DELETE autenticados; comparación en tiempo constante.\n- **Límite de intentos:** tabla `intentos_login`; 5 fallos por email o 20 por IP en 15 minutos →\n  `429 demasiados_intentos` con `reintentar_en_s`.\n- `auth/dependencias.py`: `usuario_actual` y `empresa_actual` (dependencias FastAPI).\n- `api/auth.py`: `POST /auth/registro` (crea **empresa + usuario dueño** en una transacción;\n  email único, normalizado a minúsculas), `POST /auth/login`, `POST /auth/logout`,\n  `GET /auth/yo` (usuario, empresa, idioma preferido). Mismo error `credenciales_invalidas` para\n  email inexistente y contraseña equivocada, y tiempo de respuesta similar en ambos casos.\n- `PATCH /auth/yo` para cambiar el idioma preferido (`pt-BR|es|en`).\n\nDone when: tests (marcador `db`) cubren registro, email duplicado, login correcto y fallido,\nsesión expirada, logout, CSRF faltante o inválido, límite de intentos por email y por IP, cambio\nde idioma, y que el token nunca se guarda en claro.",
+      "model": "claude/claude-opus-5-5",
+      "reason": "Seguridad; los errores aquí son vulnerabilidades.",
+      "status": "backlog",
+      "dependencies": [
+        "F0.2.T2",
+        "F0.2.T4"
+      ],
+      "estimateHours": 4.0,
+      "files": [
+        "api/src/predicts/auth/__init__.py",
+        "api/src/predicts/auth/seguridad.py",
+        "api/src/predicts/auth/sesiones.py",
+        "api/src/predicts/auth/csrf.py",
+        "api/src/predicts/auth/dependencias.py",
+        "api/src/predicts/api/auth.py",
+        "api/tests/test_auth.py"
+      ],
+      "specRef": "f2-cuentas.md#F2.1.T1",
+      "comments": []
+    },
+    {
+      "id": "F2.1.T2",
+      "phase": 2,
+      "title": "Recuperación de contraseña y envío de email",
+      "description": "- `correo/__init__.py`: envío por SMTP con la configuración `SMTP_*`; si no está configurado, escribe el\n  email completo en el log (modo dev). Plantillas de texto e HTML en\n  `api/src/predicts/correo/plantillas/\u003cidioma\u003e/` para `pt-BR`, `es` y `en`, elegidas por el\n  idioma del usuario.\n- `auth/recuperacion.py`: token de un solo uso (32 bytes, guardado como SHA-256), válido 1 hora;\n  pedir uno nuevo invalida los anteriores; al restablecer se cierran todas las sesiones del\n  usuario.\n- `api/recuperacion.py`: `POST /auth/recuperar` (siempre `204`, exista o no el email, para no\n  filtrar cuentas; con el mismo límite de intentos que el login) y `POST /auth/restablecer`\n  (token + contraseña nueva).\n\nDone when: tests cubren email existente e inexistente (misma respuesta), token vencido, reusado\ne inválido, cierre de sesiones al restablecer, y el contenido del email en los tres idiomas (con\nun transporte falso).",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Flujo estándar con detalles de seguridad ya definidos.",
+      "status": "backlog",
+      "dependencies": [
+        "F2.1.T1"
+      ],
+      "estimateHours": 2.5,
+      "files": [
+        "api/src/predicts/correo/",
+        "api/src/predicts/auth/recuperacion.py",
+        "api/src/predicts/api/recuperacion.py",
+        "api/tests/test_recuperacion.py"
+      ],
+      "specRef": "f2-cuentas.md#F2.1.T2",
+      "comments": []
+    },
+    {
+      "id": "F2.2.T1",
+      "phase": 2,
+      "title": "Aislamiento por empresa y CRUD de proyectos",
+      "description": "- `tenancy.py`: helper `de_empresa(query, empresa_id)` y una verificación usada por todas las\n  rutas que reciben un id (`obtener_o_404(db, Modelo, id, empresa_id)`): un recurso de otra\n  empresa responde `404 no_encontrado`, nunca `403` (no revelar que existe).\n- `api/proyectos.py`: `GET/POST /proyectos`, `GET/PATCH/DELETE /proyectos/{id}`; campos:\n  `nombre`, `idioma_mensajes` (`pt-BR|es|en`), `tono` (`cercano|neutro|formal`), `descripcion`.\n  Borrar un proyecto borra en cascada sus datasets y análisis (y marca sus archivos para la\n  retención).\n- `docs/notas/tenancy.md`: la regla y cómo la deben usar las fases siguientes.\n\nDone when: tests con dos empresas verifican que ninguna ve, edita ni borra proyectos de la otra\n(incluido por id adivinado) y cubren validación de campos.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "CRUD con una regla de aislamiento clara.",
+      "status": "backlog",
+      "dependencies": [
+        "F2.1.T1"
+      ],
+      "estimateHours": 2.0,
+      "files": [
+        "api/src/predicts/tenancy.py",
+        "api/src/predicts/api/proyectos.py",
+        "api/tests/test_proyectos.py",
+        "docs/notas/tenancy.md"
+      ],
+      "specRef": "f2-cuentas.md#F2.2.T1",
+      "comments": []
+    },
+    {
+      "id": "F2.2.T2",
+      "phase": 2,
+      "title": "API keys por empresa",
+      "description": "Para el servidor MCP y usos programáticos (F7):\n\n- `auth/api_keys.py`: crear (`pk_` + 32 bytes en base62; se muestra una sola vez), listar\n  (prefijo, nombre, creada, último uso), revocar; en la base solo el SHA-256.\n- Dependencia `empresa_por_api_key` (header `Authorization: Bearer pk_…`) que actualiza\n  `ultimo_uso`.\n- `api/api_keys.py`: `GET/POST /api-keys`, `DELETE /api-keys/{id}` (requieren sesión).\n\nDone when: tests cubren creación (el valor completo solo en la respuesta de creación), uso,\nrevocación, aislamiento entre empresas y que la key nunca queda en claro en la base.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Patrón conocido y acotado.",
+      "status": "backlog",
+      "dependencies": [
+        "F2.2.T1"
+      ],
+      "estimateHours": 1.5,
+      "files": [
+        "api/src/predicts/auth/api_keys.py",
+        "api/src/predicts/api/api_keys.py",
+        "api/tests/test_api_keys.py"
+      ],
+      "specRef": "f2-cuentas.md#F2.2.T2",
+      "comments": []
+    },
+    {
+      "id": "F3.1.T1",
+      "phase": 3,
+      "title": "Subida del CSV por streaming y detección de formato",
+      "description": "- `datos/subida.py`: guarda el archivo en `DATA_DIR/\u003cempresa\u003e/\u003cdataset\u003e/original.csv` leyendo en\n  bloques (nunca entero en memoria), corta con `413 archivo_muy_grande` al superar `MAX_CSV_MB`,\n  calcula SHA-256 y tamaño. Acepta también `.csv.gz` y `.zip` con un solo CSV.\n- `datos/deteccion.py`: codificación con `charset-normalizer` sobre los primeros 2 MB (UTF-8,\n  UTF-8 con BOM, latin-1, cp1252); separador, encabezado y tipos con `duckdb.sniff_csv`;\n  vista previa de 20 filas; por columna: tipo detectado, % de nulos, 10 valores de muestra y\n  **candidatos de formato de fecha** probados en orden (`dd/mm/aaaa`, `aaaa-mm-dd`, `mm/dd/aaaa`,\n  con y sin hora) con el % de valores que parsea cada uno; decimales con coma o punto.\n- `api/datasets.py`: `POST /proyectos/{id}/datasets` (multipart) → dataset en estado `subido`\n  con la detección; `GET /proyectos/{id}/datasets`, `GET /datasets/{id}`,\n  `DELETE /datasets/{id}` (borra archivos y filas).\n\nDone when: tests con fixtures (UTF-8, latin-1 con acentos, `;` como separador, decimales con\ncoma, fechas `dd/mm/aaaa`, gzip, zip, archivo vacío, CSV sin encabezado, archivo binario\ndisfrazado) verifican la detección, el límite de tamaño y el aislamiento por empresa; la subida\nde un CSV de 300 MB generado en el test (marcado `lento`, fuera de la CI) no supera 200 MB de RSS.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "E/S y casos de formato bien enumerados.",
+      "status": "backlog",
+      "dependencies": [
+        "F2.2.T1",
+        "F1.1.T1"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "api/src/predicts/datos/subida.py",
+        "api/src/predicts/datos/deteccion.py",
+        "api/src/predicts/api/datasets.py",
+        "api/tests/test_subida.py",
+        "api/tests/test_deteccion.py",
+        "api/tests/fixtures/csv/"
+      ],
+      "specRef": "f3-entrada-datos.md#F3.1.T1",
+      "comments": []
+    },
+    {
+      "id": "F3.2.T1",
+      "phase": 3,
+      "title": "Mapeo de campos con sugerencias de Jev y plantillas",
+      "description": "- `datos/mapeo.py`:\n  - `sugerir(deteccion) -\u003e Sugerencias`: **una sola llamada** `decidir_lote` de `ia.py` con una\n    pregunta `Choice` por columna; opciones = campos del esquema interno (`cliente_id`, `fecha`,\n    `producto_id`, `producto_nombre`, `pedido_id`, `cantidad`, `precio_unitario`, `valor_total`,\n    `categoria`, `marca`) + `ignorar`, con descripción de cada opción en el prompt. Contexto: nombre\n    de la columna, tipo detectado y 10 valores de muestra **enmascarados** si parecen email,\n    teléfono o CPF (regex documentadas). Para la columna elegida como producto, otra pregunta:\n    `sku` o `ean` (EAN = 8/12/13/14 dígitos con dígito verificador válido; si la regla ya lo\n    decide, no se pregunta a Jev).\n  - Confianza ≥ `CONFIANZA_MAPEO` → `prellenado`; menor → `revisar`. Cada decisión se guarda en\n    `decisiones_jev` (tipo `mapeo_columna`).\n  - `validar(mapeo, deteccion)`: obligatorios presentes y únicos, formato de fecha elegido,\n    tipo de identificador de producto; errores con códigos.\n  - Plantillas: firma = SHA-256 de los encabezados normalizados (minúsculas, sin acentos ni\n    espacios, ordenados). Si existe plantilla de la empresa con esa firma, se devuelve como\n    sugerencia con confianza 1 y origen `plantilla`, sin llamar a Jev.\n- `api/datasets_mapeo.py`: `GET /datasets/{id}/mapeo` (sugerencias), `PUT /datasets/{id}/mapeo`\n  (confirma; opción `guardar_como_plantilla`), `GET/DELETE /plantillas-mapeo`. Al confirmar,\n  se registran las correcciones de la persona en `decisiones_jev` (`corregida_a`).\n\nDone when: tests con un Jev falso cubren prellenado vs. revisar, enmascaramiento, regla de EAN,\nvalidación, uso de plantilla sin llamar a Jev, registro de correcciones y aislamiento.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Lógica de decisión con Jev siguiendo un patrón ya definido.",
+      "status": "backlog",
+      "dependencies": [
+        "F3.1.T1",
+        "F0.2.T3"
+      ],
+      "estimateHours": 4.0,
+      "files": [
+        "api/src/predicts/datos/mapeo.py",
+        "api/src/predicts/api/datasets_mapeo.py",
+        "api/tests/test_mapeo.py"
+      ],
+      "specRef": "f3-entrada-datos.md#F3.2.T1",
+      "comments": []
+    },
+    {
+      "id": "F3.2.T2",
+      "phase": 3,
+      "title": "Set de CSVs desordenados y medición del mapeo con Jev real",
+      "description": "- Generar (script con semilla, a partir del sintético y de Online Retail II) **al menos 25 CSVs\n  desordenados** en `api/tests/fixtures/desordenados/`, cada uno con su mapeo correcto en\n  `esperado.json`: encabezados en pt-BR, español e inglés, abreviados (\"Cód. Prod.\", \"Dt Venda\",\n  \"cli\"), en mayúsculas, con columnas extra (sucursal, vendedor, forma de pago), columnas sin\n  nombre, IDs de cliente numéricos y alfanuméricos, EAN y SKU, fechas en distintos formatos.\n  Mantener cada CSV chico (≤ 200 filas).\n- Comando `predicts medir-mapeo` (en `comandos/medir_mapeo.py`) que corre `sugerir` con **Jev\n  real** sobre el set y reporta acierto por columna y por campo, acierto del prellenado (solo lo\n  que quedó con confianza alta) y costo.\n- `docs/notas/mapeo.md` con la medición real (acierto total, por campo, errores típicos, y si\n  `CONFIANZA_MAPEO` = 0,8 es buen umbral: qué % queda prellenado y con qué acierto). Objetivo del\n  PRD: ≥ 90 %. No inventar cifras.\n\nDone when: el set existe con su verdad, el comando tiene tests con Jev falso, y el informe trae\nlos números de una corrida real.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Construcción de un set de evaluación y medición.",
+      "status": "backlog",
+      "dependencies": [
+        "F3.2.T1",
+        "F1.1.T2"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "api/tests/fixtures/desordenados/",
+        "scripts/generar_desordenados.py",
+        "api/src/predicts/comandos/medir_mapeo.py",
+        "api/tests/test_medir_mapeo.py",
+        "docs/notas/mapeo.md"
+      ],
+      "specRef": "f3-entrada-datos.md#F3.2.T2",
+      "comments": []
+    },
+    {
+      "id": "F3.3.T1",
+      "phase": 3,
+      "title": "Ingesta CSV → Parquet e informe de calidad",
+      "description": "- `datos/ingesta.py`: `ingerir(dataset, mapeo, progreso=callback) -\u003e ResumenIngesta` con DuckDB\n  (`read_csv` con codificación, separador y formato de fecha del mapeo, `all_varchar` y casteo\n  explícito para no perder filas por tipos), normalización (trim, `producto_nombre` y `marca`\n  sin espacios dobles, `cliente_id` como texto), descarte de filas inválidas **contadas por\n  motivo** (fecha que no parsea, cliente o producto vacío), y escritura de\n  `compras.parquet` validado con `validar_parquet`. Llama `progreso(etapa, contadores)` cada\n  ~1 M de filas.\n- `datos/calidad.py`: `calcular(compras.parquet) -\u003e InformeCalidad` (FR-6): filas, clientes,\n  productos, rango de fechas, duplicados exactos, filas descartadas por motivo (de la ingesta),\n  distribución de compras por cliente, pares con ≥ `MIN_COMPRAS` días distintos y % de la base\n  que representan, y **viabilidad por análisis** (recompra, riesgo, ofertas) con el motivo si no\n  alcanza (FR-7).\n- Comando `predicts ingerir \u003ccsv\u003e --mapeo mapeo.json --salida \u003cdir\u003e` (en\n  `comandos/ingerir.py`) que ejecuta ambos sin base de datos, para pruebas y medición.\n\nDone when: tests con los fixtures de F3.1 y F3.2 verifican conteos exactos, descartes por\nmotivo, la viabilidad, y que el Parquet pasa `validar_parquet`; medición (fuera de la CI) con un\nCSV sintético de 5 M de filas: tiempo y memoria pico con `DUCKDB_MEMORY_LIMIT=3GB`, anotados en\nel PR.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "SQL de DuckDB con conteos verificables.",
+      "status": "backlog",
+      "dependencies": [
+        "F3.2.T1"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "api/src/predicts/datos/ingesta.py",
+        "api/src/predicts/datos/calidad.py",
+        "api/src/predicts/comandos/ingerir.py",
+        "api/tests/test_ingesta.py",
+        "api/tests/test_calidad.py"
+      ],
+      "specRef": "f3-entrada-datos.md#F3.3.T1",
+      "comments": []
+    },
+    {
+      "id": "F4.1.T1",
+      "phase": 4,
+      "title": "Cola en Postgres, worker y ejecución en subproceso con tope de memoria",
+      "description": "- `trabajos/cola.py`: `encolar(db, empresa_id, tipo, parametros) -\u003e Trabajo`,\n  `tomar_siguiente(db)` con `SELECT … FOR UPDATE SKIP LOCKED`, estados\n  `en_cola → corriendo → listo | error | cancelado`, `cancelar(id)`.\n- `trabajos/registro.py`: registro de tipos de trabajo (`@tipo_trabajo(\"ingesta\")`) para que cada\n  fase agregue el suyo en su archivo.\n- `trabajos/worker.py` y comando `predicts worker` (en `comandos/worker.py`): bucle que toma\n  trabajos y ejecuta **cada uno en un subproceso** (`multiprocessing` con contexto `spawn`) con\n  `RLIMIT_AS` o `RLIMIT_DATA` = `MAX_MEMORIA_TRABAJO_MB` (documentar cuál y por qué; DuckDB y\n  NumPy reservan memoria virtual) y `TIMEOUT_TRABAJO_S`. Si el hijo muere por memoria, señal o\n  timeout, el trabajo queda en `error` con `codigo` (`memoria_excedida`, `tiempo_excedido`,\n  `error_interno`) y el worker sigue con el siguiente. Al arrancar, los trabajos que quedaron\n  `corriendo` de una caída anterior pasan a `error` (`interrumpido`).\n- `trabajos/eventos.py`: `emitir(trabajo_id, etapa, contadores, progreso)` desde el subproceso\n  (con su propia conexión) en `eventos_trabajo`, con el formato de *Interfaces → Eventos*; se\n  emite como máximo un evento por segundo por trabajo.\n- El pico de memoria del hijo (`ru_maxrss`) y la duración se guardan en el trabajo.\n\nDone when: tests con tipos de trabajo falsos cubren éxito, excepción, hijo que reserva memoria por\nencima del tope (→ `memoria_excedida` y el worker sigue), timeout, cancelación, recuperación al\nreiniciar, dos workers sin tomar el mismo trabajo, y la limitación de frecuencia de eventos.",
+      "model": "claude/claude-opus-5-5",
+      "reason": "Concurrencia, procesos y límites de memoria; ya causó caídas en otro proyecto.",
+      "status": "backlog",
+      "dependencies": [
+        "F0.2.T2",
+        "F0.2.T4"
+      ],
+      "estimateHours": 4.0,
+      "files": [
+        "api/src/predicts/trabajos/__init__.py",
+        "api/src/predicts/trabajos/cola.py",
+        "api/src/predicts/trabajos/registro.py",
+        "api/src/predicts/trabajos/worker.py",
+        "api/src/predicts/trabajos/eventos.py",
+        "api/src/predicts/comandos/worker.py",
+        "api/tests/test_trabajos.py"
+      ],
+      "specRef": "f4-analisis.md#F4.1.T1",
+      "comments": []
+    },
+    {
+      "id": "F4.1.T2",
+      "phase": 4,
+      "title": "SSE de progreso y trabajos de ingesta y calidad",
+      "description": "- `api/trabajos.py`: `GET /trabajos/{id}` (estado, error, duración, memoria) y\n  `GET /trabajos/{id}/eventos` (SSE con `sse-starlette`): envía los eventos guardados y los nuevos\n  hasta `listo`/`error`, con `Last-Event-ID` para reconectar; `POST /trabajos/{id}/cancelar`.\n- `trabajos/tipos_datos.py`: tipos `ingesta` (llama `datos.ingesta.ingerir` con el mapeo\n  confirmado y emite eventos `leyendo`) y `calidad` (llama `datos.calidad.calcular`, guarda el\n  informe en `datasets.calidad` y emite `calidad`). Al terminar la ingesta se encola la calidad.\n- `api/datasets_ingesta.py`: `POST /datasets/{id}/ingesta` (requiere mapeo confirmado; →\n  trabajo) y `GET /datasets/{id}/calidad`. Estados del dataset: `subido → mapeado → ingiriendo →\n  listo | error`.\n\nDone when: tests de punta a punta con el worker real en un hilo de prueba: subir el fixture,\nconfirmar mapeo, ingerir, recibir los eventos por SSE (cliente de prueba) y leer la calidad;\nreconexión con `Last-Event-ID`; aislamiento por empresa.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Integración de piezas ya definidas.",
+      "status": "backlog",
+      "dependencies": [
+        "F4.1.T1",
+        "F3.3.T1"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "api/src/predicts/api/trabajos.py",
+        "api/src/predicts/trabajos/tipos_datos.py",
+        "api/src/predicts/api/datasets_ingesta.py",
+        "api/tests/test_trabajos_api.py"
+      ],
+      "specRef": "f4-analisis.md#F4.1.T2",
+      "comments": []
+    },
+    {
+      "id": "F4.2.T1",
+      "phase": 4,
+      "title": "Catálogo de productos, recompra o durable y categoría con Jev",
+      "description": "- `productos/catalogo.py`: a partir del Parquet, `actualizar_catalogo(dataset)` hace upsert en\n  `productos` (por empresa y nombre normalizado) con estadísticas del dataset: clientes, clientes\n  que lo compraron más de una vez, mediana del intervalo, precio medio.\n- `productos/clasificacion.py`:\n  - **Recompra o durable** (`decidir_lote`, `Noul`-equivalente sí/no, en lotes de 50 productos\n    por llamada): pregunta y criterios en el código, con nombre, categoría si existe y las\n    estadísticas. Regla previa sin Jev: si ≥ 30 % de sus clientes lo recompraron con mediana\n    \u003c 120 días → recompra; si nadie lo recompró y tiene ≥ 50 clientes → durable. Solo lo ambiguo va\n    a Jev. Confianza \u003c `CONFIANZA_JEV` → `revisar`.\n  - **Categoría** (`Choice` sobre `productos/taxonomia.json`, ~40 categorías de consumo y\n    durables con nombre en pt-BR/es/en) solo si el CSV no trae categoría.\n  - Caché: un producto ya clasificado para la empresa no se vuelve a preguntar salvo que la\n    persona lo pida.\n- Tipo de trabajo `productos` (en `trabajos/tipos_productos.py`) encolado al terminar la calidad.\n- `api/productos.py`: `GET /datasets/{id}/productos?estado=revisar`, `PATCH /productos/{id}`\n  (corregir recompra/durable o categoría; se registra en `decisiones_jev`).\n\nDone when: tests con Jev falso cubren la regla previa, el lote, el umbral, la caché, la\ncorrección y el aislamiento; medición real (fuera de la CI) sobre Online Retail II: cuántos\nproductos van a Jev, costo y 30 clasificaciones revisadas a mano, anotado en el PR.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Reglas + Jev por lotes siguiendo un patrón definido.",
+      "status": "backlog",
+      "dependencies": [
+        "F4.1.T2",
+        "F0.2.T3"
+      ],
+      "estimateHours": 4.0,
+      "files": [
+        "api/src/predicts/productos/__init__.py",
+        "api/src/predicts/productos/catalogo.py",
+        "api/src/predicts/productos/clasificacion.py",
+        "api/src/predicts/productos/taxonomia.json",
+        "api/src/predicts/trabajos/tipos_productos.py",
+        "api/src/predicts/api/productos.py",
+        "api/tests/test_productos.py"
+      ],
+      "specRef": "f4-analisis.md#F4.2.T1",
+      "comments": []
+    },
+    {
+      "id": "F4.2.T2",
+      "phase": 4,
+      "title": "Productos equivalentes con embeddings en pgvector",
+      "description": "- `productos/equivalentes.py`: embeddings del nombre normalizado (`ia.embeddings`, lotes de 100,\n  solo productos sin embedding), búsqueda de vecinos con pgvector (coseno, índice HNSW) dentro de\n  la empresa, y propuestas de grupo cuando similitud ≥ umbral configurable **y** coinciden marca\n  o categoría si existen. Las propuestas no se aplican solas: quedan en `grupos_producto` con\n  estado `propuesto`.\n- El análisis (F4.3) usa los grupos `confirmado`; un producto sin grupo es su propio grupo.\n- Rutas en `api/productos_grupos.py`: listar propuestas, confirmar, rechazar, separar.\n\nDone when: tests con embeddings falsos deterministas cubren propuestas, umbral, la condición de\nmarca/categoría, confirmar/rechazar y aislamiento; el índice existe en la migración inicial\n(si falta, agregarlo con una migración nueva en esta tarea).",
+      "model": "claude/claude-sonnet-5",
+      "reason": "pgvector con reglas acotadas.",
+      "status": "backlog",
+      "dependencies": [
+        "F4.2.T1"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "api/src/predicts/productos/equivalentes.py",
+        "api/src/predicts/api/productos_grupos.py",
+        "api/alembic/versions/",
+        "api/tests/test_equivalentes.py"
+      ],
+      "specRef": "f4-analisis.md#F4.2.T2",
+      "comments": []
+    },
+    {
+      "id": "F4.3.T1",
+      "phase": 4,
+      "title": "Análisis de recompra y ciclos por producto con backtesting",
+      "description": "- `analisis/orquestador.py`: tipo de trabajo `analisis` que recibe los tipos pedidos y sus\n  parámetros (FR-15), aplica grupos de productos y excluye durables, y ejecuta cada análisis\n  emitiendo eventos (`ciclos`, `prediccion`, `backtest`, …) con contadores reales.\n- `analisis/recompra.py`: usa `modelo.ajustar/predecir` (F1) con `fecha_ref` = última fecha del\n  dataset; resultado en `resultados/recompra.parquet` (columnas de *Interfaces → Modelo* + nombre\n  de producto + motivo legible), filtrado por umbral de probabilidad; **backtest** del mismo\n  dataset guardado en `analisis.metricas` (modelo y línea base).\n- `analisis/ciclos.py`: ciclo típico por producto (mediana, dispersión, clientes recurrentes) en\n  `resultados/ciclos.parquet`.\n- `analisis.resumen` (JSON): totales por análisis, top productos, costo de IA, versión del\n  modelo y parámetros (NFR-4).\n\nDone when: tests sobre el sintético verifican resultados contra la verdad (ciclos ±15 %, los\npares que compran en el horizonte tienen más probabilidad), que los durables quedan fuera, que\nlos grupos se aplican, y que métricas y resumen se guardan.",
+      "model": "claude/claude-opus-5-5",
+      "reason": "Corazón del producto sobre el modelo de F1.",
+      "status": "backlog",
+      "dependencies": [
+        "F1.3.T2",
+        "F4.1.T2",
+        "F4.2.T1"
+      ],
+      "estimateHours": 4.0,
+      "files": [
+        "api/src/predicts/analisis/__init__.py",
+        "api/src/predicts/analisis/orquestador.py",
+        "api/src/predicts/analisis/recompra.py",
+        "api/src/predicts/analisis/ciclos.py",
+        "api/tests/test_analisis_recompra.py"
+      ],
+      "specRef": "f4-analisis.md#F4.3.T1",
+      "comments": []
+    },
+    {
+      "id": "F4.3.T2",
+      "phase": 4,
+      "title": "Riesgo de abandono, ofertas y decisión de contactar",
+      "description": "- `analisis/riesgo.py` (FR-13): pares con compras regulares previas (≥ `MIN_COMPRAS`) y\n  `t \u003e ciclo + 2·dispersión` (factor configurable), y clientes cuya actividad total cayó por\n  debajo de su ritmo; ordenados por valor histórico (si hay precio) o número de compras; con el\n  motivo legible.\n- `analisis/ofertas.py` (FR-14): matriz ítem–ítem de co-compra en DuckDB (lift con soporte\n  mínimo) y candidatos por cliente = recompra próxima + productos con alto lift con lo que ya\n  compra y todavía no compra + (si se subió) intersección con una lista de ofertas\n  (`POST /datasets/{id}/ofertas` con un CSV `producto_id,descuento`). Puntaje combinado\n  documentado; tope de N por cliente.\n- `analisis/contactar.py` (FR-20): regla en código para los casos claros y `decidir_lote` de Jev\n  solo para los límite (probabilidad a ±0,1 del umbral, varios recordatorios el mismo día, cliente\n  en riesgo y en recompra a la vez), en lotes; confianza baja → `revisar`.\n- Se suman al orquestador de F4.3.T1.\n\nDone when: tests sobre el sintético cubren riesgo contra `abandono_en` (precisión y cobertura\nreportadas), ofertas (lift calculado a mano en un caso chico), la lista de ofertas, y que Jev solo\nrecibe los casos límite.",
+      "model": "claude/claude-opus-5-5",
+      "reason": "Varias heurísticas con decisiones de producto.",
+      "status": "backlog",
+      "dependencies": [
+        "F4.3.T1"
+      ],
+      "estimateHours": 4.0,
+      "files": [
+        "api/src/predicts/analisis/riesgo.py",
+        "api/src/predicts/analisis/ofertas.py",
+        "api/src/predicts/analisis/contactar.py",
+        "api/src/predicts/analisis/orquestador.py",
+        "api/src/predicts/api/datasets_ofertas.py",
+        "api/tests/test_analisis_riesgo_ofertas.py"
+      ],
+      "specRef": "f4-analisis.md#F4.3.T2",
+      "comments": []
+    },
+    {
+      "id": "F4.3.T3",
+      "phase": 4,
+      "title": "Rutas de análisis y medición de rendimiento con 1 M de filas",
+      "description": "- `api/analisis.py`: `POST /datasets/{id}/analisis` (tipos + parámetros → análisis + trabajo),\n  `GET /datasets/{id}/analisis`, `GET /analisis/{id}` (estado, resumen, métricas),\n  `GET /analisis/{id}/resultados?tipo=recompra|ciclos|riesgo|ofertas\u0026pagina=\u0026orden=` (paginado\n  desde el Parquet con DuckDB, sin cargar todo en memoria), `DELETE /analisis/{id}`.\n- **Medición (NFR-1, NFR-2):** con `docker compose` (límites de la arquitectura), CSV sintético de\n  1 M y 5 M de filas: tiempo de ingesta + calidad + productos (Jev falso, para no gastar) +\n  análisis completo, y memoria pico de cada contenedor y del subproceso. Escribir\n  `docs/notas/rendimiento.md` con los números medidos y si se cumple \"\u003c 5 min para 1 M de\n  filas\".\n\nDone when: tests de las rutas (paginación, orden, tipos inválidos, aislamiento) y el informe de\nrendimiento con datos reales.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Rutas estándar más una medición guiada.",
+      "status": "backlog",
+      "dependencies": [
+        "F4.3.T2",
+        "F0.3.T1"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "api/src/predicts/api/analisis.py",
+        "api/tests/test_analisis_api.py",
+        "docs/notas/rendimiento.md"
+      ],
+      "specRef": "f4-analisis.md#F4.3.T3",
+      "comments": []
+    },
+    {
+      "id": "F5.1.T1",
+      "phase": 5,
+      "title": "Plantillas de mensaje con el LLM y revisión con Jev",
+      "description": "- `mensajes/plantillas.py`: para cada combinación (producto o grupo, o categoría si el producto\n  tiene pocos clientes) × tipo (`recordatorio`, `oferta`, `reactivacion`) × idioma del proyecto ×\n  tono, genera con `ia.generar` un `PlantillaMensaje` (Pydantic: `texto` ≤ 300 caracteres, con\n  marcadores `{producto}`, `{dias}`, `{oferta}`, `{nombre_tienda}` cuando corresponda), en\n  **lotes** de hasta 20 combinaciones por llamada. Prompt en el idioma del proyecto, con ejemplos\n  de tono y reglas: sin inventar descuentos, sin urgencia falsa, sin datos personales.\n- `mensajes/revision.py`: Jev revisa cada plantilla en lote (sí/no con motivo): promesas que el\n  sistema no garantiza, datos sensibles, tono distinto del pedido, marcadores mal usados.\n  Rechazada → se regenera **una vez** con el motivo; si vuelve a fallar queda `revisar`.\n- Caché en `plantillas_mensaje` por (empresa, clave de la combinación, idioma, tono); editar una\n  plantilla desde la API la marca `editada` y no se regenera.\n- `mensajes/render.py`: completa la plantilla por fila de resultado (en código, nunca con el LLM)\n  y valida que no queden marcadores sin reemplazar.\n- Tipo de trabajo `mensajes` y paso opcional al final del orquestador de análisis.\n- `api/mensajes.py`: `GET /analisis/{id}/plantillas`, `PATCH /plantillas-mensaje/{id}`,\n  `POST /analisis/{id}/plantillas/regenerar`.\n\nDone when: tests con LLM y Jev falsos cubren lotes, caché, regeneración única, render sin\nmarcadores sueltos y edición; medición real (fuera de la CI) sobre Online Retail II: número de\nllamadas, costo y 15 plantillas revisadas a mano en los tres idiomas, anotado en el PR.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Generación con LLM + revisión con Jev siguiendo patrones definidos.",
+      "status": "backlog",
+      "dependencies": [
+        "F4.3.T2"
+      ],
+      "estimateHours": 4.0,
+      "files": [
+        "api/src/predicts/mensajes/__init__.py",
+        "api/src/predicts/mensajes/plantillas.py",
+        "api/src/predicts/mensajes/revision.py",
+        "api/src/predicts/mensajes/render.py",
+        "api/src/predicts/trabajos/tipos_mensajes.py",
+        "api/src/predicts/api/mensajes.py",
+        "api/tests/test_mensajes.py"
+      ],
+      "specRef": "f5-mensajes.md#F5.1.T1",
+      "comments": []
+    },
+    {
+      "id": "F5.2.T1",
+      "phase": 5,
+      "title": "Exportación a CSV de recordatorios, ofertas y riesgo",
+      "description": "- `exportar.py`: `GET /analisis/{id}/exportar?tipo=recordatorios|ofertas|riesgo\u0026separador=,|;`\n  con streaming desde el Parquet (DuckDB `COPY` a un archivo temporal o generador por bloques):\n  `cliente_id`, `producto_id`, `producto_nombre`, `fecha_sugerida`, `fecha_min`, `fecha_max`,\n  `probabilidad`, `motivo`, `mensaje` (render de F5.1), `contactar` (sí/no/revisar). UTF-8 con BOM\n  (abre bien en Excel), encabezados en el idioma del proyecto, nombre de archivo con proyecto,\n  tipo y fecha.\n- Solo filas con `contactar = sí` por defecto; `incluir_revisar=true` para incluir las dudosas.\n\nDone when: tests verifican columnas, separador, BOM, encabezados en los tres idiomas, filtros,\nstreaming (memoria acotada con 1 M de filas en un test marcado `lento`) y aislamiento.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Exportación acotada.",
+      "status": "backlog",
+      "dependencies": [
+        "F5.1.T1",
+        "F4.3.T3"
+      ],
+      "estimateHours": 2.0,
+      "files": [
+        "api/src/predicts/exportar.py",
+        "api/src/predicts/api/exportar.py",
+        "api/tests/test_exportar.py"
+      ],
+      "specRef": "f5-mensajes.md#F5.2.T1",
+      "comments": []
+    },
+    {
+      "id": "F6.1.T1",
+      "phase": 6,
+      "title": "Cliente de API, sesión y pantallas de cuenta",
+      "description": "- Exportar el OpenAPI y generar `schema.ts`; cliente `openapi-fetch` en `web/src/api/cliente.ts`\n  con `credentials: \"include\"` y el header `X-CSRF-Token` leído de la cookie `predicts_csrf` en\n  métodos que cambian estado; manejo central de `401` (redirige a login) y de errores\n  `{codigo, parametros}`.\n- Hooks de TanStack Query base y `useSesion()` (`GET /auth/yo`).\n- Rutas `login`, `registro`, `recuperar`, `restablecer` (namespace `auth`), guarda de rutas\n  autenticadas, menú de usuario con cerrar sesión, y selector de idioma que además guarda la\n  preferencia con `PATCH /auth/yo`.\n\nDone when: tests cubren login correcto y con error traducido en los tres idiomas, redirección por\n`401`, envío del header CSRF y el cambio de idioma persistido; `npm run build` pasa.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Integración frontend–API con sesión y CSRF.",
+      "status": "backlog",
+      "dependencies": [
+        "F0.1.T2",
+        "F2.1.T2",
+        "F2.2.T2",
+        "F4.2.T2",
+        "F5.2.T1"
+      ],
+      "estimateHours": 4.0,
+      "files": [
+        "web/src/api/",
+        "web/src/hooks/useSesion.ts",
+        "web/src/routes/login.tsx",
+        "web/src/routes/registro.tsx",
+        "web/src/routes/recuperar.tsx",
+        "web/src/routes/restablecer.tsx",
+        "web/src/routes/_autenticado.tsx",
+        "web/src/components/layout/",
+        "web/src/i18n/locales/pt-BR/auth.json",
+        "web/src/i18n/locales/es/auth.json",
+        "web/src/i18n/locales/en/auth.json",
+        "web/src/__tests__/auth.test.tsx"
+      ],
+      "specRef": "f6-web.md#F6.1.T1",
+      "comments": []
+    },
+    {
+      "id": "F6.1.T2",
+      "phase": 6,
+      "title": "Proyectos",
+      "description": "- Rutas `_autenticado/proyectos/index.tsx` (lista, vacío con llamado a crear el primero) y\n  `_autenticado/proyectos/$proyectoId.tsx` (detalle con sus datasets y análisis), diálogo de\n  crear/editar (nombre, idioma de los mensajes, tono, descripción) y borrar con confirmación.\n- Namespace `proyectos`.\n\nDone when: tests cubren lista, crear, editar, borrar y estados de carga/vacío/error.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "CRUD de interfaz estándar.",
+      "status": "backlog",
+      "dependencies": [
+        "F6.1.T1"
+      ],
+      "estimateHours": 2.5,
+      "files": [
+        "web/src/routes/_autenticado/proyectos/",
+        "web/src/features/proyectos/",
+        "web/src/i18n/locales/pt-BR/proyectos.json",
+        "web/src/i18n/locales/es/proyectos.json",
+        "web/src/i18n/locales/en/proyectos.json",
+        "web/src/__tests__/proyectos.test.tsx"
+      ],
+      "specRef": "f6-web.md#F6.1.T2",
+      "comments": []
+    },
+    {
+      "id": "F6.2.T1",
+      "phase": 6,
+      "title": "Subir CSV",
+      "description": "- Ruta `_autenticado/proyectos/$proyectoId/datasets/nuevo.tsx`: zona de arrastrar y soltar\n  (CSV, `.csv.gz`, `.zip`), vista previa de las primeras filas leída **en el navegador** antes de\n  subir (primer bloque del archivo), subida con barra de progreso real (XHR/fetch con progreso) y\n  cancelación, errores traducidos (`archivo_muy_grande`, formato no soportado). Al terminar,\n  pasa a la pantalla de mapeo.\n- Namespace `subir`.\n\nDone when: tests cubren selección por arrastre y por botón, vista previa, progreso, cancelación y\nerrores.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Componente de subida con estados definidos.",
+      "status": "backlog",
+      "dependencies": [
+        "F6.1.T2"
+      ],
+      "estimateHours": 2.5,
+      "files": [
+        "web/src/routes/_autenticado/proyectos/$proyectoId/datasets/nuevo.tsx",
+        "web/src/features/subir/",
+        "web/src/i18n/locales/pt-BR/subir.json",
+        "web/src/i18n/locales/es/subir.json",
+        "web/src/i18n/locales/en/subir.json",
+        "web/src/__tests__/subir.test.tsx"
+      ],
+      "specRef": "f6-web.md#F6.2.T1",
+      "comments": []
+    },
+    {
+      "id": "F6.2.T2",
+      "phase": 6,
+      "title": "Mapear campos, ingesta y calidad de datos",
+      "description": "- Ruta `_autenticado/datasets/$datasetId/mapeo.tsx`: tabla con cada columna del CSV, sus valores\n  de muestra y un selector del campo interno, **prellenado con la sugerencia de Jev** y una\n  insignia de confianza (alta → verde \"sugerido\", baja → ámbar \"revisar\"); selector de formato de\n  fecha con el % que parsea cada uno; SKU o EAN; validación en vivo (obligatorios, duplicados);\n  casilla \"guardar como plantilla\"; botón confirmar e iniciar ingesta.\n- Ruta `_autenticado/datasets/$datasetId/calidad.tsx`: progreso de la ingesta (SSE de\n  `/trabajos/{id}/eventos`, versión 2D simple: etapas y contadores) y luego el informe de calidad\n  (FR-6) con tarjetas y un gráfico de compras por cliente; viabilidad por análisis con el motivo\n  cuando no alcanza (FR-7); botón para continuar a análisis.\n- Lista de productos a revisar (recompra/durable y categoría con confianza baja) con corrección en\n  línea (`PATCH /productos/{id}`), y propuestas de productos equivalentes para confirmar o\n  rechazar.\n- Hook `useEventosTrabajo(trabajoId)` (SSE con reconexión) en `web/src/hooks/`, reutilizable.\n- Namespaces `mapeo` y `calidad`.\n\nDone when: tests cubren prellenado e insignias, validación, plantilla, el hook SSE con un stream\nfalso (incluida la reconexión), el informe de calidad y la corrección de productos.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Pantallas con varios estados y streaming.",
+      "status": "backlog",
+      "dependencies": [
+        "F6.2.T1"
+      ],
+      "estimateHours": 4.0,
+      "files": [
+        "web/src/routes/_autenticado/datasets/$datasetId/mapeo.tsx",
+        "web/src/routes/_autenticado/datasets/$datasetId/calidad.tsx",
+        "web/src/features/mapeo/",
+        "web/src/features/calidad/",
+        "web/src/hooks/useEventosTrabajo.ts",
+        "web/src/i18n/locales/pt-BR/mapeo.json",
+        "web/src/i18n/locales/es/mapeo.json",
+        "web/src/i18n/locales/en/mapeo.json",
+        "web/src/i18n/locales/pt-BR/calidad.json",
+        "web/src/i18n/locales/es/calidad.json",
+        "web/src/i18n/locales/en/calidad.json",
+        "web/src/__tests__/mapeo.test.tsx",
+        "web/src/__tests__/calidad.test.tsx"
+      ],
+      "specRef": "f6-web.md#F6.2.T2",
+      "comments": []
+    },
+    {
+      "id": "F6.3.T1",
+      "phase": 6,
+      "title": "Elegir análisis y seguir su ejecución",
+      "description": "- Ruta `_autenticado/datasets/$datasetId/analisis/nuevo.tsx`: tarjetas para recompra, ciclos,\n  riesgo de abandono y ofertas (deshabilitadas con el motivo si la calidad dice que no hay datos\n  suficientes), parámetros con valores por defecto y ayuda (período, mínimo de compras,\n  horizonte, umbral), subida opcional de la lista de ofertas.\n- Ruta `_autenticado/analisis/$analisisId/progreso.tsx`: progreso con `useEventosTrabajo` en una\n  vista 2D (etapas y contadores; la escena 3D llega en F8.1 y se monta en un contenedor\n  `\u003cVistaProcesamiento\u003e` que esta tarea deja con la versión 2D por defecto), cancelar, error\n  traducido (`memoria_excedida`, `tiempo_excedido`, …) y paso automático a resultados.\n- Namespace `analisis`.\n\nDone when: tests cubren la selección, los deshabilitados por viabilidad, parámetros, el progreso\ncon un stream falso, cancelar y los errores.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Formulario y progreso con hook ya existente.",
+      "status": "backlog",
+      "dependencies": [
+        "F6.2.T2"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "web/src/routes/_autenticado/datasets/$datasetId/analisis/nuevo.tsx",
+        "web/src/routes/_autenticado/analisis/$analisisId/progreso.tsx",
+        "web/src/features/analisis/",
+        "web/src/i18n/locales/pt-BR/analisis.json",
+        "web/src/i18n/locales/es/analisis.json",
+        "web/src/i18n/locales/en/analisis.json",
+        "web/src/__tests__/analisis.test.tsx"
+      ],
+      "specRef": "f6-web.md#F6.3.T1",
+      "comments": []
+    },
+    {
+      "id": "F6.3.T2",
+      "phase": 6,
+      "title": "Resultados, precisión, mensajes y exportación",
+      "description": "- Ruta `_autenticado/analisis/$analisisId/index.tsx` con pestañas:\n  - **Recordatorios:** tabla paginada (cliente, producto, fecha probable con rango, probabilidad,\n    motivo, mensaje, contactar), filtros y orden desde la API; calendario de recordatorios por día\n    del horizonte (gráfico de barras).\n  - **Ciclos por producto:** tabla y gráfico de dispersión ciclo vs. clientes recurrentes.\n  - **Riesgo:** tabla con motivo y valor.\n  - **Ofertas:** por cliente.\n  - **Precisión:** métricas del backtest **modelo vs. línea base** lado a lado, gráfico de\n    calibración por deciles y una explicación corta de qué significa cada número (FR-16).\n  - **Mensajes:** plantillas por producto y tipo, editar y regenerar.\n- Botones de exportar (recordatorios, ofertas, riesgo; separador `,` o `;`).\n- Namespace `resultados`.\n\nDone when: tests cubren cada pestaña con datos falsos, paginación y orden, edición de plantilla y\nla descarga del CSV.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Pantalla rica pero con datos ya resueltos por la API.",
+      "status": "backlog",
+      "dependencies": [
+        "F6.3.T1"
+      ],
+      "estimateHours": 4.0,
+      "files": [
+        "web/src/routes/_autenticado/analisis/$analisisId/index.tsx",
+        "web/src/features/resultados/",
+        "web/src/i18n/locales/pt-BR/resultados.json",
+        "web/src/i18n/locales/es/resultados.json",
+        "web/src/i18n/locales/en/resultados.json",
+        "web/src/__tests__/resultados.test.tsx"
+      ],
+      "specRef": "f6-web.md#F6.3.T2",
+      "comments": []
+    },
+    {
+      "id": "F6.3.T3",
+      "phase": 6,
+      "title": "Prueba de punta a punta con Playwright",
+      "description": "- `web/e2e/flujo-completo.spec.ts`: con `docker compose` levantado (Jev y 9router reemplazados\n  por servidores falsos deterministas que la tarea crea en `api/tests/e2e/` y que se activan con\n  una variable de entorno), registrar usuario, crear proyecto, subir el CSV de fixture, confirmar\n  el mapeo, esperar la calidad, correr los cuatro análisis, ver resultados y exportar; repetir el\n  login y una pantalla en es y en.\n- Script `npm run e2e` y un job opcional en la CI (manual, `workflow_dispatch`) en un workflow\n  aparte.\n- Medir y anotar en el PR el tiempo del flujo (objetivo del PRD: ≤ 10 min para un usuario nuevo).\n\nDone when: `npm run e2e` pasa localmente contra el compose y el informe del PR trae el tiempo.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "E2E con dobles de servicios externos.",
+      "status": "backlog",
+      "dependencies": [
+        "F6.3.T2"
+      ],
+      "estimateHours": 4.0,
+      "files": [
+        "web/e2e/",
+        "web/playwright.config.ts",
+        "api/tests/e2e/",
+        ".github/workflows/e2e.yml"
+      ],
+      "specRef": "f6-web.md#F6.3.T3",
+      "comments": []
+    },
+    {
+      "id": "F7.1.T1",
+      "phase": 7,
+      "title": "Agente con LangGraph y herramienta `consultar_sql` de solo lectura",
+      "description": "- `agente/sql.py`: conexión DuckDB **de solo lectura** con vistas fijas del dataset y su último\n  análisis (`compras`, `predicciones`, `ciclos`, `riesgo`, `ofertas`, `productos` con\n  categoría y recompra/durable), y `consultar(sql)`: una sola sentencia, solo `SELECT`/`WITH`\n  (validado con `duckdb.extract_statements` y el tipo de sentencia), sin funciones de archivo ni\n  de red (`read_csv`, `read_parquet`, `httpfs`, `COPY`, `ATTACH`, `INSTALL`, `LOAD` rechazadas;\n  `enable_external_access=false`), tope de 1.000 filas y 10 s, `memory_limit` de 1 GB.\n- `agente/grafo.py`: LangGraph con el LLM de 9router, herramienta `consultar_sql` (el LLM recibe\n  el esquema de las vistas con descripción de cada columna) y `describir_dataset`; máximo 6\n  consultas por pregunta; respuesta estructurada `{respuesta, consultas: [{sql, filas_muestra,\n  n_filas}], advertencias}` en el idioma del usuario. Si los datos no alcanzan, lo dice.\n- `api/agente.py`: `POST /agente/preguntas` (`dataset_id`, `pregunta`, historial opcional de la\n  conversación) con aislamiento por empresa; costo de cada pregunta registrado.\n\nDone when: tests sin red con un LLM falso que emite llamadas a la herramienta cubren el flujo,\nel tope de consultas, y que cada sentencia peligrosa listada se rechaza; tests de `consultar` con\nel sintético.",
+      "model": "claude/claude-opus-5-5",
+      "reason": "Agente con herramientas y superficie de seguridad (SQL).",
+      "status": "backlog",
+      "dependencies": [
+        "F4.3.T2",
+        "F0.2.T3"
+      ],
+      "estimateHours": 4.0,
+      "files": [
+        "api/src/predicts/agente/__init__.py",
+        "api/src/predicts/agente/sql.py",
+        "api/src/predicts/agente/grafo.py",
+        "api/src/predicts/api/agente.py",
+        "api/tests/test_agente.py"
+      ],
+      "specRef": "f7-agente.md#F7.1.T1",
+      "comments": []
+    },
+    {
+      "id": "F7.1.T2",
+      "phase": 7,
+      "title": "Evaluación del agente con preguntas de respuesta conocida",
+      "description": "- `api/tests/evals/agente/preguntas.yaml`: al menos 25 preguntas en pt-BR, es y en sobre el\n  sintético (cuyas respuestas se calculan en el script, no a mano): conteos, top productos,\n  ciclos, clientes en riesgo, comparación entre períodos, preguntas sin respuesta posible y\n  preguntas maliciosas (\"borra la tabla\", \"lee /etc/passwd\").\n- Comando `predicts evaluar-agente` (en `comandos/evaluar_agente.py`) que corre el agente con el\n  LLM real y puntúa: respuesta numérica correcta (tolerancia definida), uso de consultas, no\n  inventar cuando no hay dato, rechazo de las maliciosas; reporta acierto, consultas por pregunta\n  y costo.\n- `docs/notas/agente.md` con la medición real y los errores típicos.\n\nDone when: el set y el comando existen con tests sin red, y el informe trae los números de una\ncorrida real.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Construcción de evals y medición.",
+      "status": "backlog",
+      "dependencies": [
+        "F7.1.T1"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "api/tests/evals/agente/",
+        "api/src/predicts/comandos/evaluar_agente.py",
+        "api/tests/test_evaluar_agente.py",
+        "docs/notas/agente.md"
+      ],
+      "specRef": "f7-agente.md#F7.1.T2",
+      "comments": []
+    },
+    {
+      "id": "F7.1.T3",
+      "phase": 7,
+      "title": "Servidor MCP",
+      "description": "- `agente/mcp.py` y comando `predicts mcp` (en `comandos/mcp.py`) con el SDK `mcp`: transporte\n  stdio y HTTP streamable, autenticado con API key de empresa (F2.2.T2). Herramientas:\n  `listar_proyectos`, `listar_datasets`, `recordatorios(analisis_id, dias, limite)`,\n  `ciclos_producto(analisis_id, producto)`, `clientes_en_riesgo(analisis_id, limite)` y\n  `preguntar(dataset_id, pregunta)` (usa el agente de F7.1.T1).\n- `docs/notas/mcp.md`: cómo conectarlo desde Claude Desktop/Claude Code con un ejemplo de\n  configuración.\n\nDone when: tests con el cliente MCP del SDK en memoria cubren cada herramienta, el rechazo sin\nAPI key y el aislamiento entre empresas.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Exponer funciones existentes por MCP.",
+      "status": "backlog",
+      "dependencies": [
+        "F7.1.T1",
+        "F2.2.T2"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "api/src/predicts/agente/mcp.py",
+        "api/src/predicts/comandos/mcp.py",
+        "api/tests/test_mcp.py",
+        "docs/notas/mcp.md"
+      ],
+      "specRef": "f7-agente.md#F7.1.T3",
+      "comments": []
+    },
+    {
+      "id": "F7.2.T1",
+      "phase": 7,
+      "title": "Pantalla del agente analista",
+      "description": "- Regenerar `web/src/api/openapi.json` y `schema.ts` (incluyen `/agente/preguntas`).\n- Ruta `_autenticado/datasets/$datasetId/agente.tsx`: chat con historial de la sesión, sugerencias\n  de preguntas, y en cada respuesta un desplegable \"cómo lo calculé\" con las consultas SQL\n  (resaltadas) y la tabla de filas de muestra; advertencias visibles; errores traducidos.\n- Enlace al agente desde resultados y desde el detalle del dataset.\n- Namespace `agente`.\n\nDone when: tests cubren enviar una pregunta, mostrar consultas y filas, advertencias y errores.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Interfaz de chat con datos estructurados.",
+      "status": "backlog",
+      "dependencies": [
+        "F7.1.T1",
+        "F6.3.T3"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "web/src/api/openapi.json",
+        "web/src/api/schema.ts",
+        "web/src/routes/_autenticado/datasets/$datasetId/agente.tsx",
+        "web/src/features/agente/",
+        "web/src/i18n/locales/pt-BR/agente.json",
+        "web/src/i18n/locales/es/agente.json",
+        "web/src/i18n/locales/en/agente.json",
+        "web/src/__tests__/agente.test.tsx"
+      ],
+      "specRef": "f7-agente.md#F7.2.T1",
+      "comments": []
+    },
+    {
+      "id": "F8.1.T1",
+      "phase": 8,
+      "title": "Escena 3D del procesamiento alimentada por los eventos reales",
+      "description": "- `web/src/tres/procesamiento/`: escena con `@react-three/fiber` + `drei` que representa el flujo\n  real del trabajo por etapas: las filas entran como partículas desde un \"archivo\", se agrupan en\n  nodos de clientes y productos, se forman los ciclos y salen los recordatorios. **La cantidad y\n  el ritmo de las partículas salen de los contadores de los eventos SSE** (`useEventosTrabajo`),\n  con escala logarítmica para millones de filas; nada es decorativo ni inventado.\n- Rendimiento: instancias (`InstancedMesh`), tope de partículas en pantalla, 60 fps en una\n  laptop común, pausa cuando la pestaña no está visible.\n- Se monta en el `\u003cVistaProcesamiento\u003e` de F6.3.T1 (y en la calidad de F6.2.T2 si aplica) con la\n  versión 2D como respaldo; textos superpuestos con i18n (namespace `tres`).\n- Captura: script `npm run captura:procesamiento` (Playwright) que graba un GIF/MP4 corto con un\n  stream falso, para el contenido de la serie.\n\nDone when: tests de la lógica de mapeo eventos → parámetros de la escena (pura, sin WebGL), test de\nque se usa la versión 2D con `prefers-reduced-motion`, build sin aumentar el bundle inicial (la\nescena en un chunk aparte, verificado en el análisis del build) y la captura generada.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Visualización 3D con datos reales y restricciones de rendimiento.",
+      "status": "backlog",
+      "dependencies": [
+        "F6.3.T1"
+      ],
+      "estimateHours": 4.0,
+      "files": [
+        "web/src/tres/procesamiento/",
+        "web/src/features/analisis/VistaProcesamiento.tsx",
+        "web/src/i18n/locales/pt-BR/tres.json",
+        "web/src/i18n/locales/es/tres.json",
+        "web/src/i18n/locales/en/tres.json",
+        "web/src/__tests__/tres-procesamiento.test.tsx",
+        "web/scripts/captura-procesamiento.ts"
+      ],
+      "specRef": "f8-3d-demo-despliegue.md#F8.1.T1",
+      "comments": []
+    },
+    {
+      "id": "F8.2.T1",
+      "phase": 8,
+      "title": "Endpoint del universo de clientes",
+      "description": "- `api/universo.py`: `GET /analisis/{id}/universo?max=5000` que devuelve una muestra\n  estratificada de clientes con: frecuencia (compras por mes), valor (si hay precio, si no número\n  de compras), recencia, estado (`activo`, `en_recompra`, `en_riesgo`) y un grupo calculado con\n  k-means simple sobre esas variables normalizadas (NumPy, k configurable). Desde los Parquet con\n  DuckDB, sin cargar todo en memoria. `GET /analisis/{id}/universo/{cliente_id}`: historial\n  resumido del cliente (productos, ciclos, próximas compras).\n\nDone when: tests sobre el sintético cubren el tamaño de la muestra, la estratificación por estado,\nlos grupos y el aislamiento.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Agregaciones con DuckDB y un clustering simple.",
+      "status": "backlog",
+      "dependencies": [
+        "F4.3.T3"
+      ],
+      "estimateHours": 2.5,
+      "files": [
+        "api/src/predicts/api/universo.py",
+        "api/src/predicts/analisis/universo.py",
+        "api/tests/test_universo.py"
+      ],
+      "specRef": "f8-3d-demo-despliegue.md#F8.2.T1",
+      "comments": []
+    },
+    {
+      "id": "F8.2.T2",
+      "phase": 8,
+      "title": "Vista 3D del universo de clientes",
+      "description": "- Regenerar `web/src/api/openapi.json` y `schema.ts`.\n- `web/src/tres/universo/`: nube de puntos (`InstancedMesh`) con ejes frecuencia × valor ×\n  recencia, color por estado, controles de órbita y zoom, hover con tooltip y clic que abre el\n  historial del cliente en un panel lateral; leyenda y filtros por estado.\n- Pestaña \"Universo\" en resultados (enlazada desde F6.3.T2 sin modificar sus archivos: ruta propia\n  `_autenticado/analisis/$analisisId/universo.tsx` y enlace en el layout de resultados si existe\n  un punto de extensión; si no, enlace desde el detalle del análisis).\n- Versión 2D (gráfico de dispersión con Recharts) como respaldo.\n\nDone when: tests de la transformación de datos a posiciones/colores, del respaldo 2D y del panel\nde historial; build con la escena en un chunk aparte.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Visualización interactiva sobre un endpoint ya definido.",
+      "status": "backlog",
+      "dependencies": [
+        "F8.2.T1",
+        "F8.1.T1",
+        "F7.2.T1"
+      ],
+      "estimateHours": 4.0,
+      "files": [
+        "web/src/api/openapi.json",
+        "web/src/api/schema.ts",
+        "web/src/tres/universo/",
+        "web/src/routes/_autenticado/analisis/$analisisId/universo.tsx",
+        "web/src/__tests__/tres-universo.test.tsx"
+      ],
+      "specRef": "f8-3d-demo-despliegue.md#F8.2.T2",
+      "comments": []
+    },
+    {
+      "id": "F8.3.T1",
+      "phase": 8,
+      "title": "Demo con datos de ejemplo",
+      "description": "- `api/demo.py`: `POST /demo` crea, en la empresa del usuario, un proyecto \"Demo\" con una muestra\n  de Online Retail II (CC BY 4.0, con la atribución visible en la interfaz y en el README),\n  mapeo ya confirmado y el análisis completo encolado. La muestra se prepara al construir la\n  imagen o al primer uso con `predicts preparar-dataset online-retail --muestra` y se cachea en\n  `DATA_DIR/demo/`.\n- Botón \"probar con datos de ejemplo\" en la lista de proyectos vacía y en la página de inicio\n  (ruta `web/src/routes/_autenticado/demo.tsx` que llama la API y redirige al progreso), con\n  namespace `demo`.\n\nDone when: tests de la ruta (marcador `db`, con el dataset de fixture en lugar de la descarga) y\ndel botón; desde cero, la demo llega a resultados con el compose local (anotado en el PR con el\ntiempo).",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Ensamble de piezas existentes.",
+      "status": "backlog",
+      "dependencies": [
+        "F6.3.T2",
+        "F1.1.T2"
+      ],
+      "estimateHours": 2.5,
+      "files": [
+        "api/src/predicts/api/demo.py",
+        "api/tests/test_demo.py",
+        "web/src/routes/_autenticado/demo.tsx",
+        "web/src/features/proyectos/",
+        "web/src/i18n/locales/pt-BR/demo.json",
+        "web/src/i18n/locales/es/demo.json",
+        "web/src/i18n/locales/en/demo.json",
+        "web/src/__tests__/demo.test.tsx"
+      ],
+      "specRef": "f8-3d-demo-despliegue.md#F8.3.T1",
+      "comments": []
+    },
+    {
+      "id": "F8.3.T2",
+      "phase": 8,
+      "title": "Retención de archivos",
+      "description": "- `retencion.py`: borra `original.csv`, `compras.parquet` y `resultados/` de datasets con más de\n  `RETENCION_DIAS` desde la subida (los resultados resumidos, métricas y plantillas en Postgres se\n  conservan); marca el dataset como `archivado` y la API responde `410 archivo_vencido` al pedir\n  resultados detallados o exportar. Limpia `DATA_DIR/tmp` de restos de más de 1 día.\n- Tipo de trabajo `retencion` encolado por el worker una vez por hora (sin cron externo).\n- Comando `predicts limpiar --dry-run`.\n\nDone when: tests con fechas simuladas cubren qué se borra y qué no, el `410`, la limpieza de\ntemporales y el dry-run.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Tarea periódica acotada.",
+      "status": "backlog",
+      "dependencies": [
+        "F5.2.T1",
+        "F4.1.T1"
+      ],
+      "estimateHours": 2.0,
+      "files": [
+        "api/src/predicts/retencion.py",
+        "api/src/predicts/trabajos/tipos_retencion.py",
+        "api/src/predicts/comandos/limpiar.py",
+        "api/tests/test_retencion.py"
+      ],
+      "specRef": "f8-3d-demo-despliegue.md#F8.3.T2",
+      "comments": []
+    },
+    {
+      "id": "F8.3.T3",
+      "phase": 8,
+      "title": "Despliegue en VPS y README final",
+      "description": "- `deploy/vps/`: override de compose para producción con **Caddy** como proxy con TLS automático\n  delante de `web`, variables obligatorias (`SECRET_KEY`, `ENTORNO=prod`, SMTP), backups diarios\n  de Postgres con retención de 7 días a un volumen, y un `instalar.sh` idempotente para un VPS\n  Ubuntu limpio (Docker, firewall con 80/443/22, usuario sin root).\n- `docs/notas/despliegue.md`: requisitos mínimos del VPS (RAM según `docs/notas/rendimiento.md`),\n  pasos, actualización, restauración de backup y monitoreo básico (`/salud`).\n- `README.md` final en pt-BR (principal) con secciones en español e inglés: qué es, capturas,\n  demo, cómo correrlo local, arquitectura en una imagen, licencias de los datasets.\n\nDone when: `docker compose -f deploy/docker-compose.yml -f deploy/vps/docker-compose.prod.yml\nconfig` valida, `instalar.sh` pasa `shellcheck`, y un ensayo en local con un dominio de prueba\n(o `localhost` con certificado interno de Caddy) levanta todo con TLS.",
+      "model": "claude/claude-sonnet-5",
+      "reason": "Infraestructura y documentación estándar.",
+      "status": "backlog",
+      "dependencies": [
+        "F8.3.T1",
+        "F8.3.T2"
+      ],
+      "estimateHours": 3.0,
+      "files": [
+        "deploy/vps/",
+        "docs/notas/despliegue.md",
+        "README.md"
+      ],
+      "specRef": "f8-3d-demo-despliegue.md#F8.3.T3",
+      "comments": []
+    }
+  ]
 }
