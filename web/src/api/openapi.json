@@ -1042,6 +1042,27 @@
         }
       }
     },
+    "/demo": {
+      "post": {
+        "tags": [
+          "demo"
+        ],
+        "summary": "Crear el proyecto de demostración",
+        "operationId": "crear_demo_demo_post",
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DemoSalida"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/analisis/{analisis_id}/exportar": {
       "get": {
         "tags": [
@@ -2532,6 +2553,29 @@
           "deteccion"
         ],
         "title": "DatasetSalida"
+      },
+      "DemoSalida": {
+        "properties": {
+          "proyecto_id": {
+            "type": "string",
+            "title": "Proyecto Id"
+          },
+          "dataset_id": {
+            "type": "string",
+            "title": "Dataset Id"
+          },
+          "analisis_id": {
+            "type": "string",
+            "title": "Analisis Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "proyecto_id",
+          "dataset_id",
+          "analisis_id"
+        ],
+        "title": "DemoSalida"
       },
       "EditarPlantilla": {
         "properties": {

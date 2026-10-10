@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { BotonProbarDemo } from '@/features/proyectos/BotonProbarDemo'
 import { DialogoBorrarProyecto } from '@/features/proyectos/DialogoBorrarProyecto'
 import { DialogoProyecto } from '@/features/proyectos/DialogoProyecto'
 import { useProyectos, type Proyecto } from '@/features/proyectos/hooks'
@@ -43,7 +44,10 @@ export function Proyectos() {
       <div className="space-y-4 text-center">
         <h1 className="text-xl font-semibold">{t('vacio.titulo')}</h1>
         <p className="text-muted-foreground">{t('vacio.descripcion')}</p>
-        <Button onClick={() => setDialogo({ tipo: 'crear' })}>{t('vacio.crear')}</Button>
+        <div className="flex items-center justify-center gap-2">
+          <Button onClick={() => setDialogo({ tipo: 'crear' })}>{t('vacio.crear')}</Button>
+          <BotonProbarDemo />
+        </div>
         {dialogo?.tipo === 'crear' && (
           <DialogoProyecto open onOpenChange={(open) => !open && setDialogo(null)} />
         )}
