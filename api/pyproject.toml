@@ -34,6 +34,7 @@ dependencies = [
     "mcp>=1.0",
     "email-validator>=2.2",
     "openpyxl>=3.1",
+    "uuid-utils>=0.17.1",
 ]
 
 [project.scripts]
@@ -53,6 +54,7 @@ build-backend = "uv_build"
 
 [tool.ruff]
 line-length = 100
+extend-exclude = ["alembic/versions"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]

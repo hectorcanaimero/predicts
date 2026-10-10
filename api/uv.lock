@@ -1518,6 +1518,7 @@ dependencies = [
     { name = "sse-starlette" },
     { name = "typer" },
     { name = "typesafe-sdk" },
+    { name = "uuid-utils" },
     { name = "uvicorn", extra = ["standard"] },
 ]
 
@@ -1556,6 +1557,7 @@ requires-dist = [
     { name = "sse-starlette", specifier = ">=2.1" },
     { name = "typer", specifier = ">=0.13" },
     { name = "typesafe-sdk", specifier = ">=0.7" },
+    { name = "uuid-utils", specifier = ">=0.17.1" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.32" },
 ]
 
