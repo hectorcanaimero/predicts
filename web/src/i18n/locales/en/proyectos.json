@@ -1,0 +1,46 @@
+{
+  "titulo": "Projects",
+  "nuevo": "New project",
+  "vacio": {
+    "titulo": "You don't have any projects yet",
+    "descripcion": "Create your first project to start uploading and analyzing data.",
+    "crear": "Create your first project"
+  },
+  "error": {
+    "titulo": "Something went wrong while loading the information.",
+    "reintentar": "Retry"
+  },
+  "acciones": {
+    "editar": "Edit",
+    "eliminar": "Delete"
+  },
+  "dialogo": {
+    "crear_titulo": "Create project",
+    "editar_titulo": "Edit project",
+    "nombre": "Name",
+    "idioma_mensajes": "Message language",
+    "tono": "Tone",
+    "tonos": {
+      "cercano": "Friendly",
+      "neutro": "Neutral",
+      "formal": "Formal"
+    },
+    "descripcion": "Description",
+    "guardando": "Saving…"
+  },
+  "borrar": {
+    "titulo": "Delete project",
+    "descripcion": "Are you sure you want to delete \"{{nombre}}\"? Its datasets and analyses will also be deleted. This action cannot be undone.",
+    "confirmar": "Delete",
+    "eliminando": "Deleting…"
+  },
+  "detalle": {
+    "datasets_titulo": "Datasets",
+    "datasets_vacio": "There are no datasets in this project yet.",
+    "analisis_vacio": "There are no analyses for this dataset yet.",
+    "volver": "Back to projects"
+  },
+  "errores": {
+    "no_encontrado": "This project no longer exists."
+  }
+}

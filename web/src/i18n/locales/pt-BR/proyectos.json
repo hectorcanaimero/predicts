@@ -1,0 +1,46 @@
+{
+  "titulo": "Projetos",
+  "nuevo": "Novo projeto",
+  "vacio": {
+    "titulo": "Você ainda não tem projetos",
+    "descripcion": "Crie seu primeiro projeto para começar a enviar dados e analisá-los.",
+    "crear": "Criar seu primeiro projeto"
+  },
+  "error": {
+    "titulo": "Ocorreu um erro ao carregar as informações.",
+    "reintentar": "Tentar de novo"
+  },
+  "acciones": {
+    "editar": "Editar",
+    "eliminar": "Excluir"
+  },
+  "dialogo": {
+    "crear_titulo": "Criar projeto",
+    "editar_titulo": "Editar projeto",
+    "nombre": "Nome",
+    "idioma_mensajes": "Idioma das mensagens",
+    "tono": "Tom",
+    "tonos": {
+      "cercano": "Próximo",
+      "neutro": "Neutro",
+      "formal": "Formal"
+    },
+    "descripcion": "Descrição",
+    "guardando": "Salvando…"
+  },
+  "borrar": {
+    "titulo": "Excluir projeto",
+    "descripcion": "Tem certeza de que quer excluir \"{{nombre}}\"? Os datasets e análises também serão excluídos. Esta ação não pode ser desfeita.",
+    "confirmar": "Excluir",
+    "eliminando": "Excluindo…"
+  },
+  "detalle": {
+    "datasets_titulo": "Datasets",
+    "datasets_vacio": "Ainda não há datasets neste projeto.",
+    "analisis_vacio": "Ainda não há análises para este dataset.",
+    "volver": "Voltar para projetos"
+  },
+  "errores": {
+    "no_encontrado": "Este projeto não existe mais."
+  }
+}
