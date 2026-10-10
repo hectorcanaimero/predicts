@@ -4,6 +4,7 @@ import { aErrorApi, cliente, type ErrorApi } from '@/api/cliente'
 import type { components } from '@/api/schema'
 
 export type Proyecto = components['schemas']['ProyectoSalida']
+export type DemoSalida = components['schemas']['DemoSalida']
 export type Dataset = components['schemas']['DatasetSalida']
 export type Analisis = components['schemas']['AnalisisSalida']
 export type ProyectoEntrada = components['schemas']['ProyectoEntrada']
@@ -73,6 +74,18 @@ export function useCrearProyecto() {
   return useMutation<Proyecto, ErrorApi, ProyectoEntrada>({
     mutationFn: async (datos) => {
       const { data, error } = await cliente.POST('/proyectos', { body: datos })
+      if (error) throw aErrorApi(error)
+      return data
+    },
+    onSuccess: () => void queryClient.invalidateQueries({ queryKey: CLAVE_PROYECTOS }),
+  })
+}
+
+export function useCrearDemo() {
+  const queryClient = useQueryClient()
+  return useMutation<DemoSalida, ErrorApi, void>({
+    mutationFn: async () => {
+      const { data, error } = await cliente.POST('/demo')
       if (error) throw aErrorApi(error)
       return data
     },
