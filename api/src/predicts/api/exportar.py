@@ -123,10 +123,13 @@ def exportar_analisis(
         raise ErrorApi("separador_invalido", 422, separador=separador)
     if _TIPO_ANALISIS[tipo] not in analisis.tipos or "contactar" not in analisis.tipos:
         raise ErrorApi("tipo_no_solicitado", 404, tipo=tipo)
+
+    dataset = db.get(Dataset, analisis.dataset_id)
+    if dataset is not None and dataset.estado == "archivado":
+        raise ErrorApi("archivo_vencido", 410)
     if analisis.estado != "listo" or not analisis.ruta_resultados:
         raise ErrorApi("analisis_no_listo", 409, estado=analisis.estado)
 
-    dataset = db.get(Dataset, analisis.dataset_id)
     proyecto = db.get(Proyecto, dataset.proyecto_id) if dataset is not None else None
     if dataset is None or proyecto is None:
         raise ErrorApi("no_encontrado", 404)
