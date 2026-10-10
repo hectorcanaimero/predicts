@@ -1,0 +1,26 @@
+{
+  "titulo": "Enviar dataset",
+  "volver": "Voltar ao projeto",
+  "dropzone": {
+    "titulo": "Arraste aqui seu arquivo CSV, .csv.gz ou .zip",
+    "elegir_archivo": "Escolher arquivo"
+  },
+  "previa": {
+    "titulo": "Pré-visualização"
+  },
+  "subiendo": {
+    "porcentaje": "{{porcentaje}}%",
+    "cancelar": "Cancelar"
+  },
+  "listo": {
+    "titulo": "Arquivo enviado. Preparando o mapeamento…"
+  },
+  "acciones": {
+    "elegir_otro": "Escolher outro arquivo"
+  },
+  "errores": {
+    "formato_no_soportado": "Formato não suportado. Use um arquivo .csv, .csv.gz ou .zip.",
+    "archivo_muy_grande": "O arquivo excede o limite de {{max_mb}} MB.",
+    "zip_formato_invalido": "O .zip deve conter um único arquivo."
+  }
+}
