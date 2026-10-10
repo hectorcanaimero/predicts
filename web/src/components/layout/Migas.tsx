@@ -68,7 +68,10 @@ export function Migas() {
                     {miga.etiqueta}
                   </Link>
                 ) : (
-                  <span aria-current={ultima ? 'page' : undefined} className="block truncate font-medium text-foreground">
+                  <span
+                    aria-current={ultima ? 'page' : undefined}
+                    className="block truncate font-medium text-foreground"
+                  >
                     {miga.etiqueta}
                   </span>
                 )}

@@ -67,7 +67,11 @@ export function ShellApp({ children }: { children: ReactNode }) {
           </div>
         </header>
 
-        <main id="contenido" tabIndex={-1} className="mx-auto w-full max-w-7xl px-4 py-6 focus:outline-none sm:px-6 lg:px-8 lg:py-8">
+        <main
+          id="contenido"
+          tabIndex={-1}
+          className="mx-auto w-full max-w-7xl px-4 py-6 focus:outline-none sm:px-6 lg:px-8 lg:py-8"
+        >
           {children}
         </main>
       </div>

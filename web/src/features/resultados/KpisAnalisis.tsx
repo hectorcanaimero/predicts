@@ -152,7 +152,9 @@ export function KpisAnalisis({ resumen: resumenCrudo, metricas }: Props) {
           <div key={clave} className="flex flex-col rounded-xl border bg-card p-4 shadow-xs">
             <div className="flex items-start justify-between gap-2">
               <dt className="text-xs font-medium leading-snug text-muted-foreground">{etiqueta}</dt>
-              <span className={`inline-flex size-7 shrink-0 items-center justify-center rounded-md ${TONO_ICONO[tono]}`}>
+              <span
+                className={`inline-flex size-7 shrink-0 items-center justify-center rounded-md ${TONO_ICONO[tono]}`}
+              >
                 <Icono aria-hidden="true" className="size-3.5" />
               </span>
             </div>

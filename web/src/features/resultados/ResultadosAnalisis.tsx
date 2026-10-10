@@ -1,5 +1,14 @@
 import { Link } from '@tanstack/react-router'
-import { BellRing, ChartColumn, CircleAlert, MessageSquareText, RefreshCw, Tag, TriangleAlert, type LucideIcon } from 'lucide-react'
+import {
+  BellRing,
+  ChartColumn,
+  CircleAlert,
+  MessageSquareText,
+  RefreshCw,
+  Tag,
+  TriangleAlert,
+  type LucideIcon,
+} from 'lucide-react'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -43,7 +52,10 @@ export function ResultadosAnalisis({ analisisId }: Props) {
   }
   if (analisis.isError) {
     return (
-      <p role="alert" className="flex items-center gap-2 rounded-xl border border-danger/20 bg-danger-soft p-4 text-sm text-danger">
+      <p
+        role="alert"
+        className="flex items-center gap-2 rounded-xl border border-danger/20 bg-danger-soft p-4 text-sm text-danger"
+      >
         <CircleAlert aria-hidden="true" className="size-4 shrink-0" />
         {t('error_generico')}
       </p>

@@ -33,10 +33,7 @@ function EnlaceNav({ enlace, icono: Icono, children, alNavegar }: PropsEnlace) {
       onClick={alNavegar}
       className="group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-sidebar-muted transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground focus-visible:outline-sidebar-primary data-[status=active]:bg-sidebar-accent data-[status=active]:text-sidebar-foreground"
     >
-      <Icono
-        aria-hidden="true"
-        className="size-4 shrink-0 group-data-[status=active]:text-sidebar-primary"
-      />
+      <Icono aria-hidden="true" className="size-4 shrink-0 group-data-[status=active]:text-sidebar-primary" />
       <span className="truncate">{children}</span>
     </Link>
   )

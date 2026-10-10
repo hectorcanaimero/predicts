@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { useEventosTrabajo } from '@/hooks/useEventosTrabajo'
 import { useAnalisis, useCancelarTrabajo, useTrabajo } from './hooks'
-import { etapasDelAnalisis, PasosAnalisis } from './PasosAnalisis'
+import { etapasDelAnalisis } from './etapas'
+import { PasosAnalisis } from './PasosAnalisis'
 import { ERRORES_TRABAJO } from './tipos'
 import { VistaProcesamiento } from './VistaProcesamiento'
 
@@ -49,9 +50,7 @@ export function ProgresoAnalisis({ analisisId, onCompletado }: Props) {
   const etapaActual = listo ? 'listo' : eventosEtapa[eventosEtapa.length - 1]?.etapa
   const etapas = etapasDelAnalisis(analisis.data?.tipos, eventosEtapa)
   const indice = etapaActual ? etapas.indexOf(etapaActual) : -1
-  const avance = listo
-    ? 1
-    : (ultimo?.progreso ?? (indice >= 0 ? indice / Math.max(1, etapas.length - 1) : 0))
+  const avance = listo ? 1 : (ultimo?.progreso ?? (indice >= 0 ? indice / Math.max(1, etapas.length - 1) : 0))
   const porcentaje = Math.round(Math.min(1, Math.max(0, avance)) * 100)
   const contadores = Object.entries(eventosEtapa[eventosEtapa.length - 1]?.contadores ?? {})
   const numero = new Intl.NumberFormat(i18n.language)
@@ -76,7 +75,10 @@ export function ProgresoAnalisis({ analisisId, onCompletado }: Props) {
               <CircleAlert aria-hidden="true" className="size-4 text-danger" />
             ) : (
               !cancelado && (
-                <LoaderCircle aria-hidden="true" className="size-4 animate-spin text-primary motion-reduce:animate-none" />
+                <LoaderCircle
+                  aria-hidden="true"
+                  className="size-4 animate-spin text-primary motion-reduce:animate-none"
+                />
               )
             )}
             {estadoTexto}

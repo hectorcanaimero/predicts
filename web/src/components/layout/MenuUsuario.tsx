@@ -17,7 +17,10 @@ import { cn } from '@/lib/utils'
 
 /** Iniciales para el avatar: primeras letras de las dos primeras "palabras" del email. */
 function iniciales(email: string): string {
-  const partes = email.split('@')[0].split(/[._-]+/).filter(Boolean)
+  const partes = email
+    .split('@')[0]
+    .split(/[._-]+/)
+    .filter(Boolean)
   const letras = (partes.length > 1 ? partes[0][0] + partes[1][0] : email.slice(0, 2)) ?? ''
   return letras.toUpperCase()
 }

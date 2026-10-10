@@ -103,9 +103,7 @@ function FilaDataset({ dataset }: { dataset: Dataset }) {
             {t('error.titulo')}
           </p>
         )}
-        {analisis.data?.length === 0 && (
-          <p className="text-sm text-muted-foreground">{t('detalle.analisis_vacio')}</p>
-        )}
+        {analisis.data?.length === 0 && <p className="text-sm text-muted-foreground">{t('detalle.analisis_vacio')}</p>}
         {analisis.data && analisis.data.length > 0 && (
           <ul className="divide-y rounded-lg border bg-background/60">
             {analisis.data.map((item) => {
@@ -119,13 +117,21 @@ function FilaDataset({ dataset }: { dataset: Dataset }) {
                     </Badge>
                     <span aria-hidden="true" className="mx-1 h-4 w-px bg-border" />
                     {item.tipos.map((tipo) => (
-                      <span key={tipo} className="rounded-md border bg-card px-1.5 py-0.5 text-xs text-muted-foreground">
+                      <span
+                        key={tipo}
+                        className="rounded-md border bg-card px-1.5 py-0.5 text-xs text-muted-foreground"
+                      >
                         {t(`detalle.tipos.${tipo}`, { defaultValue: tipo })}
                       </span>
                     ))}
                   </div>
                   {(listo || enCurso) && (
-                    <Button asChild variant={listo ? 'secondary' : 'ghost'} size="sm" className="self-start sm:self-auto">
+                    <Button
+                      asChild
+                      variant={listo ? 'secondary' : 'ghost'}
+                      size="sm"
+                      className="self-start sm:self-auto"
+                    >
                       <Link
                         to={listo ? '/analisis/$analisisId' : '/analisis/$analisisId/progreso'}
                         params={{ analisisId: item.id }}
@@ -201,9 +207,7 @@ export function ProyectoDetalle() {
       />
       <div className="-mt-4 flex flex-wrap gap-2">
         <Badge variant="neutral">{t('tarjeta.mensajes', { idioma: t(`idiomas.${datos.idioma_mensajes}`) })}</Badge>
-        <Badge variant="neutral">
-          {t('tarjeta.tono', { tono: t(`dialogo.tonos.${datos.tono}`).toLowerCase() })}
-        </Badge>
+        <Badge variant="neutral">{t('tarjeta.tono', { tono: t(`dialogo.tonos.${datos.tono}`).toLowerCase() })}</Badge>
       </div>
 
       <section aria-labelledby="titulo-datasets" className="overflow-hidden rounded-xl border bg-card shadow-xs">

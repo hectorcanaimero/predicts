@@ -1,24 +1,7 @@
 import { Check, CircleAlert, LoaderCircle } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import type { EventoTrabajo } from '@/hooks/useEventosTrabajo'
 import { cn } from '@/lib/utils'
-
-/** Orden de las etapas que emite `api/src/predicts/analisis/orquestador.py`. */
-const ORDEN_ETAPAS = ['leyendo', 'ciclos', 'prediccion', 'riesgo', 'ofertas', 'contactar', 'backtest', 'mensajes', 'listo']
-
-/** Etapas esperables para los tipos pedidos (más cualquiera que ya haya llegado por SSE, por
- * si el orquestador agrega una que acá no se previó). */
-export function etapasDelAnalisis(tipos: readonly string[] | undefined, eventos: EventoTrabajo[]): string[] {
-  const vistas = new Set(eventos.map((evento) => evento.etapa))
-  const pedidos = new Set(tipos ?? [])
-  return ORDEN_ETAPAS.filter((etapa) => {
-    if (etapa === 'leyendo' || etapa === 'listo' || vistas.has(etapa)) return true
-    if (!tipos) return false
-    if (etapa === 'prediccion' || etapa === 'backtest') return pedidos.has('recompra')
-    return pedidos.has(etapa)
-  })
-}
 
 type EstadoPaso = 'completada' | 'en_curso' | 'pendiente' | 'error'
 
@@ -48,7 +31,11 @@ export function PasosAnalisis({ etapas, actual, fallo }: Props) {
         const e = estado(i)
         const ultima = i === etapas.length - 1
         return (
-          <li key={etapa} aria-current={e === 'en_curso' ? 'step' : undefined} className="relative flex gap-3 pb-5 last:pb-0">
+          <li
+            key={etapa}
+            aria-current={e === 'en_curso' ? 'step' : undefined}
+            className="relative flex gap-3 pb-5 last:pb-0"
+          >
             {!ultima && (
               <span
                 aria-hidden="true"

@@ -31,7 +31,7 @@ function TarjetaProyecto({
   const tono = t(`dialogo.tonos.${proyecto.tono}`).toLowerCase()
 
   return (
-    <li>
+    <li className="min-w-0">
       <article
         aria-labelledby={idTitulo}
         className="group relative flex h-full flex-col rounded-xl border bg-card p-5 shadow-xs transition-[border-color,box-shadow] focus-within:border-primary/50 hover:border-primary/40 hover:shadow-sm"
@@ -53,12 +53,19 @@ function TarjetaProyecto({
                 {proyecto.nombre}
               </Link>
             </h2>
-            <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
+            <p className="mt-1 line-clamp-2 text-sm text-muted-foreground [overflow-wrap:anywhere]">
               {proyecto.descripcion || t('tarjeta.sin_descripcion')}
             </p>
           </div>
           <div className="relative z-10 -mr-2 -mt-1 flex shrink-0">
-            <Button variant="ghost" size="icon" className="size-8" aria-label={t('acciones.editar')} title={t('acciones.editar')} onClick={onEditar}>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-8"
+              aria-label={t('acciones.editar')}
+              title={t('acciones.editar')}
+              onClick={onEditar}
+            >
               <Pencil aria-hidden="true" />
             </Button>
             <Button
@@ -74,9 +81,7 @@ function TarjetaProyecto({
           </div>
         </div>
         <div className="mt-5 flex flex-wrap items-center gap-2 border-t pt-4">
-          <Badge variant="neutral">
-            {t('tarjeta.mensajes', { idioma: t(`idiomas.${proyecto.idioma_mensajes}`) })}
-          </Badge>
+          <Badge variant="neutral">{t('tarjeta.mensajes', { idioma: t(`idiomas.${proyecto.idioma_mensajes}`) })}</Badge>
           <Badge variant="neutral">{t('tarjeta.tono', { tono })}</Badge>
           <ArrowRight
             aria-hidden="true"
@@ -119,13 +124,8 @@ export function Proyectos() {
     return (
       <div className="space-y-8">
         <EncabezadoPagina titulo={t('titulo')} descripcion={t('descripcion')} />
-        <ProyectosVacio
-          onCrear={() => setDialogo({ tipo: 'crear' })}
-          demo={<BotonProbarDemo />}
-        />
-        {dialogo?.tipo === 'crear' && (
-          <DialogoProyecto open onOpenChange={(open) => !open && setDialogo(null)} />
-        )}
+        <ProyectosVacio onCrear={() => setDialogo({ tipo: 'crear' })} demo={<BotonProbarDemo />} />
+        {dialogo?.tipo === 'crear' && <DialogoProyecto open onOpenChange={(open) => !open && setDialogo(null)} />}
       </div>
     )
   }
@@ -160,11 +160,7 @@ export function Proyectos() {
         />
       )}
       {dialogo?.tipo === 'borrar' && (
-        <DialogoBorrarProyecto
-          open
-          proyecto={dialogo.proyecto}
-          onOpenChange={(open) => !open && setDialogo(null)}
-        />
+        <DialogoBorrarProyecto open proyecto={dialogo.proyecto} onOpenChange={(open) => !open && setDialogo(null)} />
       )}
     </div>
   )

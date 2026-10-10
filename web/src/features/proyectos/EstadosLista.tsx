@@ -61,7 +61,10 @@ export function EstadoErrorCarga({ onReintentar }: { onReintentar: () => void })
   const { t } = useTranslation('proyectos')
 
   return (
-    <div role="alert" className="flex flex-col items-start gap-3 rounded-xl border border-danger/20 bg-danger-soft p-5 sm:flex-row sm:items-center">
+    <div
+      role="alert"
+      className="flex flex-col items-start gap-3 rounded-xl border border-danger/20 bg-danger-soft p-5 sm:flex-row sm:items-center"
+    >
       <CircleAlert aria-hidden="true" className="size-5 shrink-0 text-danger" />
       <p className="flex-1 text-sm font-medium text-danger">{t('error.titulo')}</p>
       <Button variant="outline" size="sm" onClick={onReintentar}>

@@ -17,11 +17,11 @@ export function EncabezadoPagina({ titulo, descripcion, acciones, antetitulo, cl
   return (
     <div className={cn('flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between', className)}>
       <div className="min-w-0 space-y-1">
-        {antetitulo && (
-          <p className="text-xs font-semibold uppercase tracking-wider text-primary">{antetitulo}</p>
-        )}
+        {antetitulo && <p className="text-xs font-semibold uppercase tracking-wider text-primary">{antetitulo}</p>}
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">{titulo}</h1>
-        {descripcion && <p className="max-w-3xl text-sm text-muted-foreground [overflow-wrap:anywhere]">{descripcion}</p>}
+        {descripcion && (
+          <p className="max-w-3xl text-sm text-muted-foreground [overflow-wrap:anywhere]">{descripcion}</p>
+        )}
       </div>
       {acciones && <div className="flex shrink-0 flex-wrap items-center gap-2">{acciones}</div>}
     </div>

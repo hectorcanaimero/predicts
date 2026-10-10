@@ -45,9 +45,7 @@ export function LayoutPublico({ children }: { children: ReactNode }) {
         <Logo tono="claro" className="relative" />
         <div className="relative max-w-md space-y-8">
           <div className="space-y-4">
-            <h2 className="text-3xl font-semibold leading-tight tracking-tight xl:text-4xl">
-              {t('publico.titular')}
-            </h2>
+            <h2 className="text-3xl font-semibold leading-tight tracking-tight xl:text-4xl">{t('publico.titular')}</h2>
             <p className="text-base leading-relaxed text-sidebar-muted">{t('publico.subtitulo')}</p>
           </div>
           <ul className="space-y-4">
