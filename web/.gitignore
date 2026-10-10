@@ -1,0 +1,12 @@
+node_modules
+dist
+dist-ssr
+*.local
+
+npm-debug.log*
+
+.vscode/*
+!.vscode/extensions.json
+
+src/routeTree.gen.ts
+src/api/schema.ts
