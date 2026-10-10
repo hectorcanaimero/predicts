@@ -1,0 +1,36 @@
+{
+  "titulo": "Customer universe",
+  "enlace": "View customer universe",
+  "error_generico": "Could not load the customer universe.",
+  "vacio": "No customers to show.",
+  "ejes": {
+    "frecuencia": "Frequency",
+    "valor": "Value",
+    "recencia": "Recency",
+    "descripcion": "X: Frequency · Y: Value · Z: Recency"
+  },
+  "estados": {
+    "activo": "Active",
+    "en_recompra": "Repurchasing",
+    "en_riesgo": "At risk"
+  },
+  "filtros": {
+    "titulo": "Filter by status"
+  },
+  "dispersion": {
+    "titulo": "Frequency vs. value"
+  },
+  "panel": {
+    "titulo": "History of {{cliente}}",
+    "cerrar": "Close",
+    "error": "Could not load the history.",
+    "vacio": "No purchase history.",
+    "columnas": {
+      "n_compras": "Purchases",
+      "valor_total": "Total value",
+      "ultima_compra": "Last purchase",
+      "ciclo": "Cycle (days)",
+      "proxima_compra": "Next purchase"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "titulo": "Universo de clientes",
+  "enlace": "Ver universo de clientes",
+  "error_generico": "Não foi possível carregar o universo de clientes.",
+  "vacio": "Não há clientes para mostrar.",
+  "ejes": {
+    "frecuencia": "Frequência",
+    "valor": "Valor",
+    "recencia": "Recência",
+    "descripcion": "X: Frequência · Y: Valor · Z: Recência"
+  },
+  "estados": {
+    "activo": "Ativo",
+    "en_recompra": "Em recompra",
+    "en_riesgo": "Em risco"
+  },
+  "filtros": {
+    "titulo": "Filtrar por status"
+  },
+  "dispersion": {
+    "titulo": "Frequência vs. valor"
+  },
+  "panel": {
+    "titulo": "Histórico de {{cliente}}",
+    "cerrar": "Fechar",
+    "error": "Não foi possível carregar o histórico.",
+    "vacio": "Sem histórico de compras.",
+    "columnas": {
+      "n_compras": "Compras",
+      "valor_total": "Valor total",
+      "ultima_compra": "Última compra",
+      "ciclo": "Ciclo (dias)",
+      "proxima_compra": "Próxima compra"
+    }
+  }
+}
