@@ -1,0 +1,56 @@
+{
+  "titulo": "Map columns",
+  "error": {
+    "titulo": "An error occurred while loading the information.",
+    "reintentar": "Retry"
+  },
+  "tabla": {
+    "columna": "CSV column",
+    "valores_muestra": "Sample values",
+    "campo": "Internal field",
+    "confianza": "Confidence"
+  },
+  "insignias": {
+    "prellenado": "Suggested",
+    "revisar": "Review"
+  },
+  "campos": {
+    "ignorar": "Ignore",
+    "cliente_id": "Customer",
+    "fecha": "Date",
+    "producto_id": "Product (SKU/EAN)",
+    "producto_nombre": "Product name",
+    "pedido_id": "Order",
+    "cantidad": "Quantity",
+    "precio_unitario": "Unit price",
+    "valor_total": "Total value",
+    "categoria": "Category",
+    "marca": "Brand"
+  },
+  "formato_fecha": {
+    "titulo": "Date format",
+    "opcion": "{{formato}} ({{porcentaje}}%)"
+  },
+  "producto_id_tipo": {
+    "titulo": "Product identifier type",
+    "sku": "SKU (internal code)",
+    "ean": "EAN (barcode)"
+  },
+  "validacion": {
+    "campo_duplicado": "The field \"{{campo}}\" is assigned to more than one column.",
+    "campo_obligatorio_faltante": "The required field \"{{campo}}\" still needs a column."
+  },
+  "plantilla": {
+    "guardar": "Save as template",
+    "nombre": "Template name"
+  },
+  "errores": {
+    "mapeo_invalido": "There are errors in the mapping, review it before confirming.",
+    "dataset_sin_deteccion": "The dataset doesn't have a format detection yet.",
+    "mapeo_no_confirmado": "The mapping hasn't been confirmed yet."
+  },
+  "acciones": {
+    "confirmar": "Confirm and start ingestion",
+    "confirmando": "Confirming…"
+  }
+}
