@@ -1,0 +1,81 @@
+# Override de producción para un VPS. Se usa junto con el compose base:
+#
+#   docker compose -f deploy/docker-compose.yml -f deploy/vps/docker-compose.prod.yml up -d
+#
+# `docker compose` toma el directorio del *primer* archivo (`deploy/`) como directorio del
+# proyecto y lee `deploy/.env` (no `deploy/vps/.env`) — por eso las variables de este archivo
+# (`DOMINIO`, `RETENCION_BACKUPS_DIAS`, SMTP, `SECRET_KEY`) van en `deploy/.env`, copiando
+# `deploy/vps/.env.example` ahí también. Ver docs/notas/despliegue.md.
+#
+# No se tocan los `ports:` de deploy/docker-compose.yml acá: docker compose concatena listas al
+# fusionar archivos (no las reemplaza), así que no hay forma de "quitar" un puerto publicado
+# desde un override. En vez de eso, en `deploy/.env` del VPS atá esos puertos a localhost
+# (`API_PORT=127.0.0.1:8000`, `POSTGRES_PORT=127.0.0.1:54320`, `WEB_PORT=127.0.0.1:8080`) y dejá
+# que el firewall de `instalar.sh` (solo 22/80/443 abiertos) haga el resto. Caddy es el único
+# servicio que publica puertos nuevos (80 y 443).
+
+services:
+  api:
+    environment:
+      ENTORNO: prod
+      SECRET_KEY: ${SECRET_KEY:?Definí SECRET_KEY en deploy/.env (ver docs/notas/despliegue.md)}
+      SMTP_HOST: ${SMTP_HOST:?Definí SMTP_HOST en deploy/.env}
+      SMTP_PORT: ${SMTP_PORT:?Definí SMTP_PORT en deploy/.env}
+      SMTP_USER: ${SMTP_USER:?Definí SMTP_USER en deploy/.env}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:?Definí SMTP_PASSWORD en deploy/.env}
+      SMTP_FROM: ${SMTP_FROM:?Definí SMTP_FROM en deploy/.env}
+
+  worker:
+    environment:
+      ENTORNO: prod
+      SECRET_KEY: ${SECRET_KEY:?Definí SECRET_KEY en deploy/.env (ver docs/notas/despliegue.md)}
+      SMTP_HOST: ${SMTP_HOST:?Definí SMTP_HOST en deploy/.env}
+      SMTP_PORT: ${SMTP_PORT:?Definí SMTP_PORT en deploy/.env}
+      SMTP_USER: ${SMTP_USER:?Definí SMTP_USER en deploy/.env}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:?Definí SMTP_PASSWORD en deploy/.env}
+      SMTP_FROM: ${SMTP_FROM:?Definí SMTP_FROM en deploy/.env}
+
+  # Proxy con TLS automático delante de `web` (ver deploy/vps/Caddyfile): certificado real vía
+  # ACME si DOMINIO es un dominio público que resuelve a este VPS, o certificado interno propio
+  # de Caddy si DOMINIO es "localhost" (ensayo local, ver docs/notas/despliegue.md).
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMINIO: ${DOMINIO:?Definí DOMINIO en deploy/.env (usar "localhost" para el ensayo con certificado interno)}
+    volumes:
+      - ./vps/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+    mem_limit: 256m
+
+  # Backup diario de Postgres a un volumen, con retención de RETENCION_BACKUPS_DIAS días (ver
+  # deploy/vps/backup.sh). Usa la misma imagen que `postgres` para que `pg_dump` sea de la misma
+  # versión que el servidor.
+  backup:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    entrypoint: ["/bin/bash", "/backup.sh"]
+    environment:
+      PGHOST: postgres
+      PGUSER: ${POSTGRES_USER:-predicts}
+      PGPASSWORD: ${POSTGRES_PASSWORD:-predicts}
+      PGDATABASE: ${POSTGRES_DB:-predicts}
+      RETENCION_BACKUPS_DIAS: ${RETENCION_BACKUPS_DIAS:-7}
+    volumes:
+      - ./vps/backup.sh:/backup.sh:ro
+      - postgres_backups:/backups
+    depends_on:
+      postgres:
+        condition: service_healthy
+    mem_limit: 256m
+
+volumes:
+  caddy_data:
+  caddy_config:
+  postgres_backups:

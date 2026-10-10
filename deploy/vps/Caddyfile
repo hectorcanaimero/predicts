@@ -1,0 +1,8 @@
+# Montado por deploy/vps/docker-compose.prod.yml en /etc/caddy/Caddyfile. Caddy decide solo:
+# ACME real (Let's Encrypt) si {$DOMINIO} es un dominio público que resuelve a este VPS, o
+# certificado interno propio si es "localhost"/una IP privada (ensayo local, ver
+# docs/notas/despliegue.md). `web` ya sabe servir el panel y proxear /api/ (deploy/nginx.conf);
+# Caddy solo termina TLS y reenvía todo, igual que el navegador le pegaría a `web` directo.
+{$DOMINIO} {
+	reverse_proxy web:80
+}
