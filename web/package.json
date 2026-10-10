@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "npm run gen:api",
     "build": "vite build && tsc --noEmit",
     "test": "vitest",
     "lint": "eslint .",
