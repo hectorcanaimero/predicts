@@ -1,0 +1,9 @@
+Reset your password
+
+We received a request to reset your predicts password.
+
+Use this code to choose a new password. It expires in 1 hour and can only be used once:
+
+{token}
+
+If this wasn't you, you can ignore this email.

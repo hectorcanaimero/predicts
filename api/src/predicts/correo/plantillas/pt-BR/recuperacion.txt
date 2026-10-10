@@ -1,0 +1,9 @@
+Recupere sua senha
+
+Recebemos um pedido para redefinir sua senha no predicts.
+
+Use este código para escolher uma nova senha. Ele expira em 1 hora e só pode ser usado uma vez:
+
+{token}
+
+Se não foi você, pode ignorar este email.

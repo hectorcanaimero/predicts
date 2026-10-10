@@ -1,0 +1,9 @@
+Recuperá tu contraseña
+
+Recibimos un pedido para restablecer tu contraseña en predicts.
+
+Usá este código para elegir una nueva contraseña. Vence en 1 hora y solo se puede usar una vez:
+
+{token}
+
+Si no fuiste vos, podés ignorar este email.
