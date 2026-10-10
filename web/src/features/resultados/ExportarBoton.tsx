@@ -22,7 +22,7 @@ export function ExportarBoton({ analisisId, tipo }: Props) {
         aria-label={t('exportar.separador')}
         value={separador}
         onChange={(evento) => setSeparador(evento.target.value as Separador)}
-        className="flex h-8 rounded-md border border-input bg-background px-2 text-xs shadow-sm"
+        className="flex h-8 rounded-md border border-input bg-card px-2 text-xs shadow-xs"
       >
         {SEPARADORES.map((s) => (
           <option key={s} value={s}>
@@ -39,8 +39,10 @@ export function ExportarBoton({ analisisId, tipo }: Props) {
         {exportar.isPending ? t('exportar.exportando') : t('exportar.boton')}
       </Button>
       {exportar.error && (
-        <p role="alert" className="text-sm text-destructive">
-          {t(`exportar.errores.${claveError(exportar.error)}`, { defaultValue: t('comun:error_generico') })}
+        <p role="alert" className="text-sm text-danger">
+          {t(`exportar.errores.${claveError(exportar.error)}`, {
+            defaultValue: t('comun:error_generico'),
+          })}
         </p>
       )}
     </div>

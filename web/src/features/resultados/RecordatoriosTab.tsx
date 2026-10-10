@@ -1,13 +1,15 @@
 import { useMemo, useState } from 'react'
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { useTranslation } from 'react-i18next'
 
+import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { ExportarBoton } from './ExportarBoton'
 import { Paginador } from './Paginador'
 import { SelectorOrden } from './SelectorOrden'
 import { useResultados } from './hooks'
+import { varianteProbabilidad } from './formato'
 import { COLUMNAS_ORDEN, ORDEN_DEFECTO, TAM_PAGINA_DEFECTO, type FilaRecompra } from './tipos'
 
 interface Props {
@@ -65,48 +67,68 @@ export function RecordatoriosTab({ analisisId }: Props) {
       </div>
 
       {datosCalendario.length > 0 && (
-        <div className="space-y-1">
-          <h3 className="text-sm font-medium">{t('recordatorios.calendario.titulo')}</h3>
-          <BarChart width={500} height={200} data={datosCalendario}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="fecha" />
-            <YAxis allowDecimals={false} />
-            <Bar dataKey="cantidad" fill="#2563eb" name={t('recordatorios.calendario.titulo')} />
-          </BarChart>
+        <div className="space-y-3 rounded-xl border bg-card p-4 shadow-xs sm:p-5">
+          <h3 className="text-sm font-semibold">{t('recordatorios.calendario.titulo')}</h3>
+          <ResponsiveContainer width="100%" height={220}>
+            <BarChart data={datosCalendario} margin={{ top: 4, right: 8, bottom: 0, left: -16 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(36, 15%, 87%)" />
+              <XAxis dataKey="fecha" tick={{ fontSize: 12 }} tickLine={false} axisLine={false} />
+              <YAxis allowDecimals={false} tick={{ fontSize: 12 }} tickLine={false} axisLine={false} />
+              <Tooltip cursor={{ fill: 'hsl(168, 32%, 92%)' }} />
+              <Bar
+                dataKey="cantidad"
+                fill="hsl(173, 68%, 30%)"
+                radius={[4, 4, 0, 0]}
+                maxBarSize={48}
+                name={t('recordatorios.calendario.titulo')}
+              />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
       )}
 
       {resultados.data.resultados.length === 0 ? (
-        <p className="text-muted-foreground">{t('vacio')}</p>
+        <p className="rounded-xl border border-dashed bg-card p-8 text-center text-sm text-muted-foreground">
+          {t('vacio')}
+        </p>
       ) : (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>{t('recordatorios.columnas.cliente_id')}</TableHead>
-              <TableHead>{t('recordatorios.columnas.producto_nombre')}</TableHead>
-              <TableHead>{t('recordatorios.columnas.fecha_probable')}</TableHead>
-              <TableHead>{t('recordatorios.columnas.p')}</TableHead>
-              <TableHead>{t('recordatorios.columnas.motivo')}</TableHead>
-              <TableHead>{t('recordatorios.columnas.mensaje')}</TableHead>
-              <TableHead>{t('recordatorios.columnas.contactar')}</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {resultados.data.resultados.map((fila) => (
-              <TableRow key={`${fila.cliente_id}-${fila.producto_id}`}>
-                <TableCell>{fila.cliente_id}</TableCell>
-                <TableCell>{fila.producto_nombre ?? fila.producto_id}</TableCell>
-                <TableCell>
-                  {fila.fecha_probable} ({fila.fecha_min} – {fila.fecha_max})
-                </TableCell>
-                <TableCell>{Math.round(fila.p * 100)}%</TableCell>
-                <TableCell className="text-muted-foreground">{fila.motivo}</TableCell>
-                <TableCell className="text-muted-foreground">{fila.mensaje ?? '—'}</TableCell>
-                <TableCell>{fila.contactar ?? '—'}</TableCell>
+        <div className="overflow-hidden rounded-xl border bg-card shadow-xs">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>{t('recordatorios.columnas.cliente_id')}</TableHead>
+                <TableHead>{t('recordatorios.columnas.producto_nombre')}</TableHead>
+                <TableHead>{t('recordatorios.columnas.fecha_probable')}</TableHead>
+                <TableHead>{t('recordatorios.columnas.p')}</TableHead>
+                <TableHead>{t('recordatorios.columnas.motivo')}</TableHead>
+                <TableHead>{t('recordatorios.columnas.mensaje')}</TableHead>
+                <TableHead>{t('recordatorios.columnas.contactar')}</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {resultados.data.resultados.map((fila) => (
+                <TableRow key={`${fila.cliente_id}-${fila.producto_id}`}>
+                  <TableCell className="font-medium">{fila.cliente_id}</TableCell>
+                  <TableCell>{fila.producto_nombre ?? fila.producto_id}</TableCell>
+                  <TableCell className="whitespace-nowrap tabular">
+                    <span className="font-medium">{fila.fecha_probable}</span>
+                    <span className="block text-xs text-muted-foreground">
+                      {fila.fecha_min} – {fila.fecha_max}
+                    </span>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant={varianteProbabilidad(fila.p)} className="tabular">
+                      {Math.round(fila.p * 100)}%
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="text-muted-foreground">{fila.motivo}</TableCell>
+                  <TableCell className="text-muted-foreground">{fila.mensaje ?? '—'}</TableCell>
+                  <TableCell>{fila.contactar ?? '—'}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       )}
 
       <Paginador pagina={pagina} tamPagina={TAM_PAGINA_DEFECTO} total={resultados.data.total} onCambiar={setPagina} />

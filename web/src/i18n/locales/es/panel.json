@@ -13,9 +13,8 @@
     "contactar": "A contactar",
     "contactar_sub": "{{revisar}} para revisar",
     "precision": "Precisión del modelo",
-    "precision_sub": "Línea base {{base}}",
-    "brier": "Error de Brier",
-    "brier_sub": "Línea base {{base}} · menor es mejor"
+    "precision_sub": "Brier {{brier}} · base {{base}}",
+    "brier": "Error de Brier"
   },
   "resultados": {
     "descripcion": "Compras hasta el {{fecha}} · modelo {{version}}",

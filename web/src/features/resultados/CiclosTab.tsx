@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CartesianGrid, Scatter, ScatterChart, XAxis, YAxis } from 'recharts'
+import { CartesianGrid, Scatter, ScatterChart, XAxis, YAxis, ResponsiveContainer } from 'recharts'
 import { useTranslation } from 'react-i18next'
 
 import { Skeleton } from '@/components/ui/skeleton'
@@ -49,45 +49,47 @@ export function CiclosTab({ analisisId }: Props) {
       />
 
       {resultados.data.resultados.length > 0 && (
-        <div className="space-y-1">
-          <h3 className="text-sm font-medium">{t('ciclos.dispersion.titulo')}</h3>
+        <div className="space-y-3 rounded-xl border bg-card p-4 shadow-xs sm:p-5">
+          <h3 className="text-sm font-semibold">{t('ciclos.dispersion.titulo')}</h3>
           {/* ponytail: dispersión de la página cargada, no de todo el análisis (ver RecordatoriosTab). */}
-          <ScatterChart width={500} height={220}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" dataKey="ciclo_mediano" name={t('ciclos.columnas.ciclo_mediano')} />
-            <YAxis
-              type="number"
-              dataKey="clientes_recurrentes"
-              name={t('ciclos.columnas.clientes_recurrentes')}
-            />
-            <Scatter data={resultados.data.resultados} fill="#2563eb" />
-          </ScatterChart>
+          <ResponsiveContainer width="100%" height={240}>
+            <ScatterChart margin={{ top: 4, right: 8, bottom: 0, left: -16 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(36, 15%, 87%)" />
+              <XAxis type="number" dataKey="ciclo_mediano" name={t('ciclos.columnas.ciclo_mediano')} />
+              <YAxis type="number" dataKey="clientes_recurrentes" name={t('ciclos.columnas.clientes_recurrentes')} />
+              <Scatter data={resultados.data.resultados} fill="hsl(173, 68%, 30%)" fillOpacity={0.75} />
+            </ScatterChart>
+          </ResponsiveContainer>
         </div>
       )}
 
       {resultados.data.resultados.length === 0 ? (
-        <p className="text-muted-foreground">{t('vacio')}</p>
+        <p className="rounded-xl border border-dashed bg-card p-8 text-center text-sm text-muted-foreground">
+          {t('vacio')}
+        </p>
       ) : (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>{t('ciclos.columnas.producto_nombre')}</TableHead>
-              <TableHead>{t('ciclos.columnas.ciclo_mediano')}</TableHead>
-              <TableHead>{t('ciclos.columnas.dispersion')}</TableHead>
-              <TableHead>{t('ciclos.columnas.clientes_recurrentes')}</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {resultados.data.resultados.map((fila) => (
-              <TableRow key={fila.producto_id}>
-                <TableCell>{fila.producto_nombre ?? fila.producto_id}</TableCell>
-                <TableCell>{fila.ciclo_mediano}</TableCell>
-                <TableCell>{fila.dispersion}</TableCell>
-                <TableCell>{fila.clientes_recurrentes}</TableCell>
+        <div className="overflow-hidden rounded-xl border bg-card shadow-xs">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>{t('ciclos.columnas.producto_nombre')}</TableHead>
+                <TableHead>{t('ciclos.columnas.ciclo_mediano')}</TableHead>
+                <TableHead>{t('ciclos.columnas.dispersion')}</TableHead>
+                <TableHead>{t('ciclos.columnas.clientes_recurrentes')}</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {resultados.data.resultados.map((fila) => (
+                <TableRow key={fila.producto_id}>
+                  <TableCell>{fila.producto_nombre ?? fila.producto_id}</TableCell>
+                  <TableCell>{fila.ciclo_mediano}</TableCell>
+                  <TableCell>{fila.dispersion}</TableCell>
+                  <TableCell>{fila.clientes_recurrentes}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       )}
 
       <Paginador pagina={pagina} tamPagina={TAM_PAGINA_DEFECTO} total={resultados.data.total} onCambiar={setPagina} />

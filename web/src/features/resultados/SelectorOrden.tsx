@@ -29,7 +29,7 @@ export function SelectorOrden({
         aria-label={nombreAccesible}
         value={campo}
         onChange={(evento) => onCambiar((descendente ? '-' : '') + evento.target.value)}
-        className="flex h-8 rounded-md border border-input bg-background px-2 text-xs shadow-sm"
+        className="flex h-8 rounded-md border border-input bg-card px-2 text-xs shadow-xs"
       >
         {columnas.map((columna) => (
           <option key={columna.clave} value={columna.clave}>

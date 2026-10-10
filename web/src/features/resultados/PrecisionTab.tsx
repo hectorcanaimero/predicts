@@ -1,4 +1,4 @@
-import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { useTranslation } from 'react-i18next'
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
@@ -42,44 +42,58 @@ export function PrecisionTab({ metricas }: Props) {
         })}
       </p>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>{t('precision.columnas.metrica')}</TableHead>
-            <TableHead>{t('precision.columnas.modelo')}</TableHead>
-            <TableHead>{t('precision.columnas.linea_base')}</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {METRICAS.map((metrica) => (
-            <TableRow key={metrica}>
-              <TableCell>
-                <div>{t(`precision.metricas.${metrica}`)}</div>
-                <div className="text-xs text-muted-foreground">{t(`precision.explicaciones.${metrica}`)}</div>
-              </TableCell>
-              <TableCell>{celda(metrica, metricas.modelo[metrica])}</TableCell>
-              <TableCell>{celda(metrica, metricas.linea_base[metrica])}</TableCell>
+      <div className="overflow-hidden rounded-xl border bg-card shadow-xs">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>{t('precision.columnas.metrica')}</TableHead>
+              <TableHead>{t('precision.columnas.modelo')}</TableHead>
+              <TableHead>{t('precision.columnas.linea_base')}</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {METRICAS.map((metrica) => (
+              <TableRow key={metrica}>
+                <TableCell>
+                  <div>{t(`precision.metricas.${metrica}`)}</div>
+                  <div className="text-xs text-muted-foreground">{t(`precision.explicaciones.${metrica}`)}</div>
+                </TableCell>
+                <TableCell>{celda(metrica, metricas.modelo[metrica])}</TableCell>
+                <TableCell>{celda(metrica, metricas.linea_base[metrica])}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
 
-      <div className="space-y-1">
-        <h3 className="text-sm font-medium">{t('precision.calibracion.titulo')}</h3>
-        <p className="text-xs text-muted-foreground">{t('precision.calibracion.explicacion')}</p>
-        <LineChart width={500} height={240} data={datosCalibracion}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="tramo" />
-          <YAxis domain={[0, 1]} />
-          <Tooltip />
-          <Line type="monotone" dataKey="modelo" name={t('precision.columnas.modelo')} stroke="#2563eb" />
-          <Line
-            type="monotone"
-            dataKey="linea_base"
-            name={t('precision.columnas.linea_base')}
-            stroke="#9ca3af"
-          />
-        </LineChart>
+      <div className="space-y-3 rounded-xl border bg-card p-4 shadow-xs sm:p-5">
+        <div className="space-y-1">
+          <h3 className="text-sm font-semibold">{t('precision.calibracion.titulo')}</h3>
+          <p className="text-xs text-muted-foreground">{t('precision.calibracion.explicacion')}</p>
+        </div>
+        <ResponsiveContainer width="100%" height={260}>
+          <LineChart data={datosCalibracion} margin={{ top: 4, right: 8, bottom: 0, left: -16 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(36, 15%, 87%)" />
+            <XAxis dataKey="tramo" />
+            <YAxis domain={[0, 1]} />
+            <Tooltip />
+            <Legend wrapperStyle={{ fontSize: 12 }} />
+            <Line
+              type="monotone"
+              dataKey="modelo"
+              name={t('precision.columnas.modelo')}
+              stroke="hsl(173, 68%, 30%)"
+              strokeWidth={2}
+            />
+            <Line
+              type="monotone"
+              dataKey="linea_base"
+              name={t('precision.columnas.linea_base')}
+              stroke="hsl(30, 8%, 62%)"
+              strokeDasharray="4 4"
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
     </section>
   )

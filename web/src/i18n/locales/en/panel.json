@@ -13,9 +13,8 @@
     "contactar": "To contact",
     "contactar_sub": "{{revisar}} to review",
     "precision": "Model precision",
-    "precision_sub": "Baseline {{base}}",
-    "brier": "Brier score",
-    "brier_sub": "Baseline {{base}} · lower is better"
+    "precision_sub": "Brier {{brier}} · baseline {{base}}",
+    "brier": "Brier score"
   },
   "resultados": {
     "descripcion": "Purchases up to {{fecha}} · model {{version}}",
