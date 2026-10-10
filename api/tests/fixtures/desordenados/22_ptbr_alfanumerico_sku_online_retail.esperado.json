@@ -1,0 +1,16 @@
+{
+  "columnas": {
+    "ID Cliente": "cliente_id",
+    "Dt Venda": "fecha",
+    "Cód. Prod.": "producto_id",
+    "Nome Produto": "producto_nombre",
+    "Pedido": "pedido_id",
+    "Quantidade": "cantidad",
+    "Preço Unit.": "precio_unitario",
+    "Valor Total": "valor_total",
+    "Sucursal": "ignorar",
+    "Vendedor": "ignorar",
+    "Forma de Pago": "ignorar"
+  },
+  "producto_id_tipo": "sku"
+}

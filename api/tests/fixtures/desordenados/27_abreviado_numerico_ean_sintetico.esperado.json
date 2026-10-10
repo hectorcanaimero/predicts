@@ -1,0 +1,15 @@
+{
+  "columnas": {
+    "cli": "cliente_id",
+    "Dt Venda": "fecha",
+    "Cód. Prod.": "producto_id",
+    "Desc": "producto_nombre",
+    "Ped": "pedido_id",
+    "Qtd": "cantidad",
+    "Pr Unit": "precio_unitario",
+    "Vl Tot": "valor_total",
+    "Cat": "categoria",
+    "Mca": "marca"
+  },
+  "producto_id_tipo": "ean"
+}

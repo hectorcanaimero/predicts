@@ -1,0 +1,18 @@
+{
+  "columnas": {
+    "CLI": "cliente_id",
+    "DT VENDA": "fecha",
+    "CÓD. PROD.": "producto_id",
+    "DESC": "producto_nombre",
+    "PED": "pedido_id",
+    "QTD": "cantidad",
+    "PR UNIT": "precio_unitario",
+    "VL TOT": "valor_total",
+    "CAT": "categoria",
+    "MCA": "marca",
+    "SUCURSAL": "ignorar",
+    "VENDEDOR": "ignorar",
+    "FORMA DE PAGO": "ignorar"
+  },
+  "producto_id_tipo": "ean"
+}

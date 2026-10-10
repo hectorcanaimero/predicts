@@ -1,0 +1,13 @@
+{
+  "columnas": {
+    "CLI": "cliente_id",
+    "DT VENDA": "fecha",
+    "CÓD. PROD.": "producto_id",
+    "DESC": "producto_nombre",
+    "PED": "pedido_id",
+    "QTD": "cantidad",
+    "PR UNIT": "precio_unitario",
+    "VL TOT": "valor_total"
+  },
+  "producto_id_tipo": "sku"
+}

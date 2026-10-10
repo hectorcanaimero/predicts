@@ -1,0 +1,15 @@
+{
+  "columnas": {
+    "ID CLIENTE": "cliente_id",
+    "FECHA VENTA": "fecha",
+    "CODIGO PRODUCTO": "producto_id",
+    "NOMBRE PRODUCTO": "producto_nombre",
+    "PEDIDO": "pedido_id",
+    "CANTIDAD": "cantidad",
+    "PRECIO UNITARIO": "precio_unitario",
+    "TOTAL": "valor_total",
+    "CATEGORIA": "categoria",
+    "MARCA": "marca"
+  },
+  "producto_id_tipo": "ean"
+}
