@@ -28,7 +28,7 @@ function Insignia({ estado }: { estado: Estado }) {
   return (
     <Badge variant={estado === 'prellenado' ? 'success' : 'warning'}>
       {estado === 'prellenado' ? <Sparkles aria-hidden="true" /> : <TriangleAlert aria-hidden="true" />}
-      {t(`insignias.${estado}`)}
+      <span className="sr-only sm:not-sr-only">{t(`insignias.${estado}`)}</span>
     </Badge>
   )
 }
@@ -146,13 +146,15 @@ export function MapeoDataset({ datasetId, onIngestaIniciada }: Props) {
         <h2 id="titulo-columnas" className="border-b px-5 py-4 font-semibold">
           {t('columnas_titulo')}
         </h2>
-        <Table className="min-w-[40rem]">
+        <Table className="table-fixed md:table-auto">
           <TableHeader>
             <TableRow>
               <TableHead>{t('tabla.columna')}</TableHead>
-              <TableHead>{t('tabla.valores_muestra')}</TableHead>
-              <TableHead className="w-56">{t('tabla.campo')}</TableHead>
-              <TableHead className="w-32">{t('tabla.confianza')}</TableHead>
+              <TableHead className="hidden md:table-cell">{t('tabla.valores_muestra')}</TableHead>
+              <TableHead className="w-[45%] md:w-56">{t('tabla.campo')}</TableHead>
+              <TableHead className="w-12 sm:w-32">
+                <span className="sr-only sm:not-sr-only">{t('tabla.confianza')}</span>
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -161,10 +163,13 @@ export function MapeoDataset({ datasetId, onIngestaIniciada }: Props) {
               const ignorada = (campos[columna.nombre] ?? IGNORAR) === IGNORAR
               return (
                 <TableRow key={columna.nombre}>
-                  <TableCell>
-                    <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">{columna.nombre}</code>
+                  <TableCell className="min-w-0">
+                    <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs break-all">{columna.nombre}</code>
+                    <span className="mt-1 block truncate text-xs text-muted-foreground md:hidden">
+                      {columna.valores_muestra.slice(0, 2).join(', ')}
+                    </span>
                   </TableCell>
-                  <TableCell className="max-w-64 truncate text-muted-foreground">
+                  <TableCell className="hidden max-w-64 truncate text-muted-foreground md:table-cell">
                     {columna.valores_muestra.slice(0, 3).join(', ')}
                   </TableCell>
                   <TableCell>

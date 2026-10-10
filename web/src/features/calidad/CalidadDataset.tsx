@@ -43,7 +43,7 @@ export function CalidadDataset({ datasetId, trabajoId, onContinuarAnalisis }: Pr
   // Dataset ya `listo` sin informe (p. ej. la demo, que se carga procesada): no va a llegar nunca.
   const sinInforme = calidadNoDisponible && calidad.error.parametros.estado === 'listo'
   const calidadNoDisponibleAun = calidadNoDisponible && !sinInforme
-  const calidadOtroError = calidad.isError && !calidadNoDisponibleAun
+  const calidadOtroError = calidad.isError && !calidadNoDisponible
 
   return (
     <div className="space-y-8">
