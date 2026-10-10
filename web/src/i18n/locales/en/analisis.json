@@ -1,0 +1,53 @@
+{
+  "nuevo": {
+    "titulo": "Choose analysis",
+    "tarjetas": {
+      "recompra": { "nombre": "Repurchase reminders", "descripcion": "When each customer will buy again." },
+      "ciclos": { "nombre": "Cycles by product", "descripcion": "How often each product gets repurchased." },
+      "riesgo": { "nombre": "Churn risk", "descripcion": "Customers who might stop buying." },
+      "ofertas": { "nombre": "Offers", "descripcion": "Products to offer each customer based on their repurchase." }
+    },
+    "no_viable": "Not enough data: {{motivo}}",
+    "parametros": {
+      "titulo": "Parameters",
+      "periodo": { "etiqueta": "Period", "ayuda": "Limits the purchases considered to this date range; empty uses the whole history." },
+      "desde": "From",
+      "hasta": "To",
+      "min_compras": { "etiqueta": "Minimum purchases", "ayuda": "Minimum purchases of a customer on a product to take it into account." },
+      "horizonte": { "etiqueta": "Horizon (days)", "ayuda": "How many days ahead the likely repurchase dates are calculated." },
+      "umbral": { "etiqueta": "Probability threshold", "ayuda": "Minimum repurchase probability to generate a reminder (0 to 1)." }
+    },
+    "ofertas_lista": {
+      "titulo": "Offers list (optional)",
+      "ayuda": "CSV with columns producto_id,descuento; without a list, offers are computed from co-purchase only.",
+      "subiendo": "Uploading the list…",
+      "subida_ok": "{{productos}} products loaded."
+    },
+    "acciones": { "lanzar": "Launch analysis", "lanzando": "Launching…" },
+    "ninguna_seleccionada": "Choose at least one analysis.",
+    "errores": {
+      "tipos_invalidos": "There is an invalid analysis type.",
+      "parametros_invalidos": "Check the parameters, one of them is invalid.",
+      "dataset_no_listo": "The dataset isn't ready yet.",
+      "ofertas_codificacion": "The offers file isn't in a valid text format.",
+      "ofertas_columnas": "The offers CSV must have the producto_id and descuento columns.",
+      "ofertas_fila_invalida": "There is an invalid row in the offers CSV.",
+      "ofertas_vacia": "The offers list is empty.",
+      "ofertas_muy_grande": "The offers file is too large."
+    }
+  },
+  "progreso": {
+    "titulo": "Analysis progress",
+    "conectando": "Connecting…",
+    "esperando": "Waiting for the analysis to start…",
+    "etapa": "Stage: {{etapa}}",
+    "contador": "{{clave}}: {{valor}}",
+    "acciones": { "cancelar": "Cancel" },
+    "cancelado": "Analysis cancelled.",
+    "errores": {
+      "memoria_excedida": "The analysis exceeded the available memory.",
+      "tiempo_excedido": "The analysis exceeded the maximum allowed time.",
+      "error_interno": "An unexpected error occurred while running the analysis."
+    }
+  }
+}

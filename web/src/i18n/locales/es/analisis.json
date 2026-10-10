@@ -1,0 +1,53 @@
+{
+  "nuevo": {
+    "titulo": "Elegir análisis",
+    "tarjetas": {
+      "recompra": { "nombre": "Recordatorios de recompra", "descripcion": "Cuándo volverá a comprar cada cliente." },
+      "ciclos": { "nombre": "Ciclos por producto", "descripcion": "Cada cuánto se recompra cada producto." },
+      "riesgo": { "nombre": "Riesgo de abandono", "descripcion": "Clientes que podrían dejar de comprar." },
+      "ofertas": { "nombre": "Ofertas", "descripcion": "Productos a ofrecer por cliente según su recompra." }
+    },
+    "no_viable": "No alcanza: {{motivo}}",
+    "parametros": {
+      "titulo": "Parámetros",
+      "periodo": { "etiqueta": "Período", "ayuda": "Limita las compras consideradas a este rango de fechas; vacío usa todo el histórico." },
+      "desde": "Desde",
+      "hasta": "Hasta",
+      "min_compras": { "etiqueta": "Mínimo de compras", "ayuda": "Compras mínimas de un cliente en un producto para tenerlo en cuenta." },
+      "horizonte": { "etiqueta": "Horizonte (días)", "ayuda": "Cuántos días hacia adelante se calculan las fechas probables de recompra." },
+      "umbral": { "etiqueta": "Umbral de probabilidad", "ayuda": "Probabilidad mínima de recompra para generar un recordatorio (0 a 1)." }
+    },
+    "ofertas_lista": {
+      "titulo": "Lista de ofertas (opcional)",
+      "ayuda": "CSV con columnas producto_id,descuento; sin lista, las ofertas se calculan solo por co-compra.",
+      "subiendo": "Subiendo la lista…",
+      "subida_ok": "{{productos}} productos cargados."
+    },
+    "acciones": { "lanzar": "Lanzar análisis", "lanzando": "Lanzando…" },
+    "ninguna_seleccionada": "Elige al menos un análisis.",
+    "errores": {
+      "tipos_invalidos": "Hay un tipo de análisis inválido.",
+      "parametros_invalidos": "Revisa los parámetros, alguno no es válido.",
+      "dataset_no_listo": "El dataset todavía no está listo.",
+      "ofertas_codificacion": "El archivo de ofertas no está en un formato de texto válido.",
+      "ofertas_columnas": "El CSV de ofertas debe tener las columnas producto_id y descuento.",
+      "ofertas_fila_invalida": "Hay una fila inválida en el CSV de ofertas.",
+      "ofertas_vacia": "La lista de ofertas está vacía.",
+      "ofertas_muy_grande": "El archivo de ofertas es muy grande."
+    }
+  },
+  "progreso": {
+    "titulo": "Progreso del análisis",
+    "conectando": "Conectando…",
+    "esperando": "Esperando el inicio del análisis…",
+    "etapa": "Etapa: {{etapa}}",
+    "contador": "{{clave}}: {{valor}}",
+    "acciones": { "cancelar": "Cancelar" },
+    "cancelado": "Análisis cancelado.",
+    "errores": {
+      "memoria_excedida": "El análisis superó la memoria disponible.",
+      "tiempo_excedido": "El análisis superó el tiempo máximo permitido.",
+      "error_interno": "Ocurrió un error inesperado al correr el análisis."
+    }
+  }
+}

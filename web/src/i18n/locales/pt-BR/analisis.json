@@ -1,0 +1,53 @@
+{
+  "nuevo": {
+    "titulo": "Escolher análise",
+    "tarjetas": {
+      "recompra": { "nombre": "Lembretes de recompra", "descripcion": "Quando cada cliente vai comprar de novo." },
+      "ciclos": { "nombre": "Ciclos por produto", "descripcion": "A cada quanto tempo cada produto é recomprado." },
+      "riesgo": { "nombre": "Risco de abandono", "descripcion": "Clientes que podem deixar de comprar." },
+      "ofertas": { "nombre": "Ofertas", "descripcion": "Produtos para oferecer a cada cliente conforme sua recompra." }
+    },
+    "no_viable": "Não dá: {{motivo}}",
+    "parametros": {
+      "titulo": "Parâmetros",
+      "periodo": { "etiqueta": "Período", "ayuda": "Limita as compras consideradas a este intervalo de datas; vazio usa todo o histórico." },
+      "desde": "De",
+      "hasta": "Até",
+      "min_compras": { "etiqueta": "Mínimo de compras", "ayuda": "Compras mínimas de um cliente em um produto para considerá-lo." },
+      "horizonte": { "etiqueta": "Horizonte (dias)", "ayuda": "Quantos dias adiante se calculam as datas prováveis de recompra." },
+      "umbral": { "etiqueta": "Limiar de probabilidade", "ayuda": "Probabilidade mínima de recompra para gerar um lembrete (0 a 1)." }
+    },
+    "ofertas_lista": {
+      "titulo": "Lista de ofertas (opcional)",
+      "ayuda": "CSV com colunas producto_id,descuento; sem lista, as ofertas são calculadas só por co-compra.",
+      "subiendo": "Enviando a lista…",
+      "subida_ok": "{{productos}} produtos carregados."
+    },
+    "acciones": { "lanzar": "Lançar análise", "lanzando": "Lançando…" },
+    "ninguna_seleccionada": "Escolha ao menos uma análise.",
+    "errores": {
+      "tipos_invalidos": "Há um tipo de análise inválido.",
+      "parametros_invalidos": "Revise os parâmetros, algum não é válido.",
+      "dataset_no_listo": "O dataset ainda não está pronto.",
+      "ofertas_codificacion": "O arquivo de ofertas não está em um formato de texto válido.",
+      "ofertas_columnas": "O CSV de ofertas precisa das colunas producto_id e descuento.",
+      "ofertas_fila_invalida": "Há uma linha inválida no CSV de ofertas.",
+      "ofertas_vacia": "A lista de ofertas está vazia.",
+      "ofertas_muy_grande": "O arquivo de ofertas é muito grande."
+    }
+  },
+  "progreso": {
+    "titulo": "Progresso da análise",
+    "conectando": "Conectando…",
+    "esperando": "Esperando o início da análise…",
+    "etapa": "Etapa: {{etapa}}",
+    "contador": "{{clave}}: {{valor}}",
+    "acciones": { "cancelar": "Cancelar" },
+    "cancelado": "Análise cancelada.",
+    "errores": {
+      "memoria_excedida": "A análise superou a memória disponível.",
+      "tiempo_excedido": "A análise superou o tempo máximo permitido.",
+      "error_interno": "Ocorreu um erro inesperado ao executar a análise."
+    }
+  }
+}
