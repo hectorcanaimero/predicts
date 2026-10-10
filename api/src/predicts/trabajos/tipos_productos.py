@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 from predicts.db.modelos import Dataset, Producto
 from predicts.productos.catalogo import actualizar_catalogo
 from predicts.productos.clasificacion import clasificar_productos
+from predicts.productos.equivalentes import generar_embeddings, generar_propuestas
 from predicts.trabajos import eventos
 from predicts.trabajos.registro import TrabajoEnCurso, tipo_trabajo
 
@@ -45,3 +46,13 @@ def productos(trabajo: TrabajoEnCurso) -> None:
         db.commit()
 
     eventos.emitir(trabajo.id, "clasificacion", {"productos": len(ids)})
+
+    with Session(engine) as db:
+        embebidos = generar_embeddings(db, trabajo.empresa_id)
+        db.commit()
+        grupos = generar_propuestas(db, trabajo.empresa_id)
+        db.commit()
+
+    eventos.emitir(
+        trabajo.id, "equivalentes", {"embeddings": len(embebidos), "grupos_propuestos": len(grupos)}
+    )
