@@ -10,11 +10,15 @@ y los `parametros` (FR-15, ver `ParametrosAnalisis`). Pasos:
    normalizado, con la misma expresión que `productos/catalogo.py`.
 2. `modelo.ajustar` una vez; `ciclos` y `recompra` leen de ese ajuste (`fecha_ref` = última
    fecha de las compras del análisis).
+   `riesgo`, `ofertas` y `contactar` (F4.3.T2) también leen de ese ajuste y de la predicción;
+   `contactar` usa el riesgo aunque no se haya pedido (lo calcula igual) y es el único que llama
+   a Jev (solo para los casos límite, ver `contactar.py`).
 3. Backtest de recompra al final (pisa las tablas del ajuste) → `analisis.metricas`.
 4. `analisis.resumen` (NFR-4): totales, top productos por análisis, costo de IA, versión del
    modelo y parámetros efectivos.
 
-Eventos: `leyendo` (filas/clientes/productos), `ciclos`, `prediccion`, `backtest`.
+Eventos: `leyendo` (filas/clientes/productos), `ciclos`, `prediccion`, `riesgo`, `ofertas`,
+`contactar`, `backtest`.
 """
 
 from __future__ import annotations
@@ -28,18 +32,20 @@ import pyarrow as pa
 from pydantic import BaseModel, Field, model_validator
 from sqlalchemy import select
 from sqlalchemy.orm import Session
+from typesafe_sdk import TypeSafeClient
 
-from predicts.analisis import ciclos, recompra
+from predicts.analisis import ciclos, contactar, ofertas, recompra, riesgo
 from predicts.config import Settings, settings
 from predicts.datos.duckdb import conexion_duckdb
 from predicts.db.modelos import Analisis, Dataset, GrupoProducto, Producto
 from predicts.ia import Contador
 from predicts.modelo import VERSION_MODELO, ParamsModelo, ajustar
 from predicts.modelo.backtest import backtest
+from predicts.modelo.prediccion import predecir
 from predicts.trabajos import eventos
 from predicts.trabajos.registro import TrabajoEnCurso, tipo_trabajo
 
-TIPOS = ("recompra", "ciclos")
+TIPOS = ("recompra", "ciclos", "riesgo", "ofertas", "contactar")
 UMBRAL_DEFECTO = 0.5
 
 # Igual que en productos/catalogo.py: así el cruce con `productos.nombre_normalizado` coincide.
@@ -57,6 +63,8 @@ class ParametrosAnalisis(BaseModel):
     horizonte: int | None = Field(default=None, ge=1)
     umbral: float = Field(default=UMBRAL_DEFECTO, ge=0, le=1)
     semanas_backtest: int | None = Field(default=None, ge=1)
+    factor_riesgo: float = Field(default=riesgo.FACTOR_DEFECTO, ge=0)
+    max_ofertas: int = Field(default=ofertas.MAX_OFERTAS_DEFECTO, ge=1, le=50)
 
     @model_validator(mode="after")
     def _periodo(self) -> ParametrosAnalisis:
@@ -94,8 +102,17 @@ def _catalogo(db: Session, empresa_id: uuid.UUID) -> pa.Table:
     )
 
 
-def ejecutar(db: Session, analisis: Analisis, emitir: Emitir, cfg: Settings | None = None) -> None:
-    """Corre los análisis de `analisis` y guarda resultados, métricas y resumen (sin commit)."""
+def ejecutar(
+    db: Session,
+    analisis: Analisis,
+    emitir: Emitir,
+    cfg: Settings | None = None,
+    cliente_jev: TypeSafeClient | None = None,
+) -> None:
+    """Corre los análisis de `analisis` y guarda resultados, métricas y resumen (sin commit).
+
+    `cliente_jev`: solo para tests; por defecto `ia.cliente_jev()` (si hay casos límite).
+    """
     cfg = cfg or settings()
     desconocidos = set(analisis.tipos) - set(TIPOS)
     if desconocidos or not analisis.tipos:
@@ -107,7 +124,7 @@ def ejecutar(db: Session, analisis: Analisis, emitir: Emitir, cfg: Settings | No
 
     resultados = Path(dataset.ruta_parquet).parent / "analisis" / str(analisis.id) / "resultados"
     resultados.mkdir(parents=True, exist_ok=True)
-    contador = Contador()  # ponytail: sin IA todavía; ¿contactar? (F4.3.T2) registra acá.
+    contador = Contador()
 
     con = conexion_duckdb(cfg=cfg)
     try:
@@ -117,6 +134,7 @@ def ejecutar(db: Session, analisis: Analisis, emitir: Emitir, cfg: Settings | No
             CREATE TABLE compras AS
             SELECT c.cliente_id, c.fecha,
                    coalesce('grupo:' || k.grupo_id, c.producto_id) AS producto_id,
+                   c.producto_id AS producto_id_origen,
                    coalesce(k.grupo_nombre, c.producto_nombre) AS producto_nombre,
                    c.cantidad, c.precio_unitario, c.valor_total,
                    k.durable IS TRUE AS durable, k.grupo_id IS NOT NULL AS agrupado
@@ -172,6 +190,46 @@ def ejecutar(db: Session, analisis: Analisis, emitir: Emitir, cfg: Settings | No
             emitir(
                 "prediccion", {"pares": r["pares_evaluados"], "recordatorios": r["recordatorios"]}
             )
+        if {"riesgo", "contactar"} & set(analisis.tipos):
+            resumen["riesgo"] = r = riesgo.calcular(
+                ajuste, "compras", "nombres", fecha_ref, params.factor_riesgo, resultados
+            )
+            emitir("riesgo", {"pares": r["pares"], "clientes": r["clientes"]})
+        if {"ofertas", "contactar"} & set(analisis.tipos):
+            # Idempotente: recompra ya la creó si se pidió; acá hace falta aunque no.
+            vista = predecir(ajuste, fecha_ref, params.horizonte)
+        if "ofertas" in analisis.tipos:
+            resumen["ofertas"] = r = ofertas.calcular(
+                ajuste,
+                "compras",
+                "nombres",
+                vista,
+                params.umbral,
+                params.horizonte,
+                Path(dataset.ruta_parquet).parent / ofertas.LISTA,
+                params.max_ofertas,
+                resultados,
+            )
+            emitir("ofertas", {"ofertas": r["ofertas"], "clientes": r["clientes"]})
+        if "contactar" in analisis.tipos:
+            resumen["contactar"] = r = contactar.decidir(
+                ajuste,
+                vista,
+                "nombres",
+                riesgo.TABLA,
+                params.umbral,
+                params.horizonte,
+                fecha_ref,
+                resultados,
+                db=db,
+                empresa_id=analisis.empresa_id,
+                analisis_id=analisis.id,
+                cfg=cfg,
+                cliente=cliente_jev,
+                contador=contador,
+            )
+            emitir("contactar", {"clientes": r["clientes"], "por_jev": r["por_jev"]})
+        if "recompra" in analisis.tipos:
             metricas = backtest(con, "compras", modelo, params.semanas_backtest, params.horizonte)
             emitir("backtest", {"pares": metricas.n_pares})
     finally:
