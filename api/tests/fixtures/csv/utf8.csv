@@ -1,0 +1,4 @@
+cliente_id,fecha,producto_id,producto_id_tipo,producto_nombre,cantidad,precio_unitario
+1,2024-01-05,SKU001,sku,Café especial,2,10.50
+2,2024-01-06,SKU002,sku,Açaí congelado,1,15.90
+3,2024-01-07,SKU003,sku,Pão francês,3,5.20

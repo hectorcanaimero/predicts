@@ -63,4 +63,5 @@ select = ["E", "F", "I", "B", "UP"]
 testpaths = ["tests"]
 markers = [
     "db: tests que necesitan una base Postgres (ver tests/conftest_db.py)",
+    "lento: tests pesados (tiempo/memoria) que se excluyen de la CI (ver orch-ci.yml)",
 ]
