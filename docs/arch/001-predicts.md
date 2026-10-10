@@ -243,12 +243,41 @@ Volúmenes para `DATA_DIR` y Postgres; `.env.example` sin secretos. Mismo compos
 | `pedido_id`, `categoria`, `marca` | VARCHAR | no |
 | `cantidad`, `precio_unitario`, `valor_total` | DOUBLE | no |
 
-**Postgres (principales):** `empresas`, `usuarios`, `sesiones`, `tokens_recuperacion`,
-`proyectos` (idioma de mensajes, tono), `datasets` (estado, rutas, firma de encabezados, calidad),
-`plantillas_mapeo`, `productos` (nombre normalizado, recompra, categoría, embedding `vector`),
-`grupos_producto`, `analisis` (tipo, parámetros, versión del modelo, métricas de backtest,
-resumen, costo), `trabajos`, `eventos_trabajo`, `decisiones_jev` (tipo, entrada resumida, salida,
-confianza, corregida_por, corregida_a), `plantillas_mensaje`, `api_keys`.
+**Postgres.** Todas las tablas de negocio llevan `id` (UUID v7), `empresa_id` (FK), `creado_en` y
+`actualizado_en`; las que no, se indican. Columnas mínimas (F0.2.T2 las crea todas; las fases
+siguientes no cambian el esquema salvo que su tarea lo diga):
+
+- `empresas`: `id`, `nombre`, `creado_en`. (sin `empresa_id`)
+- `usuarios`: `email` (único, minúsculas), `hash_contrasena`, `idioma` (`pt-BR|es|en`), `rol`
+  (`dueno|miembro`), `ultimo_login_en`.
+- `sesiones`: `usuario_id`, `token_hash` (único), `expira_en`, `ip`, `user_agent`.
+- `tokens_recuperacion`: `usuario_id`, `token_hash`, `expira_en`, `usado_en`.
+- `intentos_login`: `email`, `ip`, `exitoso`, `creado_en`. (sin `empresa_id`)
+- `api_keys`: `nombre`, `prefijo`, `key_hash` (único), `ultimo_uso_en`, `revocada_en`.
+- `proyectos`: `nombre`, `descripcion`, `idioma_mensajes` (`pt-BR|es|en`), `tono`
+  (`cercano|neutro|formal`).
+- `datasets`: `proyecto_id`, `nombre_archivo`, `tamano_bytes`, `sha256`, `estado`
+  (`subido|mapeado|ingiriendo|listo|error|archivado`), `deteccion` (JSONB), `mapeo` (JSONB),
+  `firma_encabezados`, `calidad` (JSONB), `resumen_ingesta` (JSONB), `ruta_original`,
+  `ruta_parquet`, `subido_en`, `archivado_en`.
+- `plantillas_mapeo`: `firma_encabezados` (único por empresa), `nombre`, `mapeo` (JSONB).
+- `productos`: `nombre_normalizado` (único por empresa), `nombre`, `producto_id_origen`,
+  `categoria`, `categoria_origen` (`csv|jev|persona`), `tipo` (`recompra|durable|desconocido`),
+  `tipo_origen` (`regla|jev|persona`), `confianza`, `estado_revision` (`ok|revisar`),
+  `estadisticas` (JSONB), `embedding` (`vector(1536)`, índice HNSW coseno), `grupo_id`.
+- `grupos_producto`: `nombre`, `estado` (`propuesto|confirmado|rechazado`), `similitud`.
+- `analisis`: `dataset_id`, `tipos` (array), `parametros` (JSONB), `estado`, `version_modelo`,
+  `metricas` (JSONB), `resumen` (JSONB), `ruta_resultados`, `costo_ia` (JSONB), `trabajo_id`.
+- `trabajos`: `tipo`, `parametros` (JSONB), `estado` (`en_cola|corriendo|listo|error|cancelado`),
+  `error_codigo`, `error_detalle`, `iniciado_en`, `terminado_en`, `duracion_s`,
+  `memoria_pico_mb`, `intentos`.
+- `eventos_trabajo`: `trabajo_id`, `secuencia`, `etapa`, `contadores` (JSONB), `progreso`, `ts`.
+- `decisiones_jev`: `tipo` (`mapeo_columna|tipo_producto|categoria|contactar|revision_mensaje`),
+  `referencia` (id del objeto decidido), `entrada_resumida` (JSONB), `opcion`, `confianza`,
+  `corregida_a`, `corregida_por`, `corregida_en`.
+- `plantillas_mensaje`: `clave` (producto/grupo/categoría + tipo), `tipo`
+  (`recordatorio|oferta|reactivacion`), `idioma`, `tono`, `texto`, `estado`
+  (`ok|revisar|editada`), `motivo_revision`; único por (empresa, clave, idioma, tono).
 
 ## Datasets públicos
 
