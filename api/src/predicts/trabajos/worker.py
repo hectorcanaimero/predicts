@@ -37,6 +37,7 @@ from sqlalchemy.orm import Session
 from predicts.db.modelos import EventoTrabajo, Trabajo
 from predicts.trabajos import cola, eventos, registro
 from predicts.trabajos.registro import FuncionTrabajo, TrabajoEnCurso
+from predicts.trabajos.tipos_retencion import encolar_si_corresponde
 
 log = logging.getLogger(__name__)
 
@@ -219,6 +220,7 @@ def correr(
             if recuperados:
                 log.warning("%d trabajos interrumpidos pasaron a error", recuperados)
             while not detener.is_set():
+                encolar_si_corresponde(db)  # retención: sin esto no hay cron externo
                 if procesar_siguiente(db, url_db, max_memoria_mb, timeout_s) is None:
                     detener.wait(intervalo_s)
     finally:

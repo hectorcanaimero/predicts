@@ -175,6 +175,9 @@ def resultados_analisis(
         raise ErrorApi("tipo_invalido", 422, tipo=tipo, validos=sorted(_RESULTADOS))
     if tipo not in analisis.tipos:
         raise ErrorApi("tipo_no_solicitado", 404, tipo=tipo)
+    dataset = db.get(Dataset, analisis.dataset_id)
+    if dataset is not None and dataset.estado == "archivado":
+        raise ErrorApi("archivo_vencido", 410)
     if analisis.estado != "listo" or not analisis.ruta_resultados:
         raise ErrorApi("analisis_no_listo", 409, estado=analisis.estado)
 
