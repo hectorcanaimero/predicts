@@ -6,6 +6,11 @@ dist-ssr
 # salida de `npm run captura:procesamiento` (video generado, no se versiona)
 captura/
 
+# salida de `npm run e2e` (playwright.config.ts)
+test-results/
+playwright-report/
+blob-report/
+
 npm-debug.log*
 
 .vscode/*

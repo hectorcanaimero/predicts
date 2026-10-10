@@ -13,6 +13,11 @@ export type EstadoConexionSSE = 'conectando' | 'abierta' | 'cerrada'
 const REINTENTO_MS = 1000
 const ETAPAS_FINALES = new Set(['listo', 'error'])
 
+// `sse_starlette` (el servidor) termina cada línea y cada bloque en CRLF (`\r\n`, `\r\n\r\n`); un
+// bloque separado solo por LF (`\n\n`) también es válido SSE y es lo que usan los tests con un
+// stream falso (`calidad.test.tsx`), así que ambos formatos tienen que reconocerse.
+const SEPARADOR_BLOQUE = /\r?\n\r?\n/
+
 interface BloqueSSE {
   id?: string
   evento?: string
@@ -21,7 +26,7 @@ interface BloqueSSE {
 
 function parsearBloque(bloque: string): BloqueSSE {
   const resultado: BloqueSSE = {}
-  for (const linea of bloque.split('\n')) {
+  for (const linea of bloque.split(/\r?\n/)) {
     if (linea.startsWith('id:')) resultado.id = linea.slice(3).trim()
     else if (linea.startsWith('event:')) resultado.evento = linea.slice(6).trim()
     else if (linea.startsWith('data:')) resultado.datos = (resultado.datos ?? '') + linea.slice(5).trim()
@@ -76,7 +81,7 @@ export function useEventosTrabajo(trabajoId: string | null | undefined) {
           const { done, value } = await lector.read()
           if (done) break
           buffer += decodificador.decode(value, { stream: true })
-          const bloques = buffer.split('\n\n')
+          const bloques = buffer.split(SEPARADOR_BLOQUE)
           buffer = bloques.pop() ?? ''
           for (const bloqueTexto of bloques) {
             const bloque = parsearBloque(bloqueTexto)

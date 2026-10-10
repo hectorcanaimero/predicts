@@ -95,13 +95,25 @@ def test_lanzar_analisis_crea_trabajo(db, dataset, ana) -> None:
     )
     assert r.status_code == 202
     cuerpo = r.json()
-    assert cuerpo["estado"] == "en_cola" and cuerpo["tipos"] == ["recompra", "ciclos"]
+    # `contactar` se agrega solo (no se elige en la UI, ver `lanzar_analisis`): sin él,
+    # `GET /analisis/{id}/exportar` queda inalcanzable para cualquier análisis lanzado desde ahí.
+    assert cuerpo["estado"] == "en_cola" and cuerpo["tipos"] == ["recompra", "ciclos", "contactar"]
 
     analisis = db.get(Analisis, cuerpo["id"])
     assert analisis.parametros == {"umbral": 0.4}
     trabajo = db.get(Trabajo, cuerpo["trabajo_id"])
     assert trabajo.tipo == "analisis" and trabajo.estado == "en_cola"
     assert trabajo.parametros == {"analisis_id": cuerpo["id"]}
+
+
+def test_lanzar_analisis_no_duplica_contactar_si_ya_vino(dataset, ana) -> None:
+    r = ana.post(
+        f"/datasets/{dataset.id}/analisis",
+        json={"tipos": ["riesgo", "contactar"]},
+        headers=_csrf(ana),
+    )
+    assert r.status_code == 202
+    assert r.json()["tipos"] == ["riesgo", "contactar"]
 
 
 def test_lanzar_analisis_tipos_invalidos(dataset, ana) -> None:

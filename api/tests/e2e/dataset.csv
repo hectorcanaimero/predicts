@@ -1,0 +1,109 @@
+cliente_id,fecha,producto_id,producto_nombre,pedido_id,cantidad,precio_unitario,valor_total,categoria,marca
+cliente-01,01/03/2024,prod-001,Jabon en polvo 1kg,pedido-0001,1,10.50,10.50,limpieza,marca-a
+cliente-01,01/03/2024,prod-002,Cafe molido 500g,pedido-0002,1,25.00,25.00,alimentos,marca-b
+cliente-01,02/02/2024,prod-001,Jabon en polvo 1kg,pedido-0003,1,10.50,10.50,limpieza,marca-a
+cliente-01,02/02/2024,prod-002,Cafe molido 500g,pedido-0004,1,25.00,25.00,alimentos,marca-b
+cliente-01,02/08/2024,prod-001,Jabon en polvo 1kg,pedido-0005,1,10.50,10.50,limpieza,marca-a
+cliente-01,03/05/2024,prod-001,Jabon en polvo 1kg,pedido-0006,1,10.50,10.50,limpieza,marca-a
+cliente-01,04/10/2024,prod-001,Jabon en polvo 1kg,pedido-0007,1,10.50,10.50,limpieza,marca-a
+cliente-01,05/01/2024,prod-001,Jabon en polvo 1kg,pedido-0008,1,10.50,10.50,limpieza,marca-a
+cliente-01,05/01/2024,prod-002,Cafe molido 500g,pedido-0009,1,25.00,25.00,alimentos,marca-b
+cliente-01,05/04/2024,prod-001,Jabon en polvo 1kg,pedido-0010,1,10.50,10.50,limpieza,marca-a
+cliente-01,05/07/2024,prod-001,Jabon en polvo 1kg,pedido-0011,1,10.50,10.50,limpieza,marca-a
+cliente-01,06/09/2024,prod-001,Jabon en polvo 1kg,pedido-0012,1,10.50,10.50,limpieza,marca-a
+cliente-01,07/06/2024,prod-001,Jabon en polvo 1kg,pedido-0013,1,10.50,10.50,limpieza,marca-a
+cliente-01,08/03/2024,prod-001,Jabon en polvo 1kg,pedido-0014,1,10.50,10.50,limpieza,marca-a
+cliente-01,09/02/2024,prod-001,Jabon en polvo 1kg,pedido-0015,1,10.50,10.50,limpieza,marca-a
+cliente-01,09/08/2024,prod-001,Jabon en polvo 1kg,pedido-0016,1,10.50,10.50,limpieza,marca-a
+cliente-01,10/05/2024,prod-001,Jabon en polvo 1kg,pedido-0017,1,10.50,10.50,limpieza,marca-a
+cliente-01,12/01/2024,prod-001,Jabon en polvo 1kg,pedido-0018,1,10.50,10.50,limpieza,marca-a
+cliente-01,12/04/2024,prod-001,Jabon en polvo 1kg,pedido-0019,1,10.50,10.50,limpieza,marca-a
+cliente-01,12/07/2024,prod-001,Jabon en polvo 1kg,pedido-0020,1,10.50,10.50,limpieza,marca-a
+cliente-01,13/09/2024,prod-001,Jabon en polvo 1kg,pedido-0021,1,10.50,10.50,limpieza,marca-a
+cliente-01,13/09/2024,prod-002,Cafe molido 500g,pedido-0022,1,25.00,25.00,alimentos,marca-b
+cliente-01,14/06/2024,prod-001,Jabon en polvo 1kg,pedido-0023,1,10.50,10.50,limpieza,marca-a
+cliente-01,15/03/2024,prod-001,Jabon en polvo 1kg,pedido-0024,1,10.50,10.50,limpieza,marca-a
+cliente-01,16/02/2024,prod-001,Jabon en polvo 1kg,pedido-0025,1,10.50,10.50,limpieza,marca-a
+cliente-01,16/08/2024,prod-001,Jabon en polvo 1kg,pedido-0026,1,10.50,10.50,limpieza,marca-a
+cliente-01,16/08/2024,prod-002,Cafe molido 500g,pedido-0027,1,25.00,25.00,alimentos,marca-b
+cliente-01,17/05/2024,prod-001,Jabon en polvo 1kg,pedido-0028,1,10.50,10.50,limpieza,marca-a
+cliente-01,19/01/2024,prod-001,Jabon en polvo 1kg,pedido-0029,1,10.50,10.50,limpieza,marca-a
+cliente-01,19/04/2024,prod-001,Jabon en polvo 1kg,pedido-0030,1,10.50,10.50,limpieza,marca-a
+cliente-01,19/07/2024,prod-001,Jabon en polvo 1kg,pedido-0031,1,10.50,10.50,limpieza,marca-a
+cliente-01,19/07/2024,prod-002,Cafe molido 500g,pedido-0032,1,25.00,25.00,alimentos,marca-b
+cliente-01,20/09/2024,prod-001,Jabon en polvo 1kg,pedido-0033,1,10.50,10.50,limpieza,marca-a
+cliente-01,21/06/2024,prod-001,Jabon en polvo 1kg,pedido-0034,1,10.50,10.50,limpieza,marca-a
+cliente-01,21/06/2024,prod-002,Cafe molido 500g,pedido-0035,1,25.00,25.00,alimentos,marca-b
+cliente-01,22/03/2024,prod-001,Jabon en polvo 1kg,pedido-0036,1,10.50,10.50,limpieza,marca-a
+cliente-01,23/02/2024,prod-001,Jabon en polvo 1kg,pedido-0037,1,10.50,10.50,limpieza,marca-a
+cliente-01,23/08/2024,prod-001,Jabon en polvo 1kg,pedido-0038,1,10.50,10.50,limpieza,marca-a
+cliente-01,24/05/2024,prod-001,Jabon en polvo 1kg,pedido-0039,1,10.50,10.50,limpieza,marca-a
+cliente-01,24/05/2024,prod-002,Cafe molido 500g,pedido-0040,1,25.00,25.00,alimentos,marca-b
+cliente-01,26/01/2024,prod-001,Jabon en polvo 1kg,pedido-0041,1,10.50,10.50,limpieza,marca-a
+cliente-01,26/04/2024,prod-001,Jabon en polvo 1kg,pedido-0042,1,10.50,10.50,limpieza,marca-a
+cliente-01,26/04/2024,prod-002,Cafe molido 500g,pedido-0043,1,25.00,25.00,alimentos,marca-b
+cliente-01,26/07/2024,prod-001,Jabon en polvo 1kg,pedido-0044,1,10.50,10.50,limpieza,marca-a
+cliente-01,27/09/2024,prod-001,Jabon en polvo 1kg,pedido-0045,1,10.50,10.50,limpieza,marca-a
+cliente-01,28/06/2024,prod-001,Jabon en polvo 1kg,pedido-0046,1,10.50,10.50,limpieza,marca-a
+cliente-01,29/03/2024,prod-001,Jabon en polvo 1kg,pedido-0047,1,10.50,10.50,limpieza,marca-a
+cliente-01,29/03/2024,prod-002,Cafe molido 500g,pedido-0048,1,25.00,25.00,alimentos,marca-b
+cliente-01,30/08/2024,prod-001,Jabon en polvo 1kg,pedido-0049,1,10.50,10.50,limpieza,marca-a
+cliente-01,31/05/2024,prod-001,Jabon en polvo 1kg,pedido-0050,1,10.50,10.50,limpieza,marca-a
+cliente-02,01/03/2024,prod-001,Jabon en polvo 1kg,pedido-0051,1,10.50,10.50,limpieza,marca-a
+cliente-02,02/02/2024,prod-001,Jabon en polvo 1kg,pedido-0052,1,10.50,10.50,limpieza,marca-a
+cliente-02,02/08/2024,prod-001,Jabon en polvo 1kg,pedido-0053,1,10.50,10.50,limpieza,marca-a
+cliente-02,05/01/2024,prod-001,Jabon en polvo 1kg,pedido-0054,1,10.50,10.50,limpieza,marca-a
+cliente-02,05/07/2024,prod-001,Jabon en polvo 1kg,pedido-0055,1,10.50,10.50,limpieza,marca-a
+cliente-02,07/06/2024,prod-001,Jabon en polvo 1kg,pedido-0056,1,10.50,10.50,limpieza,marca-a
+cliente-02,10/05/2024,prod-001,Jabon en polvo 1kg,pedido-0057,1,10.50,10.50,limpieza,marca-a
+cliente-02,12/04/2024,prod-001,Jabon en polvo 1kg,pedido-0058,1,10.50,10.50,limpieza,marca-a
+cliente-02,13/09/2024,prod-001,Jabon en polvo 1kg,pedido-0059,1,10.50,10.50,limpieza,marca-a
+cliente-02,15/03/2024,prod-001,Jabon en polvo 1kg,pedido-0060,1,10.50,10.50,limpieza,marca-a
+cliente-02,16/02/2024,prod-001,Jabon en polvo 1kg,pedido-0061,1,10.50,10.50,limpieza,marca-a
+cliente-02,16/08/2024,prod-001,Jabon en polvo 1kg,pedido-0062,1,10.50,10.50,limpieza,marca-a
+cliente-02,19/01/2024,prod-001,Jabon en polvo 1kg,pedido-0063,1,10.50,10.50,limpieza,marca-a
+cliente-02,19/07/2024,prod-001,Jabon en polvo 1kg,pedido-0064,1,10.50,10.50,limpieza,marca-a
+cliente-02,21/06/2024,prod-001,Jabon en polvo 1kg,pedido-0065,1,10.50,10.50,limpieza,marca-a
+cliente-02,24/05/2024,prod-001,Jabon en polvo 1kg,pedido-0066,1,10.50,10.50,limpieza,marca-a
+cliente-02,26/04/2024,prod-001,Jabon en polvo 1kg,pedido-0067,1,10.50,10.50,limpieza,marca-a
+cliente-02,27/09/2024,prod-001,Jabon en polvo 1kg,pedido-0068,1,10.50,10.50,limpieza,marca-a
+cliente-02,29/03/2024,prod-001,Jabon en polvo 1kg,pedido-0069,1,10.50,10.50,limpieza,marca-a
+cliente-02,30/08/2024,prod-001,Jabon en polvo 1kg,pedido-0070,1,10.50,10.50,limpieza,marca-a
+cliente-03,01/03/2024,prod-002,Cafe molido 500g,pedido-0071,1,25.00,25.00,alimentos,marca-b
+cliente-03,02/02/2024,prod-002,Cafe molido 500g,pedido-0072,1,25.00,25.00,alimentos,marca-b
+cliente-03,03/05/2024,prod-002,Cafe molido 500g,pedido-0073,1,25.00,25.00,alimentos,marca-b
+cliente-03,05/01/2024,prod-002,Cafe molido 500g,pedido-0074,1,25.00,25.00,alimentos,marca-b
+cliente-03,05/04/2024,prod-002,Cafe molido 500g,pedido-0075,1,25.00,25.00,alimentos,marca-b
+cliente-03,08/03/2024,prod-002,Cafe molido 500g,pedido-0076,1,25.00,25.00,alimentos,marca-b
+cliente-03,09/02/2024,prod-002,Cafe molido 500g,pedido-0077,1,25.00,25.00,alimentos,marca-b
+cliente-03,09/02/2024,prod-003,Shampoo 400ml,pedido-0078,1,8.75,8.75,higiene,marca-a
+cliente-03,10/05/2024,prod-002,Cafe molido 500g,pedido-0079,1,25.00,25.00,alimentos,marca-b
+cliente-03,12/01/2024,prod-002,Cafe molido 500g,pedido-0080,1,25.00,25.00,alimentos,marca-b
+cliente-03,12/04/2024,prod-002,Cafe molido 500g,pedido-0081,1,25.00,25.00,alimentos,marca-b
+cliente-03,15/03/2024,prod-002,Cafe molido 500g,pedido-0082,1,25.00,25.00,alimentos,marca-b
+cliente-03,16/02/2024,prod-002,Cafe molido 500g,pedido-0083,1,25.00,25.00,alimentos,marca-b
+cliente-03,17/05/2024,prod-002,Cafe molido 500g,pedido-0084,1,25.00,25.00,alimentos,marca-b
+cliente-03,19/01/2024,prod-002,Cafe molido 500g,pedido-0085,1,25.00,25.00,alimentos,marca-b
+cliente-03,19/04/2024,prod-002,Cafe molido 500g,pedido-0086,1,25.00,25.00,alimentos,marca-b
+cliente-03,22/03/2024,prod-002,Cafe molido 500g,pedido-0087,1,25.00,25.00,alimentos,marca-b
+cliente-03,23/02/2024,prod-002,Cafe molido 500g,pedido-0088,1,25.00,25.00,alimentos,marca-b
+cliente-03,26/01/2024,prod-002,Cafe molido 500g,pedido-0089,1,25.00,25.00,alimentos,marca-b
+cliente-03,26/04/2024,prod-002,Cafe molido 500g,pedido-0090,1,25.00,25.00,alimentos,marca-b
+cliente-03,29/03/2024,prod-002,Cafe molido 500g,pedido-0091,1,25.00,25.00,alimentos,marca-b
+cliente-04,02/08/2024,prod-003,Shampoo 400ml,pedido-0092,1,8.75,8.75,higiene,marca-a
+cliente-04,04/10/2024,prod-003,Shampoo 400ml,pedido-0093,1,8.75,8.75,higiene,marca-a
+cliente-04,05/01/2024,prod-003,Shampoo 400ml,pedido-0094,1,8.75,8.75,higiene,marca-a
+cliente-04,08/03/2024,prod-003,Shampoo 400ml,pedido-0095,1,8.75,8.75,higiene,marca-a
+cliente-04,10/05/2024,prod-003,Shampoo 400ml,pedido-0096,1,8.75,8.75,higiene,marca-a
+cliente-04,12/07/2024,prod-003,Shampoo 400ml,pedido-0097,1,8.75,8.75,higiene,marca-a
+cliente-04,13/09/2024,prod-003,Shampoo 400ml,pedido-0098,1,8.75,8.75,higiene,marca-a
+cliente-04,15/03/2024,prod-004,Detergente liquido 1L,pedido-0099,1,15.20,15.20,limpieza,marca-c
+cliente-04,16/02/2024,prod-003,Shampoo 400ml,pedido-0100,1,8.75,8.75,higiene,marca-a
+cliente-04,19/04/2024,prod-003,Shampoo 400ml,pedido-0101,1,8.75,8.75,higiene,marca-a
+cliente-04,21/06/2024,prod-003,Shampoo 400ml,pedido-0102,1,8.75,8.75,higiene,marca-a
+cliente-04,23/08/2024,prod-003,Shampoo 400ml,pedido-0103,1,8.75,8.75,higiene,marca-a
+cliente-04,26/01/2024,prod-003,Shampoo 400ml,pedido-0104,1,8.75,8.75,higiene,marca-a
+cliente-04,29/03/2024,prod-003,Shampoo 400ml,pedido-0105,1,8.75,8.75,higiene,marca-a
+cliente-04,31/05/2024,prod-003,Shampoo 400ml,pedido-0106,1,8.75,8.75,higiene,marca-a
+cliente-05,02/08/2024,prod-004,Detergente liquido 1L,pedido-0107,1,15.20,15.20,limpieza,marca-c
+cliente-05,05/01/2024,prod-004,Detergente liquido 1L,pedido-0108,1,15.20,15.20,limpieza,marca-c

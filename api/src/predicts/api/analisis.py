@@ -114,10 +114,16 @@ def lanzar_analisis(
     except ValidationError as e:
         raise ErrorApi("parametros_invalidos", 422, detalle=e.errors()) from e
 
+    # `contactar` no se elige en la UI (la deriva el orquestador solo, ver
+    # `web/src/features/analisis/tipos.ts`), pero `exportar_analisis` exige que esté en
+    # `analisis.tipos` para exportar lo que sea (lee `contactar.parquet`); sin agregarlo acá,
+    # exportar quedaba inalcanzable para cualquier análisis lanzado desde la UI.
+    tipos = [*entrada.tipos, "contactar"] if "contactar" not in entrada.tipos else entrada.tipos
+
     analisis = Analisis(
         empresa_id=empresa.id,
         dataset_id=dataset.id,
-        tipos=entrada.tipos,
+        tipos=tipos,
         parametros=entrada.parametros,
         estado="en_cola",
     )
