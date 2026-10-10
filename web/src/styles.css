@@ -1,29 +1,54 @@
 @import 'tailwindcss';
 
+/*
+ * Identidad de predicts: verde azulado profundo (primario) sobre neutros cálidos, con una barra
+ * lateral oscura "tinta". Los colores semánticos (éxito / advertencia / peligro / info) se usan
+ * para riesgo y probabilidad; cada uno trae su versión "suave" para fondos de badges.
+ * Los pares texto/fondo usados en la app apuntan a contraste AA (≥ 4.5:1).
+ */
 :root {
-  --background: 0 0% 100%;
-  --foreground: 240 10% 3.9%;
+  --background: 40 23% 97%;
+  --foreground: 24 14% 11%;
   --card: 0 0% 100%;
-  --card-foreground: 240 10% 3.9%;
+  --card-foreground: 24 14% 11%;
   --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 3.9%;
-  --primary: 240 5.9% 10%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 240 4.8% 95.9%;
-  --secondary-foreground: 240 5.9% 10%;
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
-  --accent: 240 4.8% 95.9%;
-  --accent-foreground: 240 5.9% 10%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
-  --ring: 240 5.9% 10%;
+  --popover-foreground: 24 14% 11%;
+  --primary: 173 68% 24%;
+  --primary-foreground: 166 40% 98%;
+  --secondary: 40 18% 93%;
+  --secondary-foreground: 24 14% 15%;
+  --muted: 40 18% 94%;
+  --muted-foreground: 25 7% 38%;
+  --accent: 168 32% 92%;
+  --accent-foreground: 173 68% 17%;
+  --destructive: 4 68% 45%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 36 15% 87%;
+  --input: 36 13% 80%;
+  --ring: 173 68% 30%;
   --radius: 0.5rem;
+
+  --success: 152 60% 27%;
+  --success-soft: 145 45% 92%;
+  --warning: 30 90% 32%;
+  --warning-soft: 42 92% 90%;
+  --danger: 4 68% 42%;
+  --danger-soft: 4 85% 95%;
+  --info: 205 70% 34%;
+  --info-soft: 205 75% 94%;
+
+  --sidebar: 178 24% 10%;
+  --sidebar-foreground: 40 18% 90%;
+  --sidebar-muted: 175 10% 64%;
+  --sidebar-accent: 176 20% 17%;
+  --sidebar-border: 176 16% 18%;
+  --sidebar-primary: 164 56% 52%;
 }
 
 @theme inline {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
   --color-card: hsl(var(--card));
@@ -43,11 +68,59 @@
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
+
+  --color-success: hsl(var(--success));
+  --color-success-soft: hsl(var(--success-soft));
+  --color-warning: hsl(var(--warning));
+  --color-warning-soft: hsl(var(--warning-soft));
+  --color-danger: hsl(var(--danger));
+  --color-danger-soft: hsl(var(--danger-soft));
+  --color-info: hsl(var(--info));
+  --color-info-soft: hsl(var(--info-soft));
+
+  --color-sidebar: hsl(var(--sidebar));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-muted: hsl(var(--sidebar-muted));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-body {
-  @apply bg-background text-foreground;
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: hsl(var(--border));
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  /* Foco visible consistente para lo interactivo que no traiga su propio anillo. */
+  :where(a, button, [role='button'], [role='tab'], [role='menuitem'], summary, select):focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  a {
+    text-underline-offset: 3px;
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
 }
