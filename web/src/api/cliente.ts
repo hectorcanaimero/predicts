@@ -44,7 +44,10 @@ const middleware: Middleware = {
   async onResponse({ request, response }) {
     // Login/registro/recuperar/restablecer/yo manejan su propio 401 (credenciales, sesión
     // todavía no iniciada); solo las rutas protegidas fuera de /auth/ fuerzan la redirección.
-    const esRutaAuth = new URL(request.url).pathname.startsWith('/auth/')
+    // Con base relativa (`/api`, detrás del proxy de nginx) el pathname trae ese prefijo.
+    const basePath = new URL(URL_BASE_API, window.location.origin).pathname.replace(/\/$/, '')
+    const ruta = new URL(request.url).pathname.slice(basePath.length)
+    const esRutaAuth = ruta.startsWith('/auth/')
     if (response.status === 401 && !esRutaAuth) {
       irALogin()
     }
