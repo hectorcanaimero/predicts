@@ -27,6 +27,7 @@ import uuid
 from collections.abc import Callable
 from datetime import date
 from pathlib import Path
+from typing import Any
 
 import pyarrow as pa
 from pydantic import BaseModel, Field, model_validator
@@ -45,7 +46,7 @@ from predicts.modelo.prediccion import predecir
 from predicts.trabajos import eventos
 from predicts.trabajos.registro import TrabajoEnCurso, tipo_trabajo
 
-TIPOS = ("recompra", "ciclos", "riesgo", "ofertas", "contactar")
+TIPOS = ("recompra", "ciclos", "riesgo", "ofertas", "contactar", "mensajes")
 UMBRAL_DEFECTO = 0.5
 
 # Igual que en productos/catalogo.py: así el cruce con `productos.nombre_normalizado` coincide.
@@ -108,10 +109,12 @@ def ejecutar(
     emitir: Emitir,
     cfg: Settings | None = None,
     cliente_jev: TypeSafeClient | None = None,
+    llm: Any | None = None,
 ) -> None:
     """Corre los análisis de `analisis` y guarda resultados, métricas y resumen (sin commit).
 
-    `cliente_jev`: solo para tests; por defecto `ia.cliente_jev()` (si hay casos límite).
+    `cliente_jev` y `llm`: solo para tests; por defecto `ia.cliente_jev()` / `ia.llm_texto()`
+    (el segundo solo lo usa el paso `mensajes`, si se pidió).
     """
     cfg = cfg or settings()
     desconocidos = set(analisis.tipos) - set(TIPOS)
@@ -234,6 +237,20 @@ def ejecutar(
             emitir("backtest", {"pares": metricas.n_pares})
     finally:
         con.close()
+
+    if "mensajes" in analisis.tipos:
+        from predicts.trabajos import tipos_mensajes  # import diferido: evita ciclo de imports
+
+        resumen["mensajes"] = tipos_mensajes.generar_para_analisis(
+            db,
+            analisis,
+            dataset,
+            resultados=resultados,
+            llm=llm,
+            cliente_jev=cliente_jev,
+            contador=contador,
+        )
+        emitir("mensajes", {"combinaciones": resumen["mensajes"]["combinaciones"]})
 
     resumen["costo_ia"] = analisis.costo_ia = contador.resumen()
     analisis.version_modelo = VERSION_MODELO
