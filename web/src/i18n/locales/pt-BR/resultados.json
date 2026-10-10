@@ -1,0 +1,136 @@
+{
+  "titulo": "Resultados da análise",
+  "error_generico": "Não foi possível carregar os resultados.",
+  "vacio": "Não há linhas para mostrar.",
+  "no_listo": "A análise ainda não tem resultados.",
+  "ordenar_por": "Ordenar por",
+  "orden": { "ascendente": "Crescente ↑", "descendente": "Decrescente ↓" },
+  "pestanas": {
+    "recordatorios": "Lembretes",
+    "ciclos": "Ciclos por produto",
+    "riesgo": "Risco",
+    "ofertas": "Ofertas",
+    "precision": "Precisão",
+    "mensajes": "Mensagens"
+  },
+  "paginacion": {
+    "anterior": "Anterior",
+    "siguiente": "Próxima",
+    "pagina": "Página {{pagina}} de {{total}}",
+    "total": "{{total}} linhas no total"
+  },
+  "exportar": {
+    "separador": "Separador",
+    "separadores": { "coma": "Vírgula (,)", "punto_y_coma": "Ponto e vírgula (;)" },
+    "boton": "Exportar CSV",
+    "exportando": "Exportando…",
+    "errores": {
+      "tipo_no_solicitado": "Esta análise não inclui esse tipo de resultado.",
+      "analisis_no_listo": "A análise ainda não está pronta para exportar.",
+      "archivo_vencido": "O dataset desta análise já foi arquivado.",
+      "separador_invalido": "O separador escolhido não é válido."
+    }
+  },
+  "recordatorios": {
+    "columnas": {
+      "cliente_id": "Cliente",
+      "producto_id": "Produto",
+      "producto_nombre": "Produto",
+      "ciclo": "Ciclo (dias)",
+      "p": "Probabilidade",
+      "fecha_probable": "Data provável",
+      "fecha_min": "Desde",
+      "fecha_max": "Até",
+      "n_compras": "Compras",
+      "dias_desde_ultima": "Dias desde a última",
+      "posible_abandono": "Possível abandono",
+      "motivo": "Motivo",
+      "mensaje": "Mensagem",
+      "contactar": "Contatar"
+    },
+    "calendario": { "titulo": "Lembretes por dia" }
+  },
+  "ciclos": {
+    "columnas": {
+      "producto_id": "Produto",
+      "producto_nombre": "Produto",
+      "ciclo_mediano": "Ciclo mediano (dias)",
+      "dispersion": "Dispersão (dias)",
+      "desvio_log": "Desvio log",
+      "clientes_recurrentes": "Clientes recorrentes"
+    },
+    "dispersion": { "titulo": "Ciclo vs. clientes recorrentes" }
+  },
+  "riesgo": {
+    "columnas": {
+      "nivel": "Nível",
+      "cliente_id": "Cliente",
+      "producto_id": "Produto",
+      "producto_nombre": "Produto",
+      "n_compras": "Compras",
+      "ciclo": "Ciclo (dias)",
+      "dispersion": "Dispersão (dias)",
+      "dias_desde_ultima": "Dias desde a última",
+      "atraso": "Atraso (dias)",
+      "valor": "Valor",
+      "motivo": "Motivo"
+    },
+    "niveles": { "producto": "Produto", "tienda": "Loja" }
+  },
+  "ofertas": {
+    "columnas": {
+      "cliente_id": "Cliente",
+      "producto_id": "Produto",
+      "producto_nombre": "Produto",
+      "puntaje": "Pontuação",
+      "p_recompra": "Probabilidade de recompra",
+      "lift": "Lift",
+      "por_producto": "Por produto",
+      "descuento": "Desconto",
+      "fuentes": "Fontes",
+      "motivo": "Motivo"
+    }
+  },
+  "precision": {
+    "resumen": "Backtest sobre {{semanas}} semana(s) atrás, horizonte de {{horizonte}} dias, {{n_pares}} pares avaliados.",
+    "columnas": { "metrica": "Métrica", "modelo": "Modelo", "linea_base": "Linha de base" },
+    "metricas": {
+      "precision_at_k": "Precisão no top-K",
+      "cobertura_at_k": "Cobertura no top-K",
+      "brier": "Erro de Brier",
+      "mae_dias": "Erro médio (dias)"
+    },
+    "explicaciones": {
+      "precision_at_k": "Dos K pares com maior probabilidade, quantos realmente compraram.",
+      "cobertura_at_k": "Dos que realmente compraram, quantos ficaram dentro do top-K.",
+      "brier": "O quão perto a probabilidade prevista ficou do que aconteceu (0 é perfeito).",
+      "mae_dias": "Diferença média, em dias, entre a data provável e a data real da compra."
+    },
+    "calibracion": {
+      "titulo": "Calibração por decil",
+      "explicacion": "Para cada faixa de probabilidade prevista, qual fração realmente comprou; o ideal é que as duas linhas sigam a diagonal."
+    }
+  },
+  "mensajes": {
+    "texto_de": "Mensagem de {{clave}}",
+    "acciones": {
+      "editar": "Editar",
+      "guardar": "Salvar",
+      "cancelar": "Cancelar",
+      "regenerar": "Regenerar modelos",
+      "regenerando": "Regenerando…"
+    },
+    "acciones_de": {
+      "editar": "Editar {{clave}}",
+      "guardar": "Salvar {{clave}}",
+      "cancelar": "Cancelar edição de {{clave}}"
+    },
+    "estados": { "ok": "Gerada", "revisar": "A revisar", "editada": "Editada manualmente" },
+    "tipos": { "recordatorio": "Lembretes", "oferta": "Ofertas", "reactivacion": "Reativação" },
+    "vacio": "Ainda não há modelos de mensagem para esta análise.",
+    "errores": {
+      "plantilla_invalida": "O texto do modelo não é válido.",
+      "no_encontrado": "O modelo não foi encontrado."
+    }
+  }
+}
