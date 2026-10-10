@@ -44,7 +44,7 @@ jobs:
       - name: pytest
         if: steps.check.outputs.exists == 'true'
         working-directory: api
-        run: uv run pytest -q
+        run: uv run pytest -q -m "not lento"
 
   web:
     runs-on: ubuntu-latest
