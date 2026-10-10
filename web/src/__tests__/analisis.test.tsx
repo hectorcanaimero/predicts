@@ -292,8 +292,9 @@ describe('progreso del análisis', () => {
     const onCompletado = vi.fn()
     renderConQuery(<ProgresoAnalisis analisisId={ANALISIS_ID} onCompletado={onCompletado} />)
 
-    await screen.findByText('Etapa: listo')
-    screen.getByText('filas: 10')
+    await screen.findByText('¡Listo! Abriendo los resultados…')
+    expect(screen.getByText('Filas').nextElementSibling?.textContent).toBe('10')
+    expect(screen.getByRole('progressbar').getAttribute('aria-valuenow')).toBe('100')
     await waitFor(() => expect(onCompletado).toHaveBeenCalledWith(ANALISIS_ID))
   })
 
@@ -305,7 +306,7 @@ describe('progreso del análisis', () => {
     vi.stubGlobal('fetch', fetchFalso)
     renderConQuery(<ProgresoAnalisis analisisId={ANALISIS_ID} onCompletado={vi.fn()} />)
 
-    await screen.findByText('Etapa: leyendo')
+    await screen.findByText('En curso: Lectura de datos')
     fireEvent.click(screen.getByRole('button', { name: 'Cancelar' }))
 
     await waitFor(() =>

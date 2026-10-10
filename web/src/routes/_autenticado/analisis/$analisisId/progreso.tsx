@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
+import { EncabezadoPagina } from '@/components/layout/EncabezadoPagina'
 import { ProgresoAnalisis } from '@/features/analisis/ProgresoAnalisis'
 
 export const Route = createFileRoute('/_autenticado/analisis/$analisisId/progreso')({
@@ -9,11 +10,11 @@ export const Route = createFileRoute('/_autenticado/analisis/$analisisId/progres
 
 function ProgresoAnalisisRuta() {
   const { analisisId } = Route.useParams()
-  const { t } = useTranslation('analisis')
+  const { t } = useTranslation('panel')
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-xl font-semibold">{t('progreso.titulo')}</h1>
+    <div className="space-y-8">
+      <EncabezadoPagina titulo={t('progreso.titulo')} descripcion={t('progreso.descripcion')} />
       <ProgresoAnalisis
         analisisId={analisisId}
         // La ruta de resultados (`/analisis/$analisisId`) la crea F6.3.T2; navegación dura hasta

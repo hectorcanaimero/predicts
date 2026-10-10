@@ -43,7 +43,7 @@ export function PrecisionTab({ metricas }: Props) {
       </p>
 
       <div className="overflow-hidden rounded-xl border bg-card shadow-xs">
-        <Table>
+        <Table className="min-w-[32rem]">
           <TableHeader>
             <TableRow>
               <TableHead>{t('precision.columnas.metrica')}</TableHead>

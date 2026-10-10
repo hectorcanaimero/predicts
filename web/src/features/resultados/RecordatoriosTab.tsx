@@ -93,7 +93,7 @@ export function RecordatoriosTab({ analisisId }: Props) {
         </p>
       ) : (
         <div className="overflow-hidden rounded-xl border bg-card shadow-xs">
-          <Table>
+          <Table className="min-w-[52rem]">
             <TableHeader>
               <TableRow>
                 <TableHead>{t('recordatorios.columnas.cliente_id')}</TableHead>
@@ -110,7 +110,7 @@ export function RecordatoriosTab({ analisisId }: Props) {
                 <TableRow key={`${fila.cliente_id}-${fila.producto_id}`}>
                   <TableCell className="font-medium">{fila.cliente_id}</TableCell>
                   <TableCell>{fila.producto_nombre ?? fila.producto_id}</TableCell>
-                  <TableCell className="whitespace-nowrap tabular">
+                  <TableCell className="whitespace-nowrap">
                     <span className="font-medium">{fila.fecha_probable}</span>
                     <span className="block text-xs text-muted-foreground">
                       {fila.fecha_min} – {fila.fecha_max}

@@ -69,7 +69,7 @@ export function CiclosTab({ analisisId }: Props) {
         </p>
       ) : (
         <div className="overflow-hidden rounded-xl border bg-card shadow-xs">
-          <Table>
+          <Table className="min-w-[36rem]">
             <TableHeader>
               <TableRow>
                 <TableHead>{t('ciclos.columnas.producto_nombre')}</TableHead>

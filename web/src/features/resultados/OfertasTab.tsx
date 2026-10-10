@@ -59,7 +59,7 @@ export function OfertasTab({ analisisId }: Props) {
         </p>
       ) : (
         <div className="overflow-hidden rounded-xl border bg-card shadow-xs">
-          <Table>
+          <Table className="min-w-[48rem]">
             <TableHeader>
               <TableRow>
                 <TableHead>{t('ofertas.columnas.cliente_id')}</TableHead>

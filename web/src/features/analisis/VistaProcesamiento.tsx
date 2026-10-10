@@ -67,9 +67,21 @@ function Vista2D({ eventos, conexion }: Props) {
 
 /** Contenedor del progreso de un análisis (spec F6.3.T1): la escena 3D de F8.1.T1 montada acá
  * mismo, con la vista 2D como respaldo (tanto con `prefers-reduced-motion` como mientras carga
- * el chunk de la escena), sin tocar el resto de la pantalla. */
-export function VistaProcesamiento({ eventos, conexion }: Props) {
+ * el chunk de la escena), sin tocar el resto de la pantalla.
+ *
+ * Con `soloEscena` (pantalla de progreso, que ya muestra etapas y contadores por su cuenta) no
+ * hay respaldo 2D: con movimiento reducido no se monta nada y, mientras carga, un marcador. */
+export function VistaProcesamiento({ eventos, conexion, soloEscena = false }: Props & { soloEscena?: boolean }) {
   const movimientoReducido = usePrefiereMovimientoReducido()
+
+  if (soloEscena) {
+    if (movimientoReducido) return null
+    return (
+      <Suspense fallback={<div className="h-72 animate-pulse rounded-lg bg-muted" />}>
+        <EscenaProcesamiento eventos={eventos} conexion={conexion} />
+      </Suspense>
+    )
+  }
 
   return (
     <div className="space-y-2" aria-live="polite">
