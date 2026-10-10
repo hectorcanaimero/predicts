@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": ["Bash", "Edit", "Write", "Read", "Glob", "Grep", "WebFetch", "WebSearch", "Monitor", "mcp__orch"],
+    "additionalDirectories": [
+      "/mnt/storage/project/predicts/data",
+      "/mnt/storage/project/apolicies",
+      "/mnt/storage/agent-langchain",
+      "/mnt/storage/project/agndaZAP/docs"
+    ]
+  }
+}
