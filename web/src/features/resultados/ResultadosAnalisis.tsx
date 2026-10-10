@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -45,22 +46,31 @@ export function ResultadosAnalisis({ analisisId }: Props) {
   ]
   const pestanas = candidatas.filter((p): p is { clave: string; elemento: ReactNode } => p !== null)
 
-  if (pestanas.length === 0) return null
-
   return (
-    <Tabs defaultValue={pestanas[0].clave}>
-      <TabsList>
-        {pestanas.map((pestana) => (
-          <TabsTrigger key={pestana.clave} value={pestana.clave}>
-            {t(`pestanas.${pestana.clave}`)}
-          </TabsTrigger>
-        ))}
-      </TabsList>
-      {pestanas.map((pestana) => (
-        <TabsContent key={pestana.clave} value={pestana.clave}>
-          {pestana.elemento}
-        </TabsContent>
-      ))}
-    </Tabs>
+    <div className="space-y-4">
+      <Link
+        to="/datasets/$datasetId/agente"
+        params={{ datasetId: analisis.data.dataset_id }}
+        className="text-sm underline"
+      >
+        {t('agente:enlace')}
+      </Link>
+      {pestanas.length > 0 && (
+        <Tabs defaultValue={pestanas[0].clave}>
+          <TabsList>
+            {pestanas.map((pestana) => (
+              <TabsTrigger key={pestana.clave} value={pestana.clave}>
+                {t(`pestanas.${pestana.clave}`)}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          {pestanas.map((pestana) => (
+            <TabsContent key={pestana.clave} value={pestana.clave}>
+              {pestana.elemento}
+            </TabsContent>
+          ))}
+        </Tabs>
+      )}
+    </div>
   )
 }

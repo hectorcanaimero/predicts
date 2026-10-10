@@ -7,6 +7,14 @@ import '../i18n'
 import i18n from '../i18n'
 import { ResultadosAnalisis } from '../features/resultados/ResultadosAnalisis'
 
+vi.mock('@tanstack/react-router', async (importOriginal) => {
+  const real = await importOriginal<typeof import('@tanstack/react-router')>()
+  return {
+    ...real,
+    Link: ({ children, to }: { children: ReactNode; to: string }) => <a href={to}>{children}</a>,
+  }
+})
+
 const ANALISIS_ID = 'a1'
 
 function renderConQuery(elemento: ReactNode) {

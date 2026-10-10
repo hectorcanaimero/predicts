@@ -1,0 +1,23 @@
+{
+  "titulo": "Agente analista",
+  "enlace": "Perguntar ao agente",
+  "sugerencias_titulo": "Perguntas sugeridas",
+  "sugerencias": [
+    "Quais são os produtos mais comprados?",
+    "Quais clientes estão em risco de abandono?",
+    "Qual é o ciclo de recompra médio?"
+  ],
+  "entrada_etiqueta": "Sua pergunta",
+  "entrada_placeholder": "Pergunte algo sobre este dataset…",
+  "enviar": "Perguntar",
+  "pensando": "Pensando…",
+  "como_lo_calcule": "Como eu calculei isso",
+  "consulta": {
+    "n_filas": "{{n}} linha(s)",
+    "sin_filas": "A consulta não retornou linhas."
+  },
+  "errores": {
+    "dataset_no_listo": "O dataset ainda não está pronto para perguntas.",
+    "error_generico": "Ocorreu um erro ao perguntar ao agente. Tente novamente."
+  }
+}
