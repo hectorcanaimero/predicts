@@ -1,0 +1,23 @@
+{
+  "titulo": "Analyst agent",
+  "enlace": "Ask the agent",
+  "sugerencias_titulo": "Suggested questions",
+  "sugerencias": [
+    "What are the best-selling products?",
+    "Which customers are at risk of churning?",
+    "What is the average repurchase cycle?"
+  ],
+  "entrada_etiqueta": "Your question",
+  "entrada_placeholder": "Ask something about this dataset…",
+  "enviar": "Ask",
+  "pensando": "Thinking…",
+  "como_lo_calcule": "How I calculated this",
+  "consulta": {
+    "n_filas": "{{n}} row(s)",
+    "sin_filas": "The query returned no rows."
+  },
+  "errores": {
+    "dataset_no_listo": "The dataset isn't ready for questions yet.",
+    "error_generico": "Something went wrong asking the agent. Please try again."
+  }
+}

@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
 import { CalidadDataset } from '@/features/calidad/CalidadDataset'
@@ -21,7 +21,12 @@ function CalidadDatasetRuta() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-semibold">{t('titulo')}</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl font-semibold">{t('titulo')}</h1>
+        <Link to="/datasets/$datasetId/agente" params={{ datasetId }} className="text-sm underline">
+          {t('agente:enlace')}
+        </Link>
+      </div>
       <CalidadDataset
         datasetId={datasetId}
         trabajoId={trabajoId}
