@@ -1,3 +1,4 @@
+import { CircleAlert, Sparkles, TriangleAlert } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -7,14 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Skeleton } from '@/components/ui/skeleton'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { useConfirmarMapeo, useDataset, useIniciarIngesta, useSugerenciasMapeo } from './hooks'
 import { CAMPOS_ESQUEMA, IGNORAR, UMBRAL_CONFIANZA_MAPEO } from './tipos'
 import { validarMapeoLocal } from './validacion'
@@ -26,17 +20,14 @@ interface Props {
 
 type Estado = 'prellenado' | 'revisar'
 
+const CLASE_SELECT =
+  'flex h-9 w-full rounded-md border border-input bg-card px-3 py-1 text-sm shadow-xs focus-visible:border-ring'
+
 function Insignia({ estado }: { estado: Estado }) {
   const { t } = useTranslation('mapeo')
   return (
-    <Badge
-      variant="outline"
-      className={
-        estado === 'prellenado'
-          ? 'border-green-600 text-green-700'
-          : 'border-amber-600 text-amber-700'
-      }
-    >
+    <Badge variant={estado === 'prellenado' ? 'success' : 'warning'}>
+      {estado === 'prellenado' ? <Sparkles aria-hidden="true" /> : <TriangleAlert aria-hidden="true" />}
       {t(`insignias.${estado}`)}
     </Badge>
   )
@@ -77,13 +68,28 @@ export function MapeoDataset({ datasetId, onIngestaIniciada }: Props) {
     if (nuevoFormato !== formatoFecha) setFormatoFecha(nuevoFormato)
   }
 
-  if (dataset.isLoading || sugerencias.isLoading) return <Skeleton className="h-10 w-full" />
+  if (dataset.isLoading || sugerencias.isLoading) {
+    return (
+      <div className="space-y-3" aria-busy="true">
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-64 w-full rounded-xl" />
+      </div>
+    )
+  }
 
   if (dataset.isError || sugerencias.isError || !dataset.data?.deteccion) {
     return (
-      <div role="alert" className="space-y-2">
-        <p>{t('error.titulo')}</p>
-        <Button onClick={() => void (dataset.isError ? dataset.refetch() : sugerencias.refetch())}>
+      <div
+        role="alert"
+        className="flex flex-col items-start gap-3 rounded-xl border border-danger/20 bg-danger-soft p-5 sm:flex-row sm:items-center"
+      >
+        <CircleAlert aria-hidden="true" className="size-5 shrink-0 text-danger" />
+        <p className="flex-1 text-sm font-medium text-danger">{t('error.titulo')}</p>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => void (dataset.isError ? dataset.refetch() : sugerencias.refetch())}
+        >
           {t('error.reintentar')}
         </Button>
       </div>
@@ -94,8 +100,7 @@ export function MapeoDataset({ datasetId, onIngestaIniciada }: Props) {
   const sugerenciasPorColumna = new Map(sugerencias.data?.columnas.map((s) => [s.columna, s]))
   const sugerenciaProductoIdTipo = sugerencias.data?.producto_id_tipo ?? null
   const estadoProductoIdTipo: Estado | null = sugerenciaProductoIdTipo
-    ? sugerenciaProductoIdTipo.origen !== 'jev' ||
-      sugerenciaProductoIdTipo.confianza >= UMBRAL_CONFIANZA_MAPEO
+    ? sugerenciaProductoIdTipo.origen !== 'jev' || sugerenciaProductoIdTipo.confianza >= UMBRAL_CONFIANZA_MAPEO
       ? 'prellenado'
       : 'revisar'
     : null
@@ -133,93 +138,66 @@ export function MapeoDataset({ datasetId, onIngestaIniciada }: Props) {
 
   return (
     <div className="space-y-6">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>{t('tabla.columna')}</TableHead>
-            <TableHead>{t('tabla.valores_muestra')}</TableHead>
-            <TableHead>{t('tabla.campo')}</TableHead>
-            <TableHead>{t('tabla.confianza')}</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {deteccion.columnas.map((columna) => {
-            const sugerencia = sugerenciasPorColumna.get(columna.nombre)
-            return (
-              <TableRow key={columna.nombre}>
-                <TableCell>{columna.nombre}</TableCell>
-                <TableCell className="text-muted-foreground">
-                  {columna.valores_muestra.slice(0, 3).join(', ')}
-                </TableCell>
-                <TableCell>
-                  <select
-                    aria-label={columna.nombre}
-                    value={campos[columna.nombre] ?? IGNORAR}
-                    onChange={(evento) =>
-                      setCampos((anteriores) => ({
-                        ...anteriores,
-                        [columna.nombre]: evento.target.value,
-                      }))
-                    }
-                    className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm"
-                  >
-                    <option value={IGNORAR}>{t('campos.ignorar')}</option>
-                    {CAMPOS_ESQUEMA.map((campo) => (
-                      <option key={campo} value={campo}>
-                        {t(`campos.${campo}`)}
-                      </option>
-                    ))}
-                  </select>
-                </TableCell>
-                <TableCell>{sugerencia && <Insignia estado={sugerencia.estado as Estado} />}</TableCell>
-              </TableRow>
-            )
-          })}
-        </TableBody>
-      </Table>
-
-      {columnaFecha && (
-        <div className="space-y-1">
-          <Label htmlFor="formato_fecha">{t('formato_fecha.titulo')}</Label>
-          <select
-            id="formato_fecha"
-            value={formatoFecha}
-            onChange={(evento) => setFormatoFecha(evento.target.value)}
-            className="flex h-9 w-full max-w-sm rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm"
-          >
-            {columnaFecha.candidatos_fecha.map((candidato) => (
-              <option key={candidato.formato} value={candidato.formato}>
-                {t('formato_fecha.opcion', {
-                  formato: candidato.formato,
-                  porcentaje: Math.round(candidato.porcentaje * 100),
-                })}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-
-      {sugerenciaProductoIdTipo && (
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <Label htmlFor="producto_id_tipo">{t('producto_id_tipo.titulo')}</Label>
-            {estadoProductoIdTipo && <Insignia estado={estadoProductoIdTipo} />}
-          </div>
-          <select
-            id="producto_id_tipo"
-            value={productoIdTipo}
-            onChange={(evento) => setProductoIdTipo(evento.target.value)}
-            className="flex h-9 w-full max-w-sm rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm"
-          >
-            <option value="sku">{t('producto_id_tipo.sku')}</option>
-            <option value="ean">{t('producto_id_tipo.ean')}</option>
-          </select>
-        </div>
-      )}
+      <section aria-labelledby="titulo-columnas" className="overflow-hidden rounded-xl border bg-card shadow-xs">
+        <h2 id="titulo-columnas" className="border-b px-5 py-4 font-semibold">
+          {t('columnas_titulo')}
+        </h2>
+        <Table className="min-w-[40rem]">
+          <TableHeader>
+            <TableRow>
+              <TableHead>{t('tabla.columna')}</TableHead>
+              <TableHead>{t('tabla.valores_muestra')}</TableHead>
+              <TableHead className="w-56">{t('tabla.campo')}</TableHead>
+              <TableHead className="w-32">{t('tabla.confianza')}</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {deteccion.columnas.map((columna) => {
+              const sugerencia = sugerenciasPorColumna.get(columna.nombre)
+              const ignorada = (campos[columna.nombre] ?? IGNORAR) === IGNORAR
+              return (
+                <TableRow key={columna.nombre}>
+                  <TableCell>
+                    <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">{columna.nombre}</code>
+                  </TableCell>
+                  <TableCell className="max-w-64 truncate text-muted-foreground">
+                    {columna.valores_muestra.slice(0, 3).join(', ')}
+                  </TableCell>
+                  <TableCell>
+                    <select
+                      aria-label={columna.nombre}
+                      value={campos[columna.nombre] ?? IGNORAR}
+                      onChange={(evento) =>
+                        setCampos((anteriores) => ({
+                          ...anteriores,
+                          [columna.nombre]: evento.target.value,
+                        }))
+                      }
+                      className={ignorada ? `${CLASE_SELECT} text-muted-foreground` : CLASE_SELECT}
+                    >
+                      <option value={IGNORAR}>{t('campos.ignorar')}</option>
+                      {CAMPOS_ESQUEMA.map((campo) => (
+                        <option key={campo} value={campo}>
+                          {t(`campos.${campo}`)}
+                        </option>
+                      ))}
+                    </select>
+                  </TableCell>
+                  <TableCell>{sugerencia && <Insignia estado={sugerencia.estado as Estado} />}</TableCell>
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+      </section>
 
       {errores.length > 0 && (
-        <div role="alert" className="space-y-1 text-sm text-destructive">
-          <ul className="list-inside list-disc">
+        <div
+          role="alert"
+          className="flex items-start gap-2 rounded-xl border border-danger/20 bg-danger-soft p-4 text-sm text-danger"
+        >
+          <CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+          <ul className="space-y-1">
             {errores.map((error, indice) => (
               <li key={indice}>{t(`validacion.${error.codigo}`, error.parametros)}</li>
             ))}
@@ -227,30 +205,81 @@ export function MapeoDataset({ datasetId, onIngestaIniciada }: Props) {
         </div>
       )}
 
-      <div className="space-y-2">
-        <div className="flex items-center gap-2">
-          <input
-            id="guardar_plantilla"
-            type="checkbox"
-            checked={guardarPlantilla}
-            onChange={(evento) => setGuardarPlantilla(evento.target.checked)}
-          />
-          <Label htmlFor="guardar_plantilla">{t('plantilla.guardar')}</Label>
+      <section aria-labelledby="titulo-opciones" className="rounded-xl border bg-card p-5 shadow-xs">
+        <h2 id="titulo-opciones" className="font-semibold">
+          {t('opciones.titulo')}
+        </h2>
+        <div className="mt-4 grid gap-5 sm:grid-cols-2">
+          {columnaFecha && (
+            <div className="space-y-1.5">
+              <Label htmlFor="formato_fecha">{t('formato_fecha.titulo')}</Label>
+              <select
+                id="formato_fecha"
+                value={formatoFecha}
+                onChange={(evento) => setFormatoFecha(evento.target.value)}
+                className={`${CLASE_SELECT} h-10`}
+              >
+                {columnaFecha.candidatos_fecha.map((candidato) => (
+                  <option key={candidato.formato} value={candidato.formato}>
+                    {t('formato_fecha.opcion', {
+                      formato: candidato.formato,
+                      porcentaje: Math.round(candidato.porcentaje * 100),
+                    })}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {sugerenciaProductoIdTipo && (
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2">
+                <Label htmlFor="producto_id_tipo">{t('producto_id_tipo.titulo')}</Label>
+                {estadoProductoIdTipo && <Insignia estado={estadoProductoIdTipo} />}
+              </div>
+              <select
+                id="producto_id_tipo"
+                value={productoIdTipo}
+                onChange={(evento) => setProductoIdTipo(evento.target.value)}
+                className={`${CLASE_SELECT} h-10`}
+              >
+                <option value="sku">{t('producto_id_tipo.sku')}</option>
+                <option value="ean">{t('producto_id_tipo.ean')}</option>
+              </select>
+            </div>
+          )}
         </div>
-        {guardarPlantilla && (
-          <div className="max-w-sm space-y-1">
-            <Label htmlFor="nombre_plantilla">{t('plantilla.nombre')}</Label>
-            <Input
-              id="nombre_plantilla"
-              value={nombrePlantilla}
-              onChange={(evento) => setNombrePlantilla(evento.target.value)}
+
+        <div className="mt-5 space-y-3 border-t pt-5">
+          <div className="flex items-center gap-2">
+            <input
+              id="guardar_plantilla"
+              type="checkbox"
+              checked={guardarPlantilla}
+              onChange={(evento) => setGuardarPlantilla(evento.target.checked)}
+              className="size-4 rounded accent-[hsl(var(--primary))]"
             />
+            <Label htmlFor="guardar_plantilla">{t('plantilla.guardar')}</Label>
           </div>
-        )}
-      </div>
+          {guardarPlantilla && (
+            <div className="max-w-sm space-y-1.5">
+              <Label htmlFor="nombre_plantilla">{t('plantilla.nombre')}</Label>
+              <Input
+                id="nombre_plantilla"
+                value={nombrePlantilla}
+                onChange={(evento) => setNombrePlantilla(evento.target.value)}
+              />
+            </div>
+          )}
+        </div>
+      </section>
 
       {errorEnvio && (
-        <p role="alert" className="text-sm text-destructive">
+        <p
+          role="alert"
+          className="flex items-start gap-2 rounded-xl border border-danger/20 bg-danger-soft p-4 text-sm text-danger"
+        >
+          <CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
           {t(`errores.${claveError(errorEnvio)}`, {
             ...errorEnvio.parametros,
             defaultValue: t('comun:error_generico'),
@@ -258,11 +287,11 @@ export function MapeoDataset({ datasetId, onIngestaIniciada }: Props) {
         </p>
       )}
 
-      <Button onClick={() => void confirmarEIniciar()} disabled={!puedeConfirmar}>
-        {confirmarMapeo.isPending || iniciarIngesta.isPending
-          ? t('acciones.confirmando')
-          : t('acciones.confirmar')}
-      </Button>
+      <div className="flex justify-end">
+        <Button size="lg" onClick={() => void confirmarEIniciar()} disabled={!puedeConfirmar}>
+          {confirmarMapeo.isPending || iniciarIngesta.isPending ? t('acciones.confirmando') : t('acciones.confirmar')}
+        </Button>
+      </div>
     </div>
   )
 }

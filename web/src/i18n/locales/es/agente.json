@@ -19,5 +19,9 @@
   "errores": {
     "dataset_no_listo": "El dataset todavía no está listo para preguntas.",
     "error_generico": "Ocurrió un error al preguntarle al agente. Intenta de nuevo."
-  }
+  },
+  "descripcion": "Haz preguntas en lenguaje natural sobre este dataset. Cada respuesta muestra las consultas que corrió.",
+  "vacio_titulo": "¿Qué quieres saber?",
+  "tu": "Tú",
+  "agente": "Agente"
 }

@@ -11,7 +11,7 @@ import { BotonProbarDemo } from '@/features/proyectos/BotonProbarDemo'
 import { DialogoBorrarProyecto } from '@/features/proyectos/DialogoBorrarProyecto'
 import { DialogoProyecto } from '@/features/proyectos/DialogoProyecto'
 import { EstadoErrorCarga, ProyectosVacio } from '@/features/proyectos/EstadosLista'
-import { useProyectos, type Proyecto } from '@/features/proyectos/hooks'
+import { useDatasetsProyecto, useProyectos, type Proyecto } from '@/features/proyectos/hooks'
 
 export const Route = createFileRoute('/_autenticado/proyectos/')({ component: Proyectos })
 
@@ -29,6 +29,9 @@ function TarjetaProyecto({
   const { t } = useTranslation('proyectos')
   const idTitulo = useId()
   const tono = t(`dialogo.tonos.${proyecto.tono}`).toLowerCase()
+  // Misma clave de caché que el detalle del proyecto: al entrar ya está cargado.
+  const datasets = useDatasetsProyecto(proyecto.id)
+  const cantidadDatasets = Array.isArray(datasets.data) ? datasets.data.length : null
 
   return (
     <li className="min-w-0">
@@ -81,6 +84,9 @@ function TarjetaProyecto({
           </div>
         </div>
         <div className="mt-5 flex flex-wrap items-center gap-2 border-t pt-4">
+          {cantidadDatasets != null && (
+            <Badge variant="info">{t('tarjeta.datasets', { count: cantidadDatasets })}</Badge>
+          )}
           <Badge variant="neutral">{t('tarjeta.mensajes', { idioma: t(`idiomas.${proyecto.idioma_mensajes}`) })}</Badge>
           <Badge variant="neutral">{t('tarjeta.tono', { tono })}</Badge>
           <ArrowRight

@@ -11,24 +11,26 @@ function TablaFilas({ consulta }: { consulta: ConsultaAgente }) {
   }
   const columnas = Object.keys(consulta.filas_muestra[0])
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          {columnas.map((columna) => (
-            <TableHead key={columna}>{columna}</TableHead>
-          ))}
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {consulta.filas_muestra.map((fila, indice) => (
-          <TableRow key={indice}>
+    <div className="overflow-hidden rounded-md border">
+      <Table>
+        <TableHeader>
+          <TableRow>
             {columnas.map((columna) => (
-              <TableCell key={columna}>{String(fila[columna] ?? '')}</TableCell>
+              <TableHead key={columna}>{columna}</TableHead>
             ))}
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {consulta.filas_muestra.map((fila, indice) => (
+            <TableRow key={indice}>
+              {columnas.map((columna) => (
+                <TableCell key={columna}>{String(fila[columna] ?? '')}</TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   )
 }
 
@@ -39,17 +41,15 @@ export function ComoLoCalcule({ consultas }: { consultas: ConsultaAgente[] }) {
   if (consultas.length === 0) return null
 
   return (
-    <details className="mt-2 rounded-md border p-3">
-      <summary className="cursor-pointer text-sm font-medium">{t('como_lo_calcule')}</summary>
+    <details className="mt-2 rounded-lg border bg-card p-3">
+      <summary className="cursor-pointer rounded-sm text-xs font-medium text-primary">{t('como_lo_calcule')}</summary>
       <div className="mt-3 space-y-4">
         {consultas.map((consulta, indice) => (
           <div key={indice} className="space-y-2">
-            <pre className="overflow-x-auto rounded-md bg-muted p-2 text-xs">
+            <pre className="overflow-x-auto rounded-md bg-sidebar p-3 font-mono text-xs text-sidebar-foreground">
               <code>{resaltarSql(consulta.sql)}</code>
             </pre>
-            <p className="text-xs text-muted-foreground">
-              {t('consulta.n_filas', { n: consulta.n_filas })}
-            </p>
+            <p className="text-xs text-muted-foreground">{t('consulta.n_filas', { n: consulta.n_filas })}</p>
             <TablaFilas consulta={consulta} />
           </div>
         ))}

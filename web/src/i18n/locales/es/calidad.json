@@ -35,7 +35,8 @@
     "viabilidad": {
       "viable": "Viable",
       "no_viable": "No alcanza"
-    }
+    },
+    "viabilidad_titulo": "Qué puedes analizar"
   },
   "productos": {
     "titulo": "Productos a revisar",
@@ -51,15 +52,19 @@
     "tipos": {
       "recompra": "Recompra",
       "durable": "Durable"
-    }
+    },
+    "descripcion": "Productos que no pudimos clasificar con seguridad. Corrígelos si hace falta."
   },
   "grupos": {
     "titulo": "Productos equivalentes propuestos",
     "vacio": "No hay propuestas de productos equivalentes.",
     "confirmar": "Confirmar",
-    "rechazar": "Rechazar"
+    "rechazar": "Rechazar",
+    "descripcion": "Productos que parecen ser el mismo con nombres distintos."
   },
   "acciones": {
-    "continuar_analisis": "Continuar a análisis"
-  }
+    "continuar_analisis": "Continuar a análisis",
+    "listo": "Los datos están listos para analizar."
+  },
+  "descripcion": "Revisa qué tan completos están los datos y qué análisis se pueden hacer con ellos."
 }

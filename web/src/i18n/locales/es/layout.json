@@ -42,5 +42,13 @@
       "precision": "Precisión medida con backtest, sin cajas negras"
     },
     "pie": "Empieza con un CSV de compras. Sin integraciones."
-  }
+  },
+  "flujo": {
+    "aria": "Pasos del dataset",
+    "subir": "Subir",
+    "mapear": "Mapear",
+    "calidad": "Calidad",
+    "analizar": "Analizar"
+  },
+  "cargando_sesion": "Cargando tu espacio…"
 }

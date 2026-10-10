@@ -52,5 +52,10 @@
   "acciones": {
     "confirmar": "Confirmar e iniciar a ingestão",
     "confirmando": "Confirmando…"
-  }
+  },
+  "descripcion": "Indique o que cada coluna do arquivo representa. Preenchemos o que conseguimos detectar; revise o que está marcado.",
+  "opciones": {
+    "titulo": "Opções de leitura"
+  },
+  "columnas_titulo": "Colunas do arquivo"
 }

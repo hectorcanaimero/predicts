@@ -20,7 +20,7 @@ export default function EscenaUniverso({ puntos, onSeleccionar }: Props) {
   const [hover, setHover] = useState<{ punto: PuntoUniverso; x: number; y: number } | null>(null)
 
   return (
-    <div className="relative h-[28rem] w-full overflow-hidden rounded-lg border bg-slate-950">
+    <div className="relative h-[28rem] w-full overflow-hidden rounded-lg bg-sidebar">
       <Canvas camera={{ position: [8, 8, 8], fov: 50 }} dpr={[1, 1.5]}>
         <ambientLight intensity={1.2} />
         <axesHelper args={[6]} />
@@ -31,9 +31,7 @@ export default function EscenaUniverso({ puntos, onSeleccionar }: Props) {
         />
         <OrbitControls enableDamping makeDefault />
       </Canvas>
-      <p className="pointer-events-none absolute bottom-2 left-2 text-xs text-white/80">
-        {t('ejes.descripcion')}
-      </p>
+      <p className="pointer-events-none absolute bottom-2 left-2 text-xs text-white/80">{t('ejes.descripcion')}</p>
       {hover && (
         <div
           className="pointer-events-none fixed z-10 rounded bg-black/80 px-2 py-1 text-xs text-white"

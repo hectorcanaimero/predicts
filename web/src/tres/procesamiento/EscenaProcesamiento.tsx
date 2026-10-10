@@ -22,7 +22,7 @@ export default function EscenaProcesamiento({ eventos, conexion }: Props) {
   const parametros = mapearEventos(eventos)
 
   return (
-    <div className="relative h-72 w-full overflow-hidden rounded-lg border bg-slate-950">
+    <div className="relative h-72 w-full overflow-hidden rounded-lg bg-sidebar">
       <Canvas frameloop={visible ? 'always' : 'never'} camera={{ position: [0, 0, 11], fov: 45 }} dpr={[1, 1.5]}>
         <ambientLight intensity={1.4} />
         <Particulas parametros={parametros} activa={visible} />

@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
+import { EncabezadoPagina } from '@/components/layout/EncabezadoPagina'
 import { ChatAgente } from '@/features/agente/ChatAgente'
 
 export const Route = createFileRoute('/_autenticado/datasets/$datasetId/agente')({
@@ -12,8 +13,8 @@ function AgenteDatasetRuta() {
   const { t } = useTranslation('agente')
 
   return (
-    <div className="space-y-8">
-      <h1 className="text-2xl font-semibold tracking-tight">{t('titulo')}</h1>
+    <div className="space-y-6">
+      <EncabezadoPagina titulo={t('titulo')} descripcion={t('descripcion')} />
       <ChatAgente datasetId={datasetId} />
     </div>
   )

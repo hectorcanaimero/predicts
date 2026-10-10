@@ -32,5 +32,8 @@
       "ciclo": "Ciclo (dias)",
       "proxima_compra": "Próxima compra"
     }
-  }
+  },
+  "descripcion": "Cada ponto é um cliente: frequência, valor e recência de compra. Clique em um para ver o histórico.",
+  "clientes_other": "{{count}} clientes",
+  "clientes_one": "{{count}} cliente"
 }

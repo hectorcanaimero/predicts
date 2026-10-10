@@ -44,6 +44,11 @@ export function RecordatoriosTab({ analisisId }: Props) {
   }
   if (!resultados.data) return null
 
+  // `mensaje`/`contactar` todavía no vienen por fila en la API (ver `tipos.ts`): las columnas solo
+  // se muestran si al menos una fila de la página las trae, en vez de una columna llena de "—".
+  const conMensaje = resultados.data.resultados.some((fila) => fila.mensaje != null)
+  const conContactar = resultados.data.resultados.some((fila) => fila.contactar != null)
+
   const columnasOrden = COLUMNAS_ORDEN.recompra.map((clave) => ({
     clave,
     etiqueta: t(`recordatorios.columnas.${clave}`),
@@ -93,7 +98,7 @@ export function RecordatoriosTab({ analisisId }: Props) {
         </p>
       ) : (
         <div className="overflow-hidden rounded-xl border bg-card shadow-xs">
-          <Table className="min-w-[52rem]">
+          <Table className={conMensaje || conContactar ? 'min-w-[52rem]' : 'min-w-[44rem]'}>
             <TableHeader>
               <TableRow>
                 <TableHead>{t('recordatorios.columnas.cliente_id')}</TableHead>
@@ -101,8 +106,8 @@ export function RecordatoriosTab({ analisisId }: Props) {
                 <TableHead>{t('recordatorios.columnas.fecha_probable')}</TableHead>
                 <TableHead>{t('recordatorios.columnas.p')}</TableHead>
                 <TableHead>{t('recordatorios.columnas.motivo')}</TableHead>
-                <TableHead>{t('recordatorios.columnas.mensaje')}</TableHead>
-                <TableHead>{t('recordatorios.columnas.contactar')}</TableHead>
+                {conMensaje && <TableHead>{t('recordatorios.columnas.mensaje')}</TableHead>}
+                {conContactar && <TableHead>{t('recordatorios.columnas.contactar')}</TableHead>}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -122,8 +127,8 @@ export function RecordatoriosTab({ analisisId }: Props) {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-muted-foreground">{fila.motivo}</TableCell>
-                  <TableCell className="text-muted-foreground">{fila.mensaje ?? '—'}</TableCell>
-                  <TableCell>{fila.contactar ?? '—'}</TableCell>
+                  {conMensaje && <TableCell className="text-muted-foreground">{fila.mensaje ?? '—'}</TableCell>}
+                  {conContactar && <TableCell>{fila.contactar ?? '—'}</TableCell>}
                 </TableRow>
               ))}
             </TableBody>

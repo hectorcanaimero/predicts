@@ -42,5 +42,13 @@
       "precision": "Precisão medida com backtest, sem caixas-pretas"
     },
     "pie": "Comece com um CSV de compras. Sem integrações."
-  }
+  },
+  "flujo": {
+    "aria": "Etapas do conjunto de dados",
+    "subir": "Enviar",
+    "mapear": "Mapear",
+    "calidad": "Qualidade",
+    "analizar": "Analisar"
+  },
+  "cargando_sesion": "Carregando seu espaço…"
 }

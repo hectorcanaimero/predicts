@@ -35,7 +35,8 @@
     "viabilidad": {
       "viable": "Viable",
       "no_viable": "Not enough data"
-    }
+    },
+    "viabilidad_titulo": "What you can analyze"
   },
   "productos": {
     "titulo": "Products to review",
@@ -51,15 +52,19 @@
     "tipos": {
       "recompra": "Repurchase",
       "durable": "Durable"
-    }
+    },
+    "descripcion": "Products we could not classify with confidence. Fix them if needed."
   },
   "grupos": {
     "titulo": "Proposed equivalent products",
     "vacio": "No proposed equivalent products.",
     "confirmar": "Confirm",
-    "rechazar": "Reject"
+    "rechazar": "Reject",
+    "descripcion": "Products that look like the same item under different names."
   },
   "acciones": {
-    "continuar_analisis": "Continue to analysis"
-  }
+    "continuar_analisis": "Continue to analysis",
+    "listo": "The data is ready to analyze."
+  },
+  "descripcion": "Check how complete the data is and which analyses it supports."
 }

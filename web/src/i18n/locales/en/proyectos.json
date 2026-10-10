@@ -85,7 +85,9 @@
     "abrir": "Open {{nombre}}",
     "sin_descripcion": "No description",
     "mensajes": "Messages in {{idioma}}",
-    "tono": "{{tono}} tone"
+    "tono": "{{tono}} tone",
+    "datasets_one": "{{count}} dataset",
+    "datasets_other": "{{count}} datasets"
   },
   "idiomas": {
     "pt-BR": "Portuguese",

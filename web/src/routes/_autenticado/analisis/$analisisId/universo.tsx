@@ -1,6 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { ArrowLeft } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
+import { EncabezadoPagina } from '@/components/layout/EncabezadoPagina'
+import { Button } from '@/components/ui/button'
 import { VistaUniverso } from '@/tres/universo/VistaUniverso'
 
 export const Route = createFileRoute('/_autenticado/analisis/$analisisId/universo')({
@@ -13,7 +16,18 @@ function UniversoRuta() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-2xl font-semibold tracking-tight">{t('titulo')}</h1>
+      <EncabezadoPagina
+        titulo={t('titulo')}
+        descripcion={t('descripcion')}
+        acciones={
+          <Button asChild variant="outline">
+            <Link to="/analisis/$analisisId" params={{ analisisId }}>
+              <ArrowLeft aria-hidden="true" />
+              {t('layout:nav.resultados')}
+            </Link>
+          </Button>
+        }
+      />
       <VistaUniverso analisisId={analisisId} />
     </div>
   )

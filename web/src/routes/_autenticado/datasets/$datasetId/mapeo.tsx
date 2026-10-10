@@ -1,6 +1,8 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
+import { EncabezadoPagina } from '@/components/layout/EncabezadoPagina'
+import { FlujoDatos } from '@/components/layout/FlujoDatos'
 import { MapeoDataset } from '@/features/mapeo/MapeoDataset'
 
 export const Route = createFileRoute('/_autenticado/datasets/$datasetId/mapeo')({
@@ -14,7 +16,8 @@ function MapeoDatasetRuta() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-2xl font-semibold tracking-tight">{t('titulo')}</h1>
+      <FlujoDatos actual="mapear" />
+      <EncabezadoPagina titulo={t('titulo')} descripcion={t('descripcion')} />
       <MapeoDataset
         datasetId={datasetId}
         onIngestaIniciada={(trabajoId) =>

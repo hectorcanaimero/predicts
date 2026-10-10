@@ -2,20 +2,45 @@
   "nuevo": {
     "titulo": "Choose analysis",
     "tarjetas": {
-      "recompra": { "nombre": "Repurchase reminders", "descripcion": "When each customer will buy again." },
-      "ciclos": { "nombre": "Cycles by product", "descripcion": "How often each product gets repurchased." },
-      "riesgo": { "nombre": "Churn risk", "descripcion": "Customers who might stop buying." },
-      "ofertas": { "nombre": "Offers", "descripcion": "Products to offer each customer based on their repurchase." }
+      "recompra": {
+        "nombre": "Repurchase reminders",
+        "descripcion": "When each customer will buy again."
+      },
+      "ciclos": {
+        "nombre": "Cycles by product",
+        "descripcion": "How often each product gets repurchased."
+      },
+      "riesgo": {
+        "nombre": "Churn risk",
+        "descripcion": "Customers who might stop buying."
+      },
+      "ofertas": {
+        "nombre": "Offers",
+        "descripcion": "Products to offer each customer based on their repurchase."
+      }
     },
     "no_viable": "Not enough data: {{motivo}}",
     "parametros": {
       "titulo": "Parameters",
-      "periodo": { "etiqueta": "Period", "ayuda": "Limits the purchases considered to this date range; empty uses the whole history." },
+      "periodo": {
+        "etiqueta": "Period",
+        "ayuda": "Limits the purchases considered to this date range; empty uses the whole history."
+      },
       "desde": "From",
       "hasta": "To",
-      "min_compras": { "etiqueta": "Minimum purchases", "ayuda": "Minimum purchases of a customer on a product to take it into account." },
-      "horizonte": { "etiqueta": "Horizon (days)", "ayuda": "How many days ahead the likely repurchase dates are calculated." },
-      "umbral": { "etiqueta": "Probability threshold", "ayuda": "Minimum repurchase probability to generate a reminder (0 to 1)." }
+      "min_compras": {
+        "etiqueta": "Minimum purchases",
+        "ayuda": "Minimum purchases of a customer on a product to take it into account."
+      },
+      "horizonte": {
+        "etiqueta": "Horizon (days)",
+        "ayuda": "How many days ahead the likely repurchase dates are calculated."
+      },
+      "umbral": {
+        "etiqueta": "Probability threshold",
+        "ayuda": "Minimum repurchase probability to generate a reminder (0 to 1)."
+      },
+      "descripcion": "The defaults work well for most cases."
     },
     "ofertas_lista": {
       "titulo": "Offers list (optional)",
@@ -23,7 +48,10 @@
       "subiendo": "Uploading the list…",
       "subida_ok": "{{productos}} products loaded."
     },
-    "acciones": { "lanzar": "Launch analysis", "lanzando": "Launching…" },
+    "acciones": {
+      "lanzar": "Launch analysis",
+      "lanzando": "Launching…"
+    },
     "ninguna_seleccionada": "Choose at least one analysis.",
     "errores": {
       "tipos_invalidos": "There is an invalid analysis type.",
@@ -34,7 +62,12 @@
       "ofertas_fila_invalida": "There is an invalid row in the offers CSV.",
       "ofertas_vacia": "The offers list is empty.",
       "ofertas_muy_grande": "The offers file is too large."
-    }
+    },
+    "descripcion": "Choose what you want to know about your customers and tune the parameters if needed.",
+    "elegir_titulo": "Analyses",
+    "seleccionados_other": "{{count}} analyses selected",
+    "elegida": "Selected",
+    "seleccionados_one": "{{count}} analysis selected"
   },
   "progreso": {
     "titulo": "Analysis progress",
@@ -42,7 +75,9 @@
     "esperando": "Waiting for the analysis to start…",
     "etapa": "Stage: {{etapa}}",
     "contador": "{{clave}}: {{valor}}",
-    "acciones": { "cancelar": "Cancel" },
+    "acciones": {
+      "cancelar": "Cancel"
+    },
     "cancelado": "Analysis cancelled.",
     "errores": {
       "memoria_excedida": "The analysis exceeded the available memory.",

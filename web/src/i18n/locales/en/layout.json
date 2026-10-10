@@ -42,5 +42,13 @@
       "precision": "Accuracy measured by backtesting, no black boxes"
     },
     "pie": "Start with a purchases CSV. No integrations needed."
-  }
+  },
+  "flujo": {
+    "aria": "Dataset steps",
+    "subir": "Upload",
+    "mapear": "Map",
+    "calidad": "Quality",
+    "analizar": "Analyze"
+  },
+  "cargando_sesion": "Loading your workspace…"
 }

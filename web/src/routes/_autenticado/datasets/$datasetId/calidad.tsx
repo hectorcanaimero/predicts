@@ -1,6 +1,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { Bot } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
+import { EncabezadoPagina } from '@/components/layout/EncabezadoPagina'
+import { FlujoDatos } from '@/components/layout/FlujoDatos'
+import { Button } from '@/components/ui/button'
 import { CalidadDataset } from '@/features/calidad/CalidadDataset'
 
 interface BusquedaCalidad {
@@ -21,12 +25,19 @@ function CalidadDatasetRuta() {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold tracking-tight">{t('titulo')}</h1>
-        <Link to="/datasets/$datasetId/agente" params={{ datasetId }} className="rounded-sm text-sm font-medium text-primary hover:underline">
-          {t('agente:enlace')}
-        </Link>
-      </div>
+      <FlujoDatos actual="calidad" />
+      <EncabezadoPagina
+        titulo={t('titulo')}
+        descripcion={t('descripcion')}
+        acciones={
+          <Button asChild variant="outline">
+            <Link to="/datasets/$datasetId/agente" params={{ datasetId }}>
+              <Bot aria-hidden="true" />
+              {t('agente:enlace')}
+            </Link>
+          </Button>
+        }
+      />
       <CalidadDataset
         datasetId={datasetId}
         trabajoId={trabajoId}

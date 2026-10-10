@@ -3,14 +3,17 @@
   "volver": "Voltar ao projeto",
   "dropzone": {
     "titulo": "Arraste aqui seu arquivo CSV, .csv.gz ou .zip",
-    "elegir_archivo": "Escolher arquivo"
+    "elegir_archivo": "Escolher arquivo",
+    "o": "ou",
+    "formatos": "CSV, .csv.gz ou .zip · até 200 MB"
   },
   "previa": {
     "titulo": "Pré-visualização"
   },
   "subiendo": {
     "porcentaje": "{{porcentaje}}%",
-    "cancelar": "Cancelar"
+    "cancelar": "Cancelar",
+    "titulo": "Enviando {{nombre}}…"
   },
   "listo": {
     "titulo": "Arquivo enviado. Preparando o mapeamento…"
@@ -22,5 +25,13 @@
     "formato_no_soportado": "Formato não suportado. Use um arquivo .csv, .csv.gz ou .zip.",
     "archivo_muy_grande": "O arquivo excede o limite de {{max_mb}} MB.",
     "zip_formato_invalido": "O .zip deve conter um único arquivo."
+  },
+  "descripcion": "Envie o histórico de compras: uma linha por produto comprado, com cliente, data e produto.",
+  "requisitos": {
+    "titulo": "O que o arquivo precisa ter",
+    "cliente": "Um identificador de cliente",
+    "fecha": "A data de cada compra",
+    "producto": "O produto (SKU ou EAN)",
+    "opcional": "Opcional: quantidade, preço, categoria, marca"
   }
 }

@@ -19,5 +19,9 @@
   "errores": {
     "dataset_no_listo": "The dataset isn't ready for questions yet.",
     "error_generico": "Something went wrong asking the agent. Please try again."
-  }
+  },
+  "descripcion": "Ask questions about this dataset in plain language. Every answer shows the queries it ran.",
+  "vacio_titulo": "What do you want to know?",
+  "tu": "You",
+  "agente": "Agent"
 }

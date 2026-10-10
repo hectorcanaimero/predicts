@@ -2,5 +2,7 @@
   "boton": "Try with sample data",
   "creando": "Setting up your demo project…",
   "atribucion": "Uses a sample of Online Retail II (UCI Machine Learning Repository, Chen 2019), licensed CC BY 4.0.",
-  "reintentar": "Try again"
+  "reintentar": "Try again",
+  "titulo": "Preparing the demo",
+  "pasos": "We create a project with sample data and run a full analysis."
 }

@@ -3,14 +3,17 @@
   "volver": "Back to project",
   "dropzone": {
     "titulo": "Drag your CSV, .csv.gz or .zip file here",
-    "elegir_archivo": "Choose file"
+    "elegir_archivo": "Choose file",
+    "o": "or",
+    "formatos": "CSV, .csv.gz or .zip · up to 200 MB"
   },
   "previa": {
     "titulo": "Preview"
   },
   "subiendo": {
     "porcentaje": "{{porcentaje}}%",
-    "cancelar": "Cancel"
+    "cancelar": "Cancel",
+    "titulo": "Uploading {{nombre}}…"
   },
   "listo": {
     "titulo": "File uploaded. Preparing mapping…"
@@ -22,5 +25,13 @@
     "formato_no_soportado": "Unsupported format. Use a .csv, .csv.gz or .zip file.",
     "archivo_muy_grande": "The file exceeds the {{max_mb}} MB limit.",
     "zip_formato_invalido": "The .zip must contain a single file."
+  },
+  "descripcion": "Upload your purchase history: one row per purchased product, with customer, date and product.",
+  "requisitos": {
+    "titulo": "What the file needs",
+    "cliente": "A customer identifier",
+    "fecha": "The date of each purchase",
+    "producto": "The product (SKU or EAN)",
+    "opcional": "Optional: quantity, price, category, brand"
   }
 }

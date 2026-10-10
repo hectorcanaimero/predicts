@@ -32,5 +32,8 @@
       "ciclo": "Cycle (days)",
       "proxima_compra": "Next purchase"
     }
-  }
+  },
+  "descripcion": "Each dot is a customer: purchase frequency, value and recency. Click one to see their history.",
+  "clientes_other": "{{count}} customers",
+  "clientes_one": "{{count}} customer"
 }

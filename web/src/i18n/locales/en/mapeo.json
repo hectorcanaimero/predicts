@@ -52,5 +52,10 @@
   "acciones": {
     "confirmar": "Confirm and start ingestion",
     "confirmando": "Confirming…"
-  }
+  },
+  "descripcion": "Tell us what each column of your file represents. We pre-filled what we could detect; review what is flagged.",
+  "opciones": {
+    "titulo": "Reading options"
+  },
+  "columnas_titulo": "File columns"
 }
