@@ -71,7 +71,8 @@ def ingesta(trabajo: TrabajoEnCurso) -> None:
 
 @tipo_trabajo("calidad")
 def calidad(trabajo: TrabajoEnCurso) -> None:
-    """Calcula el informe de calidad del Parquet ya ingerido y lo guarda en `datasets.calidad`."""
+    """Calcula el informe de calidad del Parquet ya ingerido, lo guarda en `datasets.calidad`
+    y encola la clasificación de `productos` (F4.2.T1)."""
     engine = eventos._engine()
     with Session(engine) as db:
         dataset = _dataset(db, trabajo)
@@ -83,5 +84,6 @@ def calidad(trabajo: TrabajoEnCurso) -> None:
     eventos.emitir(trabajo.id, "calidad", {"filas": informe.filas})
 
     with Session(engine) as db:
-        _dataset(db, trabajo).calidad = informe.model_dump(mode="json")
-        db.commit()
+        dataset = _dataset(db, trabajo)
+        dataset.calidad = informe.model_dump(mode="json")
+        cola.encolar(db, trabajo.empresa_id, "productos", {"dataset_id": str(dataset.id)})
