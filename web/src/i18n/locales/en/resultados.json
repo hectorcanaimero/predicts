@@ -1,0 +1,136 @@
+{
+  "titulo": "Analysis results",
+  "error_generico": "Couldn't load the results.",
+  "vacio": "No rows to show.",
+  "no_listo": "The analysis doesn't have results yet.",
+  "ordenar_por": "Sort by",
+  "orden": { "ascendente": "Ascending ↑", "descendente": "Descending ↓" },
+  "pestanas": {
+    "recordatorios": "Reminders",
+    "ciclos": "Cycles by product",
+    "riesgo": "Risk",
+    "ofertas": "Offers",
+    "precision": "Accuracy",
+    "mensajes": "Messages"
+  },
+  "paginacion": {
+    "anterior": "Previous",
+    "siguiente": "Next",
+    "pagina": "Page {{pagina}} of {{total}}",
+    "total": "{{total}} rows total"
+  },
+  "exportar": {
+    "separador": "Separator",
+    "separadores": { "coma": "Comma (,)", "punto_y_coma": "Semicolon (;)" },
+    "boton": "Export CSV",
+    "exportando": "Exporting…",
+    "errores": {
+      "tipo_no_solicitado": "This analysis doesn't include that result type.",
+      "analisis_no_listo": "The analysis isn't ready to export yet.",
+      "archivo_vencido": "This analysis's dataset was already archived.",
+      "separador_invalido": "The chosen separator isn't valid."
+    }
+  },
+  "recordatorios": {
+    "columnas": {
+      "cliente_id": "Customer",
+      "producto_id": "Product",
+      "producto_nombre": "Product",
+      "ciclo": "Cycle (days)",
+      "p": "Probability",
+      "fecha_probable": "Likely date",
+      "fecha_min": "From",
+      "fecha_max": "To",
+      "n_compras": "Purchases",
+      "dias_desde_ultima": "Days since last",
+      "posible_abandono": "Possible churn",
+      "motivo": "Reason",
+      "mensaje": "Message",
+      "contactar": "Contact"
+    },
+    "calendario": { "titulo": "Reminders by day" }
+  },
+  "ciclos": {
+    "columnas": {
+      "producto_id": "Product",
+      "producto_nombre": "Product",
+      "ciclo_mediano": "Median cycle (days)",
+      "dispersion": "Dispersion (days)",
+      "desvio_log": "Log deviation",
+      "clientes_recurrentes": "Recurring customers"
+    },
+    "dispersion": { "titulo": "Cycle vs. recurring customers" }
+  },
+  "riesgo": {
+    "columnas": {
+      "nivel": "Level",
+      "cliente_id": "Customer",
+      "producto_id": "Product",
+      "producto_nombre": "Product",
+      "n_compras": "Purchases",
+      "ciclo": "Cycle (days)",
+      "dispersion": "Dispersion (days)",
+      "dias_desde_ultima": "Days since last",
+      "atraso": "Overdue (days)",
+      "valor": "Value",
+      "motivo": "Reason"
+    },
+    "niveles": { "producto": "Product", "tienda": "Store" }
+  },
+  "ofertas": {
+    "columnas": {
+      "cliente_id": "Customer",
+      "producto_id": "Product",
+      "producto_nombre": "Product",
+      "puntaje": "Score",
+      "p_recompra": "Repurchase probability",
+      "lift": "Lift",
+      "por_producto": "Based on product",
+      "descuento": "Discount",
+      "fuentes": "Sources",
+      "motivo": "Reason"
+    }
+  },
+  "precision": {
+    "resumen": "Backtest over {{semanas}} week(s) back, {{horizonte}}-day horizon, {{n_pares}} pairs evaluated.",
+    "columnas": { "metrica": "Metric", "modelo": "Model", "linea_base": "Baseline" },
+    "metricas": {
+      "precision_at_k": "Top-K precision",
+      "cobertura_at_k": "Top-K coverage",
+      "brier": "Brier score",
+      "mae_dias": "Mean error (days)"
+    },
+    "explicaciones": {
+      "precision_at_k": "Of the K pairs with the highest probability, how many actually bought.",
+      "cobertura_at_k": "Of the ones who actually bought, how many landed in the top-K.",
+      "brier": "How close the predicted probability was to what happened (0 is perfect).",
+      "mae_dias": "Average difference, in days, between the likely date and the actual purchase date."
+    },
+    "calibracion": {
+      "titulo": "Calibration by decile",
+      "explicacion": "For each band of predicted probability, what fraction actually bought; ideally both lines follow the diagonal."
+    }
+  },
+  "mensajes": {
+    "texto_de": "Message for {{clave}}",
+    "acciones": {
+      "editar": "Edit",
+      "guardar": "Save",
+      "cancelar": "Cancel",
+      "regenerar": "Regenerate templates",
+      "regenerando": "Regenerating…"
+    },
+    "acciones_de": {
+      "editar": "Edit {{clave}}",
+      "guardar": "Save {{clave}}",
+      "cancelar": "Cancel editing {{clave}}"
+    },
+    "estados": { "ok": "Generated", "revisar": "Needs review", "editada": "Edited by hand" },
+    "tipos": { "recordatorio": "Reminders", "oferta": "Offers", "reactivacion": "Reactivation" },
+    "vacio": "There are no message templates for this analysis yet.",
+    "errores": {
+      "plantilla_invalida": "The template text isn't valid.",
+      "no_encontrado": "The template wasn't found."
+    }
+  }
+}

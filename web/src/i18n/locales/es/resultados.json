@@ -1,0 +1,136 @@
+{
+  "titulo": "Resultados del análisis",
+  "error_generico": "No se pudieron cargar los resultados.",
+  "vacio": "No hay filas para mostrar.",
+  "no_listo": "El análisis todavía no tiene resultados.",
+  "ordenar_por": "Ordenar por",
+  "orden": { "ascendente": "Ascendente ↑", "descendente": "Descendente ↓" },
+  "pestanas": {
+    "recordatorios": "Recordatorios",
+    "ciclos": "Ciclos por producto",
+    "riesgo": "Riesgo",
+    "ofertas": "Ofertas",
+    "precision": "Precisión",
+    "mensajes": "Mensajes"
+  },
+  "paginacion": {
+    "anterior": "Anterior",
+    "siguiente": "Siguiente",
+    "pagina": "Página {{pagina}} de {{total}}",
+    "total": "{{total}} filas en total"
+  },
+  "exportar": {
+    "separador": "Separador",
+    "separadores": { "coma": "Coma (,)", "punto_y_coma": "Punto y coma (;)" },
+    "boton": "Exportar CSV",
+    "exportando": "Exportando…",
+    "errores": {
+      "tipo_no_solicitado": "Este análisis no incluye ese tipo de resultado.",
+      "analisis_no_listo": "El análisis todavía no está listo para exportar.",
+      "archivo_vencido": "El dataset de este análisis ya fue archivado.",
+      "separador_invalido": "El separador elegido no es válido."
+    }
+  },
+  "recordatorios": {
+    "columnas": {
+      "cliente_id": "Cliente",
+      "producto_id": "Producto",
+      "producto_nombre": "Producto",
+      "ciclo": "Ciclo (días)",
+      "p": "Probabilidad",
+      "fecha_probable": "Fecha probable",
+      "fecha_min": "Desde",
+      "fecha_max": "Hasta",
+      "n_compras": "Compras",
+      "dias_desde_ultima": "Días desde la última",
+      "posible_abandono": "Posible abandono",
+      "motivo": "Motivo",
+      "mensaje": "Mensaje",
+      "contactar": "Contactar"
+    },
+    "calendario": { "titulo": "Recordatorios por día" }
+  },
+  "ciclos": {
+    "columnas": {
+      "producto_id": "Producto",
+      "producto_nombre": "Producto",
+      "ciclo_mediano": "Ciclo mediano (días)",
+      "dispersion": "Dispersión (días)",
+      "desvio_log": "Desvío log",
+      "clientes_recurrentes": "Clientes recurrentes"
+    },
+    "dispersion": { "titulo": "Ciclo vs. clientes recurrentes" }
+  },
+  "riesgo": {
+    "columnas": {
+      "nivel": "Nivel",
+      "cliente_id": "Cliente",
+      "producto_id": "Producto",
+      "producto_nombre": "Producto",
+      "n_compras": "Compras",
+      "ciclo": "Ciclo (días)",
+      "dispersion": "Dispersión (días)",
+      "dias_desde_ultima": "Días desde la última",
+      "atraso": "Atraso (días)",
+      "valor": "Valor",
+      "motivo": "Motivo"
+    },
+    "niveles": { "producto": "Producto", "tienda": "Tienda" }
+  },
+  "ofertas": {
+    "columnas": {
+      "cliente_id": "Cliente",
+      "producto_id": "Producto",
+      "producto_nombre": "Producto",
+      "puntaje": "Puntaje",
+      "p_recompra": "Probabilidad de recompra",
+      "lift": "Lift",
+      "por_producto": "Por producto",
+      "descuento": "Descuento",
+      "fuentes": "Fuentes",
+      "motivo": "Motivo"
+    }
+  },
+  "precision": {
+    "resumen": "Backtest sobre {{semanas}} semana(s) hacia atrás, horizonte de {{horizonte}} días, {{n_pares}} pares evaluados.",
+    "columnas": { "metrica": "Métrica", "modelo": "Modelo", "linea_base": "Línea base" },
+    "metricas": {
+      "precision_at_k": "Precisión en el top-K",
+      "cobertura_at_k": "Cobertura en el top-K",
+      "brier": "Error de Brier",
+      "mae_dias": "Error medio (días)"
+    },
+    "explicaciones": {
+      "precision_at_k": "De los K pares con mayor probabilidad, cuántos realmente compraron.",
+      "cobertura_at_k": "De los que realmente compraron, cuántos quedaron dentro del top-K.",
+      "brier": "Qué tan cerca estuvo la probabilidad predicha de lo que pasó (0 es perfecto).",
+      "mae_dias": "Diferencia promedio, en días, entre la fecha probable y la fecha real de compra."
+    },
+    "calibracion": {
+      "titulo": "Calibración por deciles",
+      "explicacion": "Por cada franja de probabilidad predicha, qué fracción realmente compró; lo ideal es que ambas líneas sigan la diagonal."
+    }
+  },
+  "mensajes": {
+    "texto_de": "Mensaje de {{clave}}",
+    "acciones": {
+      "editar": "Editar",
+      "guardar": "Guardar",
+      "cancelar": "Cancelar",
+      "regenerar": "Regenerar plantillas",
+      "regenerando": "Regenerando…"
+    },
+    "acciones_de": {
+      "editar": "Editar {{clave}}",
+      "guardar": "Guardar {{clave}}",
+      "cancelar": "Cancelar edición de {{clave}}"
+    },
+    "estados": { "ok": "Generada", "revisar": "A revisar", "editada": "Editada a mano" },
+    "tipos": { "recordatorio": "Recordatorios", "oferta": "Ofertas", "reactivacion": "Reactivación" },
+    "vacio": "Todavía no hay plantillas de mensaje para este análisis.",
+    "errores": {
+      "plantilla_invalida": "El texto de la plantilla no es válido.",
+      "no_encontrado": "No se encontró la plantilla."
+    }
+  }
+}
