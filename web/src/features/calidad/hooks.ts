@@ -11,8 +11,7 @@ export type Grupo = components['schemas']['GrupoSalida']
 const INTERVALO_SONDEO_CALIDAD_MS = 2000
 
 export const claveCalidad = (datasetId: string) => ['datasets', datasetId, 'calidad'] as const
-export const claveProductosARevisar = (datasetId: string) =>
-  ['datasets', datasetId, 'productos', 'revisar'] as const
+export const claveProductosARevisar = (datasetId: string) => ['datasets', datasetId, 'productos', 'revisar'] as const
 export const CLAVE_GRUPOS_PROPUESTOS = ['productos', 'grupos', 'propuesto'] as const
 
 /** El informe lo llena un trabajo `calidad` encolado después de la `ingesta` (ver
@@ -30,7 +29,10 @@ export function useCalidad(datasetId: string, habilitado: boolean) {
     },
     enabled: habilitado,
     retry: false,
-    refetchInterval: (query) => (query.state.data ? false : INTERVALO_SONDEO_CALIDAD_MS),
+    // Se sondea hasta que llega el informe, salvo que el dataset ya esté `listo` sin informe (la
+    // demo): ese no va a aparecer nunca.
+    refetchInterval: (query) =>
+      query.state.data || query.state.error?.parametros.estado === 'listo' ? false : INTERVALO_SONDEO_CALIDAD_MS,
   })
 }
 

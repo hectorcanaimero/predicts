@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CartesianGrid, Scatter, ScatterChart, Tooltip, XAxis, YAxis } from 'recharts'
 
@@ -11,17 +12,42 @@ interface Props {
 /** Respaldo 2D (spec F8.2.T2): mismos puntos/colores/filtro que la nube 3D, en frecuencia × valor
  * (la recencia queda disponible en el tooltip), para cuando el usuario prefiere menos movimiento
  * o mientras se descarga el chunk de la escena. */
+const ANCHO_DEFECTO = 640
+
+/** Ancho disponible del contenedor (ResizeObserver); sin él (jsdom) queda `ANCHO_DEFECTO`. Se
+ * prefiere a `ResponsiveContainer` porque éste no dibuja nada mientras no puede medir. */
+function useAncho() {
+  const ref = useRef<HTMLDivElement>(null)
+  const [ancho, setAncho] = useState(ANCHO_DEFECTO)
+  useEffect(() => {
+    const elemento = ref.current
+    if (!elemento || typeof ResizeObserver === 'undefined') return undefined
+    const observador = new ResizeObserver(([entrada]) => {
+      const medido = Math.floor(entrada.contentRect.width)
+      if (medido > 0) setAncho(Math.max(320, medido))
+    })
+    observador.observe(elemento)
+    return () => observador.disconnect()
+  }, [])
+  return { ref, ancho }
+}
+
 export function Dispersion2D({ puntos, onSeleccionar }: Props) {
   const { t } = useTranslation('universo')
+  const { ref, ancho } = useAncho()
 
   return (
-    <div className="space-y-3">
+    <div ref={ref} className="space-y-3">
       <h3 className="text-sm font-semibold">{t('dispersion.titulo')}</h3>
       {puntos.length === 0 ? (
         <p className="py-10 text-center text-sm text-muted-foreground">{t('vacio')}</p>
       ) : (
         <div className="overflow-x-auto">
-          <ScatterChart width={640} height={420} margin={{ top: 10, right: 20, bottom: 10, left: 10 }}>
+          <ScatterChart
+            width={ancho}
+            height={Math.round(Math.min(480, Math.max(320, ancho * 0.5)))}
+            margin={{ top: 10, right: 20, bottom: 10, left: 10 }}
+          >
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(36, 15%, 87%)" />
             <XAxis type="number" dataKey="frecuencia" name={t('ejes.frecuencia')} />
             <YAxis type="number" dataKey="valor" name={t('ejes.valor')} />

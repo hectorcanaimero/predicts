@@ -184,6 +184,23 @@ function crearServidorCalidad() {
 }
 
 describe('calidad del dataset', () => {
+  it('dataset listo sin informe (demo): no queda esperando y ofrece ir al análisis', async () => {
+    const fetchFalso = vi.fn(
+      async () =>
+        new Response(JSON.stringify({ codigo: 'calidad_no_disponible', parametros: { estado: 'listo' } }), {
+          status: 404,
+        }),
+    )
+    vi.stubGlobal('fetch', fetchFalso)
+    const onContinuar = vi.fn()
+    renderConQuery(<CalidadDataset datasetId={DATASET_ID} onContinuarAnalisis={onContinuar} />)
+
+    await screen.findByText(/no tiene informe de calidad/)
+    expect(screen.queryByText('Calculando el informe de calidad…')).toBeNull()
+    fireEvent.click(screen.getByRole('button', { name: 'Continuar a análisis' }))
+    expect(onContinuar).toHaveBeenCalled()
+  })
+
   it('muestra el informe de calidad con sus tarjetas y la viabilidad por análisis', async () => {
     const { fetchFalso } = crearServidorCalidad()
     vi.stubGlobal('fetch', fetchFalso)

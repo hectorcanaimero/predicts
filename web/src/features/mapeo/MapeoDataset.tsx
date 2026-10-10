@@ -84,7 +84,11 @@ export function MapeoDataset({ datasetId, onIngestaIniciada }: Props) {
         className="flex flex-col items-start gap-3 rounded-xl border border-danger/20 bg-danger-soft p-5 sm:flex-row sm:items-center"
       >
         <CircleAlert aria-hidden="true" className="size-5 shrink-0 text-danger" />
-        <p className="flex-1 text-sm font-medium text-danger">{t('error.titulo')}</p>
+        <p className="flex-1 text-sm font-medium text-danger">
+          {sugerencias.error?.codigo === 'dataset_sin_deteccion'
+            ? t('errores.dataset_sin_deteccion')
+            : t('error.titulo')}
+        </p>
         <Button
           variant="outline"
           size="sm"

@@ -36,7 +36,8 @@
       "viable": "Viable",
       "no_viable": "No alcanza"
     },
-    "viabilidad_titulo": "Qué puedes analizar"
+    "viabilidad_titulo": "Qué puedes analizar",
+    "sin_informe": "Este dataset no tiene informe de calidad (por ejemplo, los datos de demostración se cargan ya procesados). Puedes continuar directo al análisis."
   },
   "productos": {
     "titulo": "Productos a revisar",

@@ -36,7 +36,8 @@
       "viable": "Viable",
       "no_viable": "Not enough data"
     },
-    "viabilidad_titulo": "What you can analyze"
+    "viabilidad_titulo": "What you can analyze",
+    "sin_informe": "This dataset has no quality report (for example, demo data is loaded already processed). You can go straight to the analysis."
   },
   "productos": {
     "titulo": "Products to review",

@@ -1,4 +1,4 @@
-import { CircleAlert, CircleCheck, LoaderCircle } from 'lucide-react'
+import { CircleAlert, CircleCheck, Info, LoaderCircle } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
@@ -39,7 +39,10 @@ export function CalidadDataset({ datasetId, trabajoId, onContinuarAnalisis }: Pr
   const ingestaTerminada = !trabajoId || ultimoEvento?.etapa === 'listo'
 
   const calidad = useCalidad(datasetId, ingestaTerminada)
-  const calidadNoDisponibleAun = calidad.isError && calidad.error.codigo === 'calidad_no_disponible'
+  const calidadNoDisponible = calidad.isError && calidad.error.codigo === 'calidad_no_disponible'
+  // Dataset ya `listo` sin informe (p. ej. la demo, que se carga procesada): no va a llegar nunca.
+  const sinInforme = calidadNoDisponible && calidad.error.parametros.estado === 'listo'
+  const calidadNoDisponibleAun = calidadNoDisponible && !sinInforme
   const calidadOtroError = calidad.isError && !calidadNoDisponibleAun
 
   return (
@@ -59,6 +62,16 @@ export function CalidadDataset({ datasetId, trabajoId, onContinuarAnalisis }: Pr
       )}
 
       {calidadOtroError && <Alerta>{t('error.titulo')}</Alerta>}
+
+      {sinInforme && !calidad.data && (
+        <div className="flex flex-col gap-4 rounded-xl border bg-card p-5 shadow-xs sm:flex-row sm:items-center">
+          <p className="flex flex-1 items-start gap-2 text-sm text-muted-foreground">
+            <Info aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-info" />
+            {t('informe.sin_informe')}
+          </p>
+          <Button onClick={onContinuarAnalisis}>{t('acciones.continuar_analisis')}</Button>
+        </div>
+      )}
 
       {calidad.data && (
         <>

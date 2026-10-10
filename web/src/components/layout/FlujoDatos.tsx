@@ -14,7 +14,7 @@ export function FlujoDatos({ actual }: { actual: PasoFlujo }) {
 
   return (
     <nav aria-label={t('flujo.aria')}>
-      <ol className="flex items-center gap-2 overflow-x-auto text-sm [scrollbar-width:none]">
+      <ol className="flex items-center gap-2 overflow-x-auto p-1 text-sm [scrollbar-width:none]">
         {PASOS_FLUJO.map((paso, i) => {
           const hecho = i < indiceActual
           const enCurso = i === indiceActual

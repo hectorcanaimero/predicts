@@ -36,7 +36,8 @@
       "viable": "Viável",
       "no_viable": "Não alcança"
     },
-    "viabilidad_titulo": "O que você pode analisar"
+    "viabilidad_titulo": "O que você pode analisar",
+    "sin_informe": "Este conjunto de dados não tem relatório de qualidade (por exemplo, os dados de demonstração já chegam processados). Você pode seguir direto para a análise."
   },
   "productos": {
     "titulo": "Produtos a revisar",
