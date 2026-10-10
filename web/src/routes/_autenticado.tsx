@@ -1,8 +1,7 @@
 import { createFileRoute, Outlet, useNavigate } from '@tanstack/react-router'
 import { useEffect } from 'react'
 
-import { MenuUsuario } from '@/components/layout/MenuUsuario'
-import { SelectorIdioma } from '@/components/layout/SelectorIdioma'
+import { ShellApp } from '@/components/layout/ShellApp'
 import { useSesion } from '@/hooks/useSesion'
 
 export const Route = createFileRoute('/_autenticado')({ component: LayoutAutenticado })
@@ -18,12 +17,8 @@ export function LayoutAutenticado() {
   if (sesion.isLoading || !sesion.data) return null
 
   return (
-    <div>
-      <header className="flex items-center justify-between gap-4 border-b pb-4">
-        <SelectorIdioma />
-        <MenuUsuario />
-      </header>
+    <ShellApp>
       <Outlet />
-    </div>
+    </ShellApp>
   )
 }

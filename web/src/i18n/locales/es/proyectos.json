@@ -4,7 +4,13 @@
   "vacio": {
     "titulo": "Todavía no tienes proyectos",
     "descripcion": "Crea tu primer proyecto para empezar a subir datos y analizarlos.",
-    "crear": "Crear tu primer proyecto"
+    "crear": "Crear tu primer proyecto",
+    "demo_ayuda": "¿Solo quieres ver cómo funciona? Pruébalo con datos de ejemplo.",
+    "pasos": {
+      "subir": "Sube un CSV de compras",
+      "analizar": "Elige qué analizar",
+      "actuar": "Contacta a quien va a recomprar"
+    }
   },
   "error": {
     "titulo": "Ocurrió un error al cargar la información.",
@@ -38,9 +44,52 @@
     "datasets_titulo": "Datasets",
     "datasets_vacio": "Todavía no hay datasets en este proyecto.",
     "analisis_vacio": "Todavía no hay análisis para este dataset.",
-    "volver": "Volver a proyectos"
+    "volver": "Volver a proyectos",
+    "datasets_descripcion": "Archivos de compras del proyecto y los análisis de cada uno.",
+    "subir": "Subir datos",
+    "ver_resultados": "Ver resultados",
+    "ver_progreso": "Ver progreso",
+    "mapear": "Mapear columnas",
+    "calidad": "Calidad",
+    "nuevo_analisis": "Nuevo análisis",
+    "analisis_titulo": "Análisis",
+    "estados_dataset": {
+      "subido": "Subido",
+      "mapeado": "Mapeado",
+      "ingiriendo": "Procesando",
+      "listo": "Listo",
+      "error": "Error",
+      "archivado": "Archivado"
+    },
+    "estados_analisis": {
+      "en_cola": "En cola",
+      "corriendo": "Procesando",
+      "listo": "Listo",
+      "error": "Error",
+      "cancelado": "Cancelado"
+    },
+    "tipos": {
+      "recompra": "Recompra",
+      "ciclos": "Ciclos",
+      "riesgo": "Riesgo",
+      "ofertas": "Ofertas",
+      "contactar": "Contactar",
+      "mensajes": "Mensajes"
+    }
   },
   "errores": {
     "no_encontrado": "Este proyecto ya no existe."
+  },
+  "descripcion": "Cada proyecto agrupa los datos y análisis de un negocio o una marca.",
+  "tarjeta": {
+    "abrir": "Abrir {{nombre}}",
+    "sin_descripcion": "Sin descripción",
+    "mensajes": "Mensajes en {{idioma}}",
+    "tono": "Tono {{tono}}"
+  },
+  "idiomas": {
+    "pt-BR": "portugués",
+    "es": "español",
+    "en": "inglés"
   }
 }

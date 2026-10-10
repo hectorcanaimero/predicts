@@ -4,7 +4,13 @@
   "vacio": {
     "titulo": "You don't have any projects yet",
     "descripcion": "Create your first project to start uploading and analyzing data.",
-    "crear": "Create your first project"
+    "crear": "Create your first project",
+    "demo_ayuda": "Just want to see how it works? Try it with sample data.",
+    "pasos": {
+      "subir": "Upload a purchases CSV",
+      "analizar": "Choose what to analyze",
+      "actuar": "Reach out to who will buy again"
+    }
   },
   "error": {
     "titulo": "Something went wrong while loading the information.",
@@ -38,9 +44,52 @@
     "datasets_titulo": "Datasets",
     "datasets_vacio": "There are no datasets in this project yet.",
     "analisis_vacio": "There are no analyses for this dataset yet.",
-    "volver": "Back to projects"
+    "volver": "Back to projects",
+    "datasets_descripcion": "Purchase files in this project and the analyses of each one.",
+    "subir": "Upload data",
+    "ver_resultados": "View results",
+    "ver_progreso": "View progress",
+    "mapear": "Map columns",
+    "calidad": "Quality",
+    "nuevo_analisis": "New analysis",
+    "analisis_titulo": "Analyses",
+    "estados_dataset": {
+      "subido": "Uploaded",
+      "mapeado": "Mapped",
+      "ingiriendo": "Processing",
+      "listo": "Ready",
+      "error": "Error",
+      "archivado": "Archived"
+    },
+    "estados_analisis": {
+      "en_cola": "Queued",
+      "corriendo": "Processing",
+      "listo": "Ready",
+      "error": "Error",
+      "cancelado": "Cancelled"
+    },
+    "tipos": {
+      "recompra": "Repurchase",
+      "ciclos": "Cycles",
+      "riesgo": "Risk",
+      "ofertas": "Offers",
+      "contactar": "Contact",
+      "mensajes": "Messages"
+    }
   },
   "errores": {
     "no_encontrado": "This project no longer exists."
+  },
+  "descripcion": "Each project groups the data and analyses of one business or brand.",
+  "tarjeta": {
+    "abrir": "Open {{nombre}}",
+    "sin_descripcion": "No description",
+    "mensajes": "Messages in {{idioma}}",
+    "tono": "{{tono}} tone"
+  },
+  "idiomas": {
+    "pt-BR": "Portuguese",
+    "es": "Spanish",
+    "en": "English"
   }
 }

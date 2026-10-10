@@ -4,7 +4,13 @@
   "vacio": {
     "titulo": "Você ainda não tem projetos",
     "descripcion": "Crie seu primeiro projeto para começar a enviar dados e analisá-los.",
-    "crear": "Criar seu primeiro projeto"
+    "crear": "Criar seu primeiro projeto",
+    "demo_ayuda": "Só quer ver como funciona? Experimente com dados de exemplo.",
+    "pasos": {
+      "subir": "Envie um CSV de compras",
+      "analizar": "Escolha o que analisar",
+      "actuar": "Contate quem vai recomprar"
+    }
   },
   "error": {
     "titulo": "Ocorreu um erro ao carregar as informações.",
@@ -38,9 +44,52 @@
     "datasets_titulo": "Datasets",
     "datasets_vacio": "Ainda não há datasets neste projeto.",
     "analisis_vacio": "Ainda não há análises para este dataset.",
-    "volver": "Voltar para projetos"
+    "volver": "Voltar para projetos",
+    "datasets_descripcion": "Arquivos de compras do projeto e as análises de cada um.",
+    "subir": "Enviar dados",
+    "ver_resultados": "Ver resultados",
+    "ver_progreso": "Ver progresso",
+    "mapear": "Mapear colunas",
+    "calidad": "Qualidade",
+    "nuevo_analisis": "Nova análise",
+    "analisis_titulo": "Análises",
+    "estados_dataset": {
+      "subido": "Enviado",
+      "mapeado": "Mapeado",
+      "ingiriendo": "Processando",
+      "listo": "Pronto",
+      "error": "Erro",
+      "archivado": "Arquivado"
+    },
+    "estados_analisis": {
+      "en_cola": "Na fila",
+      "corriendo": "Processando",
+      "listo": "Pronta",
+      "error": "Erro",
+      "cancelado": "Cancelada"
+    },
+    "tipos": {
+      "recompra": "Recompra",
+      "ciclos": "Ciclos",
+      "riesgo": "Risco",
+      "ofertas": "Ofertas",
+      "contactar": "Contatar",
+      "mensajes": "Mensagens"
+    }
   },
   "errores": {
     "no_encontrado": "Este projeto não existe mais."
+  },
+  "descripcion": "Cada projeto reúne os dados e as análises de um negócio ou marca.",
+  "tarjeta": {
+    "abrir": "Abrir {{nombre}}",
+    "sin_descripcion": "Sem descrição",
+    "mensajes": "Mensagens em {{idioma}}",
+    "tono": "Tom {{tono}}"
+  },
+  "idiomas": {
+    "pt-BR": "português",
+    "es": "espanhol",
+    "en": "inglês"
   }
 }

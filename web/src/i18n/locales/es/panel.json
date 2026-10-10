@@ -1,0 +1,68 @@
+{
+  "kpis": {
+    "aria": "Indicadores clave",
+    "clientes": "Clientes analizados",
+    "clientes_sub": "{{productos}} productos · {{filas}} compras",
+    "recordatorios": "Recordatorios",
+    "recordatorios_sub": "para {{clientes}} clientes",
+    "riesgo": "Clientes en riesgo",
+    "riesgo_sub": "{{valor}} en riesgo (tienda)",
+    "riesgo_sub_simple": "{{pares}} pares cliente-producto",
+    "ofertas": "Ofertas sugeridas",
+    "ofertas_sub": "para {{clientes}} clientes",
+    "contactar": "A contactar",
+    "contactar_sub": "{{revisar}} para revisar",
+    "precision": "Precisión del modelo",
+    "precision_sub": "Línea base {{base}}",
+    "brier": "Error de Brier",
+    "brier_sub": "Línea base {{base}} · menor es mejor"
+  },
+  "resultados": {
+    "descripcion": "Compras hasta el {{fecha}} · modelo {{version}}",
+    "descripcion_sin_fecha": "Modelo {{version}}",
+    "universo": "Universo 3D",
+    "agente": "Preguntar al agente"
+  },
+  "probabilidad": {
+    "alta": "Alta",
+    "media": "Media",
+    "baja": "Baja"
+  },
+  "progreso": {
+    "titulo": "Analizando tus compras",
+    "descripcion": "Esto suele tardar unos minutos. Puedes dejar esta pantalla abierta: te llevamos a los resultados apenas termine.",
+    "pasos_aria": "Etapas del análisis",
+    "en_curso": "En curso: {{etapa}}",
+    "esperando": "Esperando el inicio…",
+    "listo": "¡Listo! Abriendo los resultados…",
+    "porcentaje": "{{valor}} %",
+    "avance": "Avance",
+    "estado_paso": {
+      "completada": "completada",
+      "en_curso": "en curso",
+      "pendiente": "pendiente"
+    },
+    "etapas": {
+      "leyendo": "Lectura de datos",
+      "ciclos": "Ciclos de recompra",
+      "prediccion": "Predicción de recompra",
+      "riesgo": "Riesgo de abandono",
+      "ofertas": "Ofertas",
+      "contactar": "A quién contactar",
+      "backtest": "Validación del modelo",
+      "mensajes": "Mensajes con IA",
+      "listo": "Resultados listos"
+    },
+    "contadores": {
+      "filas": "Filas",
+      "clientes": "Clientes",
+      "productos": "Productos",
+      "pares": "Pares cliente-producto",
+      "recordatorios": "Recordatorios",
+      "ofertas": "Ofertas",
+      "combinaciones": "Mensajes",
+      "por_jev": "Revisados por IA"
+    },
+    "visual": "Vista del procesamiento"
+  }
+}

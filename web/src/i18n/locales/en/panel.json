@@ -1,0 +1,68 @@
+{
+  "kpis": {
+    "aria": "Key metrics",
+    "clientes": "Customers analyzed",
+    "clientes_sub": "{{productos}} products · {{filas}} purchases",
+    "recordatorios": "Reminders",
+    "recordatorios_sub": "for {{clientes}} customers",
+    "riesgo": "Customers at risk",
+    "riesgo_sub": "{{valor}} at risk (store)",
+    "riesgo_sub_simple": "{{pares}} customer-product pairs",
+    "ofertas": "Suggested offers",
+    "ofertas_sub": "for {{clientes}} customers",
+    "contactar": "To contact",
+    "contactar_sub": "{{revisar}} to review",
+    "precision": "Model precision",
+    "precision_sub": "Baseline {{base}}",
+    "brier": "Brier score",
+    "brier_sub": "Baseline {{base}} · lower is better"
+  },
+  "resultados": {
+    "descripcion": "Purchases up to {{fecha}} · model {{version}}",
+    "descripcion_sin_fecha": "Model {{version}}",
+    "universo": "3D universe",
+    "agente": "Ask the agent"
+  },
+  "probabilidad": {
+    "alta": "High",
+    "media": "Medium",
+    "baja": "Low"
+  },
+  "progreso": {
+    "titulo": "Analyzing your purchases",
+    "descripcion": "This usually takes a few minutes. You can leave this screen open: we’ll take you to the results as soon as it’s done.",
+    "pasos_aria": "Analysis stages",
+    "en_curso": "In progress: {{etapa}}",
+    "esperando": "Waiting to start…",
+    "listo": "Done! Opening the results…",
+    "porcentaje": "{{valor}}%",
+    "avance": "Progress",
+    "estado_paso": {
+      "completada": "completed",
+      "en_curso": "in progress",
+      "pendiente": "pending"
+    },
+    "etapas": {
+      "leyendo": "Reading data",
+      "ciclos": "Repurchase cycles",
+      "prediccion": "Repurchase prediction",
+      "riesgo": "Churn risk",
+      "ofertas": "Offers",
+      "contactar": "Who to contact",
+      "backtest": "Model validation",
+      "mensajes": "AI messages",
+      "listo": "Results ready"
+    },
+    "contadores": {
+      "filas": "Rows",
+      "clientes": "Customers",
+      "productos": "Products",
+      "pares": "Customer-product pairs",
+      "recordatorios": "Reminders",
+      "ofertas": "Offers",
+      "combinaciones": "Messages",
+      "por_jev": "Reviewed by AI"
+    },
+    "visual": "Processing view"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "kpis": {
+    "aria": "Indicadores principais",
+    "clientes": "Clientes analisados",
+    "clientes_sub": "{{productos}} produtos · {{filas}} compras",
+    "recordatorios": "Lembretes",
+    "recordatorios_sub": "para {{clientes}} clientes",
+    "riesgo": "Clientes em risco",
+    "riesgo_sub": "{{valor}} em risco (loja)",
+    "riesgo_sub_simple": "{{pares}} pares cliente-produto",
+    "ofertas": "Ofertas sugeridas",
+    "ofertas_sub": "para {{clientes}} clientes",
+    "contactar": "A contatar",
+    "contactar_sub": "{{revisar}} para revisar",
+    "precision": "Precisão do modelo",
+    "precision_sub": "Linha de base {{base}}",
+    "brier": "Erro de Brier",
+    "brier_sub": "Linha de base {{base}} · menor é melhor"
+  },
+  "resultados": {
+    "descripcion": "Compras até {{fecha}} · modelo {{version}}",
+    "descripcion_sin_fecha": "Modelo {{version}}",
+    "universo": "Universo 3D",
+    "agente": "Perguntar ao agente"
+  },
+  "probabilidad": {
+    "alta": "Alta",
+    "media": "Média",
+    "baja": "Baixa"
+  },
+  "progreso": {
+    "titulo": "Analisando suas compras",
+    "descripcion": "Isso costuma levar alguns minutos. Pode deixar esta tela aberta: levamos você aos resultados assim que terminar.",
+    "pasos_aria": "Etapas da análise",
+    "en_curso": "Em andamento: {{etapa}}",
+    "esperando": "Aguardando o início…",
+    "listo": "Pronto! Abrindo os resultados…",
+    "porcentaje": "{{valor}} %",
+    "avance": "Progresso",
+    "estado_paso": {
+      "completada": "concluída",
+      "en_curso": "em andamento",
+      "pendiente": "pendente"
+    },
+    "etapas": {
+      "leyendo": "Leitura dos dados",
+      "ciclos": "Ciclos de recompra",
+      "prediccion": "Previsão de recompra",
+      "riesgo": "Risco de abandono",
+      "ofertas": "Ofertas",
+      "contactar": "Quem contatar",
+      "backtest": "Validação do modelo",
+      "mensajes": "Mensagens com IA",
+      "listo": "Resultados prontos"
+    },
+    "contadores": {
+      "filas": "Linhas",
+      "clientes": "Clientes",
+      "productos": "Produtos",
+      "pares": "Pares cliente-produto",
+      "recordatorios": "Lembretes",
+      "ofertas": "Ofertas",
+      "combinaciones": "Mensagens",
+      "por_jev": "Revisados por IA"
+    },
+    "visual": "Visualização do processamento"
+  }
+}

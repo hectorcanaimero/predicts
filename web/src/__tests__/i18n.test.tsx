@@ -4,13 +4,13 @@ import { describe, expect, it } from 'vitest'
 import { useTranslation } from 'react-i18next'
 
 import '../i18n'
-import { LanguageSwitcher } from '../routes/__root'
+import { ControlIdioma } from '../components/layout/SelectorIdioma'
 
 function PaginaDePrueba() {
   const { t } = useTranslation()
   return (
     <div>
-      <LanguageSwitcher />
+      <ControlIdioma />
       <p>{t('bienvenida')}</p>
     </div>
   )

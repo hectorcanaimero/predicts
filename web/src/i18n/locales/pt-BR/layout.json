@@ -1,0 +1,46 @@
+{
+  "saltar": "Pular para o conteúdo",
+  "cargando": "Carregando…",
+  "nav": {
+    "principal": "Navegação principal",
+    "espacio": "Espaço de trabalho",
+    "proyectos": "Projetos",
+    "proyecto": "Projeto",
+    "resumen_proyecto": "Resumo do projeto",
+    "subir_datos": "Enviar dados",
+    "datos": "Dados",
+    "calidad": "Qualidade dos dados",
+    "nuevo_analisis": "Nova análise",
+    "agente": "Agente analista",
+    "analisis": "Análise",
+    "resultados": "Resultados",
+    "progreso": "Progresso",
+    "universo": "Universo de clientes",
+    "abrir_menu": "Abrir menu",
+    "cerrar_menu": "Fechar menu"
+  },
+  "migas": {
+    "aria": "Caminho de navegação",
+    "proyectos": "Projetos",
+    "subir": "Enviar dados",
+    "mapeo": "Mapeamento de colunas",
+    "calidad": "Qualidade dos dados",
+    "agente": "Agente analista",
+    "nuevo_analisis": "Nova análise",
+    "resultados": "Resultados",
+    "progreso": "Progresso",
+    "universo": "Universo de clientes",
+    "demo": "Demo"
+  },
+  "publico": {
+    "titular": "Saiba quem vai comprar de novo, e quando.",
+    "subtitulo": "Envie seu histórico de compras e o predicts estima a próxima compra de cada cliente, detecta quem está prestes a sair e sugere o que oferecer.",
+    "puntos": {
+      "recompra": "Lembretes de recompra por cliente e produto",
+      "riesgo": "Alertas de abandono com o valor em jogo",
+      "mensajes": "Mensagens prontas para enviar, escritas com IA",
+      "precision": "Precisão medida com backtest, sem caixas-pretas"
+    },
+    "pie": "Comece com um CSV de compras. Sem integrações."
+  }
+}

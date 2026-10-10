@@ -1,14 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { useTranslation } from 'react-i18next'
+import { createFileRoute, Navigate } from '@tanstack/react-router'
+
+import { useSesion } from '@/hooks/useSesion'
 
 export const Route = createFileRoute('/')({ component: Inicio })
 
+/** `/` no tiene contenido propio: con sesión va a la lista de proyectos, sin sesión al login. */
 function Inicio() {
-  const { t } = useTranslation()
+  const sesion = useSesion()
 
-  return (
-    <div>
-      <h1 className="text-2xl font-semibold">{t('bienvenida')}</h1>
-    </div>
-  )
+  if (sesion.isLoading) return null
+  return <Navigate to={sesion.data ? '/proyectos' : '/login'} replace />
 }

@@ -1,0 +1,46 @@
+{
+  "saltar": "Skip to content",
+  "cargando": "Loading…",
+  "nav": {
+    "principal": "Main navigation",
+    "espacio": "Workspace",
+    "proyectos": "Projects",
+    "proyecto": "Project",
+    "resumen_proyecto": "Project overview",
+    "subir_datos": "Upload data",
+    "datos": "Data",
+    "calidad": "Data quality",
+    "nuevo_analisis": "New analysis",
+    "agente": "Analyst agent",
+    "analisis": "Analysis",
+    "resultados": "Results",
+    "progreso": "Progress",
+    "universo": "Customer universe",
+    "abrir_menu": "Open menu",
+    "cerrar_menu": "Close menu"
+  },
+  "migas": {
+    "aria": "Breadcrumb",
+    "proyectos": "Projects",
+    "subir": "Upload data",
+    "mapeo": "Column mapping",
+    "calidad": "Data quality",
+    "agente": "Analyst agent",
+    "nuevo_analisis": "New analysis",
+    "resultados": "Results",
+    "progreso": "Progress",
+    "universo": "Customer universe",
+    "demo": "Demo"
+  },
+  "publico": {
+    "titular": "Know who will buy again, and when.",
+    "subtitulo": "Upload your purchase history and predicts estimates each customer’s next purchase, spots who is about to churn and suggests what to offer.",
+    "puntos": {
+      "recompra": "Repurchase reminders per customer and product",
+      "riesgo": "Churn alerts with the value at stake",
+      "mensajes": "Ready-to-send messages, written with AI",
+      "precision": "Accuracy measured by backtesting, no black boxes"
+    },
+    "pie": "Start with a purchases CSV. No integrations needed."
+  }
+}

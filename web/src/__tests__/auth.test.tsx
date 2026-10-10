@@ -53,7 +53,7 @@ function renderConQuery(elemento: ReactNode) {
 }
 
 describe('login', () => {
-  it('inicia sesión y navega a /inicio', async () => {
+  it('inicia sesión y navega a /proyectos', async () => {
     vi.stubGlobal(
       'fetch',
       vi.fn(async () => new Response(JSON.stringify(SESION), { status: 200 })),
@@ -64,7 +64,26 @@ describe('login', () => {
     fireEvent.change(screen.getByLabelText('Contraseña'), { target: { value: 'contrasena-larga' } })
     fireEvent.click(screen.getByRole('button', { name: 'Iniciar sesión' }))
 
-    await waitFor(() => expect(navegar).toHaveBeenCalledWith({ to: '/inicio' }))
+    await waitFor(() => expect(navegar).toHaveBeenCalledWith({ to: '/proyectos' }))
+  })
+
+  it('si la API no responde, muestra el error genérico y vuelve a habilitar el botón', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => {
+        throw new TypeError('Failed to fetch')
+      }),
+    )
+    renderConQuery(<Login />)
+
+    fireEvent.change(screen.getByLabelText('Correo'), { target: { value: 'ana@acme.com' } })
+    fireEvent.change(screen.getByLabelText('Contraseña'), { target: { value: 'contrasena-larga' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Iniciar sesión' }))
+
+    await screen.findByRole('alert')
+    expect(screen.getByRole('alert').textContent).toBe('Ocurrió un error. Intenta de nuevo.')
+    expect((screen.getByRole('button', { name: 'Iniciar sesión' }) as HTMLButtonElement).disabled).toBe(false)
+    expect(navegar).not.toHaveBeenCalled()
   })
 
   it('muestra el error de credenciales traducido en pt-BR, es y en', async () => {
