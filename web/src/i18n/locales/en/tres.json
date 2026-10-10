@@ -1,0 +1,20 @@
+{
+  "escena": {
+    "conectando": "Connecting…",
+    "esperando": "Waiting for the analysis to start…",
+    "etapas": {
+      "entrada": "Reading purchases from the file",
+      "ciclos": "Forming the repurchase cycles",
+      "recordatorios": "Generating the reminders",
+      "listo": "Analysis ready",
+      "error": "The analysis ended with an error"
+    },
+    "grupos": {
+      "archivo": "Rows read",
+      "clientes": "Clients",
+      "productos": "Products",
+      "ciclos": "Cycles formed",
+      "recordatorios": "Reminders"
+    }
+  }
+}
