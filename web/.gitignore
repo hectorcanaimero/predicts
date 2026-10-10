@@ -3,6 +3,9 @@ dist
 dist-ssr
 *.local
 
+# salida de `npm run captura:procesamiento` (video generado, no se versiona)
+captura/
+
 npm-debug.log*
 
 .vscode/*

@@ -1,0 +1,20 @@
+{
+  "escena": {
+    "conectando": "Conectando…",
+    "esperando": "Esperando o início da análise…",
+    "etapas": {
+      "entrada": "Lendo as compras do arquivo",
+      "ciclos": "Formando os ciclos de recompra",
+      "recordatorios": "Gerando os lembretes",
+      "listo": "Análise concluída",
+      "error": "A análise terminou com um erro"
+    },
+    "grupos": {
+      "archivo": "Linhas lidas",
+      "clientes": "Clientes",
+      "productos": "Produtos",
+      "ciclos": "Ciclos formados",
+      "recordatorios": "Lembretes"
+    }
+  }
+}
