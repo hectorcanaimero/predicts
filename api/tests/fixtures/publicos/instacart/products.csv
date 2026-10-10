@@ -1,0 +1,5 @@
+product_id,product_name,aisle_id,department_id
+100,Banana,24,4
+101,Organic Milk,91,16
+102,Sparkling Water,115,7
+103,Chocolate Bar,45,19

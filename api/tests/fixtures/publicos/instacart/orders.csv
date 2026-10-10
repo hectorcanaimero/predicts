@@ -1,0 +1,6 @@
+order_id,user_id,eval_set,order_number,order_dow,order_hour_of_day,days_since_prior_order
+1,1,prior,1,2,8,
+2,1,prior,2,3,9,7
+3,1,prior,3,1,10,10
+4,2,prior,1,5,12,
+5,2,prior,2,0,13,5
