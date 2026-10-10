@@ -65,7 +65,7 @@ export function RiesgoTab({ analisisId }: Props) {
             <TableHeader>
               <TableRow>
                 <TableHead>{t('riesgo.columnas.cliente_id')}</TableHead>
-                <TableHead>{t('riesgo.columnas.producto_nombre')}</TableHead>
+                <TableHead className="min-w-44">{t('riesgo.columnas.producto_nombre')}</TableHead>
                 <TableHead>{t('riesgo.columnas.nivel')}</TableHead>
                 <TableHead>{t('riesgo.columnas.motivo')}</TableHead>
                 <TableHead className="text-right">{t('riesgo.columnas.valor')}</TableHead>

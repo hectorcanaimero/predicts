@@ -12,8 +12,8 @@ function UniversoRuta() {
   const { t } = useTranslation('universo')
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-xl font-semibold">{t('titulo')}</h1>
+    <div className="space-y-8">
+      <h1 className="text-2xl font-semibold tracking-tight">{t('titulo')}</h1>
       <VistaUniverso analisisId={analisisId} />
     </div>
   )

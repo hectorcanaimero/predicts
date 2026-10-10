@@ -97,7 +97,7 @@ export function RecordatoriosTab({ analisisId }: Props) {
             <TableHeader>
               <TableRow>
                 <TableHead>{t('recordatorios.columnas.cliente_id')}</TableHead>
-                <TableHead>{t('recordatorios.columnas.producto_nombre')}</TableHead>
+                <TableHead className="min-w-44">{t('recordatorios.columnas.producto_nombre')}</TableHead>
                 <TableHead>{t('recordatorios.columnas.fecha_probable')}</TableHead>
                 <TableHead>{t('recordatorios.columnas.p')}</TableHead>
                 <TableHead>{t('recordatorios.columnas.motivo')}</TableHead>

@@ -13,8 +13,8 @@ function NuevoAnalisisRuta() {
   const navigate = useNavigate()
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-xl font-semibold">{t('nuevo.titulo')}</h1>
+    <div className="space-y-8">
+      <h1 className="text-2xl font-semibold tracking-tight">{t('nuevo.titulo')}</h1>
       <SeleccionAnalisis
         datasetId={datasetId}
         onLanzado={(analisisId) =>

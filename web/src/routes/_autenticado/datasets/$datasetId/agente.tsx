@@ -12,8 +12,8 @@ function AgenteDatasetRuta() {
   const { t } = useTranslation('agente')
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-xl font-semibold">{t('titulo')}</h1>
+    <div className="space-y-8">
+      <h1 className="text-2xl font-semibold tracking-tight">{t('titulo')}</h1>
       <ChatAgente datasetId={datasetId} />
     </div>
   )

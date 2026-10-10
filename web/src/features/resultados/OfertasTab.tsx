@@ -63,7 +63,7 @@ export function OfertasTab({ analisisId }: Props) {
             <TableHeader>
               <TableRow>
                 <TableHead>{t('ofertas.columnas.cliente_id')}</TableHead>
-                <TableHead>{t('ofertas.columnas.producto_nombre')}</TableHead>
+                <TableHead className="min-w-44">{t('ofertas.columnas.producto_nombre')}</TableHead>
                 <TableHead>{t('ofertas.columnas.puntaje')}</TableHead>
                 <TableHead>{t('ofertas.columnas.descuento')}</TableHead>
                 <TableHead>{t('ofertas.columnas.motivo')}</TableHead>

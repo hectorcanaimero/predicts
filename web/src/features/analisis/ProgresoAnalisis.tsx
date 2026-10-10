@@ -81,7 +81,7 @@ export function ProgresoAnalisis({ analisisId, onCompletado }: Props) {
             )}
             {estadoTexto}
           </p>
-          <span className="text-2xl font-semibold tracking-tight tabular">
+          <span className="whitespace-nowrap text-2xl font-semibold tracking-tight tabular">
             {t('panel:progreso.porcentaje', { valor: porcentaje })}
           </span>
         </div>

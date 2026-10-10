@@ -20,10 +20,10 @@ function CalidadDatasetRuta() {
   const { t } = useTranslation('calidad')
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">{t('titulo')}</h1>
-        <Link to="/datasets/$datasetId/agente" params={{ datasetId }} className="text-sm underline">
+        <h1 className="text-2xl font-semibold tracking-tight">{t('titulo')}</h1>
+        <Link to="/datasets/$datasetId/agente" params={{ datasetId }} className="rounded-sm text-sm font-medium text-primary hover:underline">
           {t('agente:enlace')}
         </Link>
       </div>
